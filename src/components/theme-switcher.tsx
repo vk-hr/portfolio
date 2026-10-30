@@ -2,9 +2,7 @@ import { Desktop, Moon, Sun } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "motion/react";
 import type * as React from "react";
-import { useTheme } from "#/components/providers/theme-provider";
-import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import type { Theme } from "#/functions/theme";
+import { type Theme, useTheme } from "start-theme";
 
 const THEME_CONFIG: Record<Theme, { icon: React.ReactNode; label: string }> = {
 	system: {

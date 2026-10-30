@@ -15,7 +15,9 @@
 			"**/*.config.ts",
 			"**/index.html",
 			"!**/src/routeTree.gen.ts",
-			"!**/tmp/**/*"
+			"!**/tmp/**/*",
+			"!**/.output/**/*",
+			"!**/dist/**/*"
 		]
 	},
 	"formatter": {

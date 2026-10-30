@@ -3,16 +3,17 @@ import { HeadContent, Scripts, useRouteContext } from "@tanstack/react-router";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import type * as React from "react";
-import { ThemeProvider } from "#/components/providers/theme-provider";
+import { type Theme, ThemeProvider } from "start-theme";
 import { Devtools } from "#/components/shell";
 import { Toaster } from "#/components/ui/sonner";
 import { TooltipProvider } from "#/components/ui/tooltip";
+import { setTheme } from "#/functions/theme";
 import { authClient } from "#/lib/auth-client";
 import { Route } from "#/routes/__root";
 
 type RootProvidersProps = {
 	children: React.ReactNode;
-	theme?: "system" | "light" | "dark";
+	theme?: Theme;
 };
 
 export function RootProviders({ children, theme }: RootProvidersProps) {
@@ -25,7 +26,7 @@ export function RootProviders({ children, theme }: RootProvidersProps) {
 			authClient={authClient}
 			initialToken={context.token}
 		>
-			<ThemeProvider theme={initialTheme}>
+			<ThemeProvider theme={initialTheme} setThemeFn={setTheme}>
 				<TooltipProvider>
 					<html lang="en" suppressHydrationWarning>
 						<head>

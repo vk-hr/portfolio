@@ -1,22 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getCookie, setCookie } from "@tanstack/react-start/server";
-import * as z from "zod";
+import { createThemeCookie } from "start-theme/server";
 
-const postThemeValidator = z.union([
-	z.literal("light"),
-	z.literal("dark"),
-	z.literal("system"),
-]);
-export type Theme = z.infer<typeof postThemeValidator>;
-const storageKey = "_preferred-theme";
+const themeCookie = createThemeCookie({ key: "_preferred-theme" });
 
-export const getTheme = createServerFn().handler(async () => {
-	const cookie = getCookie(storageKey);
-	return (cookie ?? "system") as Theme;
-});
+export const getTheme = createServerFn().handler(() => themeCookie.read());
 
 export const setTheme = createServerFn({ method: "POST" })
-	.inputValidator(postThemeValidator)
-	.handler(async ({ data }) => {
-		setCookie(storageKey, data);
-	});
+	.inputValidator(themeCookie.validate)
+	.handler(({ data }) => themeCookie.write(data));
+
+export type { Theme } from "start-theme";
