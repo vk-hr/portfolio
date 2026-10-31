@@ -81,7 +81,7 @@ TipTap with 20+ extensions (code blocks, tables, math/KaTeX, drag handle, slash 
 - **Tailwind classes:** Auto-sorted by Biome in `clsx`, `cva`, `cn`, `tw` calls
 - **Class merging:** `import { cn } from "cn"` — shadcn's official `cn` package (replaces the old `clsx` + `tailwind-merge` util; `src/lib/utils.ts` is gone)
 - **UI components:** shadcn (style: `base-nova`, icons: `hugeicons`, color: `mist`). Managed via the registry — update with `bunx shadcn add <component> --overwrite --yes` (no `update` command in CLI 4.x)
-- **Local ui/ adaptations** (reapply after registry updates): `sonner.tsx` uses `start-theme` instead of `next-themes`; `calendar.tsx` hoists day-picker components to module level; targeted `biome-ignore` comments in `sidebar`/`field`/`input-group`/`button-group` for upstream patterns
+- **Local ui/ adaptations** (reapply after registry updates): `sonner.tsx` uses `start-theme` instead of `next-themes` (if `bunx shadcn add` re-installs `next-themes`, remove it — nothing imports it); `calendar.tsx` hoists day-picker components to module level; targeted `biome-ignore` comments in `sidebar`/`field`/`input-group`/`button-group` for upstream patterns
 - **Exports:** Named exports only (no default exports)
 - **Icons:** `@hugeicons/react` + `@hugeicons/core-free-icons`
 - **Environment variables:** Validated via T3 Env in `src/env.ts`
