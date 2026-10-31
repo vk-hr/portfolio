@@ -32,7 +32,7 @@ function RouteComponent() {
 		return (
 			<Layout>
 				<div className="flex flex-col items-center gap-4 py-20">
-					<h1 className="font-bold text-2xl">Post not found</h1>
+					<h1 className="text-2xl font-bold">Post not found</h1>
 					<p className="text-muted-foreground">
 						This post doesn't exist or isn't published yet.
 					</p>
@@ -49,7 +49,7 @@ function RouteComponent() {
 
 	return (
 		<Layout>
-			<article className="relative mx-4 my-4 max-w-4xl border-2 bg-background p-4 sm:mx-auto sm:my-8 sm:w-full md:p-10">
+			<article className="bg-background relative mx-4 my-4 max-w-4xl border-2 p-4 sm:mx-auto sm:my-8 sm:w-full md:p-10">
 				<CornerSquare position="top-left" mode="offset" />
 				<CornerSquare position="top-right" mode="offset" />
 				<CornerSquare position="bottom-left" mode="offset" />
@@ -57,17 +57,17 @@ function RouteComponent() {
 
 				<Link
 					to="/posts"
-					className="mb-8 inline-flex items-center gap-1.5 text-muted-foreground text-sm transition-colors hover:text-foreground"
+					className="text-muted-foreground hover:text-foreground mb-8 inline-flex items-center gap-1.5 text-sm transition-colors"
 				>
 					<HugeiconsIcon icon={ArrowLeft} strokeWidth={2} className="size-4" />
 					Back to posts
 				</Link>
 
-				<h1 className="mb-4 font-bold text-3xl leading-tight tracking-tight sm:text-4xl">
+				<h1 className="mb-4 text-3xl leading-tight font-bold tracking-tight sm:text-4xl">
 					{post.title}
 				</h1>
 
-				<div className="mb-8 flex flex-wrap items-center gap-3 text-muted-foreground text-sm">
+				<div className="text-muted-foreground mb-8 flex flex-wrap items-center gap-3 text-sm">
 					<time dateTime={new Date(post.publishDate).toISOString()}>
 						{longDate.format(new Date(post.publishDate))}
 					</time>

@@ -10,15 +10,15 @@ export function Hero() {
 			<div className="relative flex flex-col justify-between border-b-2 sm:flex-row sm:items-center">
 				<CornerSquare position="bottom-left" />
 				<CornerSquare position="bottom-right" />
-				<h1 className="border-b-2 p-4 font-bold font-mono text-2xl sm:border-b-0 sm:p-0 sm:pl-4 md:text-3xl">
+				<h1 className="border-b-2 p-4 font-mono text-2xl font-bold sm:border-b-0 sm:p-0 sm:pl-4 md:text-3xl">
 					Hi, I'm Viktor
 				</h1>
-				<div className="flex w-full bg-background sm:w-auto sm:border-l-2">
+				<div className="bg-background flex w-full sm:w-auto sm:border-l-2">
 					<a
 						href={SOCIAL_LINKS.github}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="flex flex-1 items-center justify-center p-3 transition-colors hover:bg-muted sm:flex-none sm:p-4"
+						className="hover:bg-muted flex flex-1 items-center justify-center p-3 transition-colors sm:flex-none sm:p-4"
 						aria-label="GitHub profile"
 					>
 						<HugeiconsIcon icon={Github} strokeWidth={2} className="size-5" />
@@ -26,7 +26,7 @@ export function Hero() {
 					<Separator className="w-0.5!" orientation="vertical" />
 					<a
 						href={`mailto:${SOCIAL_LINKS.email}`}
-						className="flex flex-1 items-center justify-center p-3 transition-colors hover:bg-muted sm:flex-none sm:p-4"
+						className="hover:bg-muted flex flex-1 items-center justify-center p-3 transition-colors sm:flex-none sm:p-4"
 						aria-label="Send email"
 					>
 						<HugeiconsIcon icon={Mail} strokeWidth={2} className="size-5" />
@@ -34,7 +34,7 @@ export function Hero() {
 					<Separator className="w-0.5!" orientation="vertical" />
 					<a
 						href={SOCIAL_LINKS.linkedin}
-						className="flex flex-1 items-center justify-center p-3 transition-colors hover:bg-muted sm:flex-none sm:p-4"
+						className="hover:bg-muted flex flex-1 items-center justify-center p-3 transition-colors sm:flex-none sm:p-4"
 						aria-label="LinkedIn profile"
 					>
 						<HugeiconsIcon icon={Linkedin} strokeWidth={2} className="size-5" />
@@ -42,7 +42,7 @@ export function Hero() {
 					<Separator className="w-0.5!" orientation="vertical" />
 					<a
 						href={SOCIAL_LINKS.cv}
-						className="flex flex-1 items-center justify-center p-3 transition-colors hover:bg-muted sm:flex-none sm:p-4"
+						className="hover:bg-muted flex flex-1 items-center justify-center p-3 transition-colors sm:flex-none sm:p-4"
 						aria-label="CV"
 					>
 						<HugeiconsIcon icon={Document} strokeWidth={2} className="size-5" />

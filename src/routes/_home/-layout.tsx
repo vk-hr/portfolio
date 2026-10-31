@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
+import { cn } from "cn";
 import { type HTMLMotionProps, motion } from "motion/react";
-import { cn } from "#/lib/utils";
 
 type LayoutProps = React.PropsWithChildren<unknown>;
 
@@ -8,7 +8,7 @@ export function Layout({ children }: LayoutProps) {
 	return (
 		<div className="relative">
 			<div
-				className="pointer-events-none absolute inset-0 bg-diagonal-dashed"
+				className="bg-diagonal-dashed pointer-events-none absolute inset-0"
 				aria-hidden="true"
 			/>
 			<div className="relative z-10 flex min-h-screen flex-col overflow-hidden font-sans">
@@ -19,7 +19,7 @@ export function Layout({ children }: LayoutProps) {
 }
 
 const cornerSquareVariants = cva(
-	"absolute z-30 size-3 rotate-45 border-2 bg-background",
+	"bg-background absolute z-30 size-3 rotate-45 border-2",
 	{
 		variants: {
 			position: {

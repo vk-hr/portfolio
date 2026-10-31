@@ -255,7 +255,7 @@ export function useImageUpload(
 							(typeof attrs.title === "string" ? attrs.title : undefined),
 						uploading: false,
 						uploadError: null,
-						uploadId: null,
+						uploadId: undefined,
 					};
 				},
 			);

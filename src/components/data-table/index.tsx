@@ -14,4 +14,5 @@ export const DataTable = {
 	EditableCell: DataTableEditableCell,
 };
 
+export type { DataTableColumnDef } from "./types";
 export { EditingProvider, InlineInputCell };

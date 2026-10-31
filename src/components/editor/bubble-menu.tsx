@@ -16,6 +16,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { Editor as TiptapEditor } from "@tiptap/core";
 import { TextSelection } from "@tiptap/pm/state";
 import { BubbleMenu as TiptapBubbleMenu } from "@tiptap/react/menus";
+import { cn } from "cn";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import {
@@ -27,7 +28,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#/components/ui/select";
-import { cn } from "#/lib/utils";
 import type { ActiveState, BlockType } from "./types";
 import type { BubbleMenuState } from "./use-bubble-menu";
 
@@ -129,7 +129,7 @@ export function EditorBubbleMenu({
 			ref={bubbleMenuRef}
 			editor={editor}
 			appendTo={menuBoundary ? () => menuBoundary : undefined}
-			className="z-50 w-fit max-w-[95vw] text-popover-foreground outline-hidden"
+			className="text-popover-foreground z-50 w-fit max-w-[95vw] outline-hidden"
 			options={{
 				placement: "top-end",
 				offset: 10,
@@ -159,7 +159,7 @@ export function EditorBubbleMenu({
 			}}
 		>
 			<div className="flex flex-col gap-1">
-				<div className="flex flex-nowrap items-center gap-0.5 overflow-x-auto whitespace-nowrap rounded-md border border-border bg-popover p-1 shadow-sm">
+				<div className="border-border bg-popover flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-md border p-1 whitespace-nowrap shadow-sm">
 					<div className="w-fit">
 						<Select
 							value={activeState.blockType}
@@ -172,7 +172,7 @@ export function EditorBubbleMenu({
 							<SelectTrigger
 								size="sm"
 								aria-label="Block style"
-								className="h-9 min-w-29 border-transparent bg-transparent py-0 pr-1.5 pl-2 shadow-none hover:bg-accent focus-visible:border-transparent focus-visible:ring-0 sm:h-8"
+								className="hover:bg-accent h-9 min-w-29 border-transparent bg-transparent py-0 pr-1.5 pl-2 shadow-none focus-visible:border-transparent focus-visible:ring-0 sm:h-8"
 							>
 								<SelectValue />
 							</SelectTrigger>
@@ -205,7 +205,7 @@ export function EditorBubbleMenu({
 							aria-pressed={
 								btn.stateKey ? activeState[btn.stateKey] : undefined
 							}
-							className="h-9 w-9 aria-pressed:bg-accent aria-pressed:text-accent-foreground sm:h-8 sm:w-8"
+							className="aria-pressed:bg-accent aria-pressed:text-accent-foreground h-9 w-9 sm:h-8 sm:w-8"
 						>
 							<HugeiconsIcon
 								icon={btn.icon}
@@ -223,7 +223,7 @@ export function EditorBubbleMenu({
 						onClick={openLinkInput}
 						disabled={disabled}
 						aria-pressed={showLinkInput || activeState.link}
-						className="h-9 w-9 aria-pressed:bg-accent aria-pressed:text-accent-foreground sm:h-8 sm:w-8"
+						className="aria-pressed:bg-accent aria-pressed:text-accent-foreground h-9 w-9 sm:h-8 sm:w-8"
 					>
 						<HugeiconsIcon
 							icon={Link}
@@ -241,7 +241,7 @@ export function EditorBubbleMenu({
 							aria-pressed={showAltInput}
 							onClick={toggleAltInput}
 							disabled={disabled}
-							className="h-9 text-xs aria-pressed:bg-accent aria-pressed:text-accent-foreground sm:h-8"
+							className="aria-pressed:bg-accent aria-pressed:text-accent-foreground h-9 text-xs sm:h-8"
 						>
 							ALT
 						</Button>
@@ -256,7 +256,7 @@ export function EditorBubbleMenu({
 							onClick={toggleTableActions}
 							disabled={disabled}
 							aria-pressed={showTableActions}
-							className="h-9 w-9 aria-pressed:bg-accent aria-pressed:text-accent-foreground sm:h-8 sm:w-8"
+							className="aria-pressed:bg-accent aria-pressed:text-accent-foreground h-9 w-9 sm:h-8 sm:w-8"
 						>
 							<HugeiconsIcon
 								icon={Table}
@@ -364,7 +364,7 @@ export function EditorBubbleMenu({
 							"inline-flex w-fit flex-nowrap items-center gap-1 self-end overflow-x-auto whitespace-nowrap",
 						)}
 					>
-						<span className="ml-1 text-muted-foreground text-sm">Rows:</span>
+						<span className="text-muted-foreground ml-1 text-sm">Rows:</span>
 						<Button
 							variant="ghost"
 							size="icon-sm"
@@ -385,7 +385,7 @@ export function EditorBubbleMenu({
 						>
 							<HugeiconsIcon icon={Minus} strokeWidth={2} className="size-4" />
 						</Button>
-						<span className="mx-0.5 h-4 w-px bg-border" aria-hidden="true" />
+						<span className="bg-border mx-0.5 h-4 w-px" aria-hidden="true" />
 						<span className="text-muted-foreground text-sm">Columns:</span>
 						<Button
 							variant="ghost"

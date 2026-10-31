@@ -1,10 +1,10 @@
 import { Photo, Upload } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { cn } from "cn";
 import * as React from "react";
 import type { ImagePickerResult } from "#/components/editor";
 import { useConvexUpload } from "#/hooks/use-convex-upload";
-import { cn } from "#/lib/utils";
 import { listMedia } from "#/queries/admin";
 import { Button } from "../ui/button";
 import {
@@ -137,11 +137,11 @@ export function MediaPickerDialog({
 							<HugeiconsIcon
 								icon={Upload}
 								strokeWidth={2}
-								className="size-6 text-muted-foreground"
+								className="text-muted-foreground size-6"
 							/>
 							<p className="text-muted-foreground text-sm">
 								Drag and drop an image, or{" "}
-								<span className="font-medium text-foreground underline underline-offset-2">
+								<span className="text-foreground font-medium underline underline-offset-2">
 									browse
 								</span>
 							</p>
@@ -158,7 +158,7 @@ export function MediaPickerDialog({
 
 				{/* Library grid */}
 				<div className="flex flex-col gap-2">
-					<p className="font-medium text-sm">Library</p>
+					<p className="text-sm font-medium">Library</p>
 
 					{isPending ? (
 						<div className="grid grid-cols-4 gap-2">
@@ -175,7 +175,7 @@ export function MediaPickerDialog({
 							<HugeiconsIcon
 								icon={Photo}
 								strokeWidth={2}
-								className="size-8 text-muted-foreground/50"
+								className="text-muted-foreground/50 size-8"
 							/>
 							<p className="text-muted-foreground text-sm">
 								No images uploaded yet.

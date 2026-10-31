@@ -5,13 +5,8 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { shallow, useStore } from "@tanstack/react-store";
-import {
-	flexRender,
-	getCoreRowModel,
-	type RowData,
-	type SortingState,
-	useReactTable,
-} from "@tanstack/react-table";
+import { flexRender, type SortingState, useTable } from "@tanstack/react-table";
+import { cn } from "cn";
 import { Button } from "#/components/ui/button";
 import {
 	Table,
@@ -21,22 +16,9 @@ import {
 	TableHeader,
 	TableRow,
 } from "#/components/ui/table";
-import { cn } from "#/lib/utils";
 import { useDataTableContext } from "./context";
+import { dataTableFeatures } from "./features";
 import type { DataTableMeta } from "./types";
-
-declare const columnMetaType: unique symbol;
-
-declare module "@tanstack/react-table" {
-	interface ColumnMeta<TData extends RowData, TValue> {
-		headerClassName?: string;
-		cellClassName?: string;
-		[columnMetaType]?: {
-			data: TData;
-			value: TValue;
-		};
-	}
-}
 
 function getNextSortingState(
 	columnId: string,
@@ -63,10 +45,10 @@ function useAdminReactTable({
 }) {
 	"use no memo";
 
-	return useReactTable({
+	return useTable({
+		features: dataTableFeatures,
 		data,
 		columns,
-		getCoreRowModel: getCoreRowModel(),
 		manualSorting: true,
 		enableMultiSort: false,
 		state: {
@@ -116,7 +98,7 @@ export function DataTableTable() {
 												type="button"
 												variant="ghost"
 												size="sm"
-												className="-ml-2 h-8 px-2 hover:bg-muted/80"
+												className="hover:bg-muted/80 -ml-2 h-8 px-2"
 												onClick={() =>
 													actions.setSorting(
 														getNextSortingState(header.column.id, currentSort),
@@ -165,7 +147,7 @@ export function DataTableTable() {
 						<TableRow>
 							<TableCell
 								colSpan={table.getAllLeafColumns().length}
-								className="h-24 text-center text-muted-foreground"
+								className="text-muted-foreground h-24 text-center"
 							>
 								{meta.loadingLabel}
 							</TableCell>
@@ -176,7 +158,7 @@ export function DataTableTable() {
 								key={row.id}
 								{...(meta.getRowProps?.(row.original, row.index) ?? {})}
 							>
-								{row.getVisibleCells().map((cell) => (
+								{row.getAllCells().map((cell) => (
 									<TableCell
 										key={cell.id}
 										className={cn(
@@ -193,7 +175,7 @@ export function DataTableTable() {
 						<TableRow>
 							<TableCell
 								colSpan={table.getAllLeafColumns().length}
-								className="h-24 text-center text-muted-foreground"
+								className="text-muted-foreground h-24 text-center"
 							>
 								{meta.emptyLabel}
 							</TableCell>

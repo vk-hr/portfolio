@@ -405,7 +405,7 @@ function RecentItemsCard({
 							<TableRow>
 								<TableCell
 									colSpan={5}
-									className="h-24 text-center text-muted-foreground"
+									className="text-muted-foreground h-24 text-center"
 								>
 									{emptyLabel}
 								</TableCell>

@@ -2,7 +2,6 @@ import { Plus, Trash } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import type { ColumnDef } from "@tanstack/react-table";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
 import { useMutation } from "convex/react";
@@ -11,6 +10,7 @@ import { toSlug } from "shared/slug";
 import { toast } from "sonner";
 import {
 	DataTable,
+	type DataTableColumnDef,
 	EditingProvider,
 	InlineInputCell,
 } from "#/components/data-table";
@@ -95,7 +95,7 @@ export function SeriesAdminResource({
 		}
 	}, [deleteSeries, queryClient, search, seriesToDelete]);
 
-	const columns = React.useMemo<Array<ColumnDef<SeriesRow>>>(
+	const columns = React.useMemo<Array<DataTableColumnDef<SeriesRow>>>(
 		() => [
 			{
 				id: "actions",

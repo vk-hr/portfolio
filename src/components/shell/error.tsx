@@ -28,14 +28,16 @@ export function ErrorPage({ error }: ErrorComponentProps) {
 						<HugeiconsIcon
 							icon={AlertTriangle}
 							strokeWidth={2}
-							className="size-4 text-destructive"
+							className="text-destructive size-4"
 						/>
 						Something went wrong
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-3">
-					<pre className="overflow-x-auto rounded-md bg-muted p-3 font-mono text-muted-foreground text-sm">
-						<code>{error.message}</code>
+					<pre className="bg-muted text-muted-foreground overflow-x-auto rounded-md p-3 font-mono text-sm">
+						<code>
+							{error instanceof Error ? error.message : String(error)}
+						</code>
 					</pre>
 				</CardContent>
 				<CardFooter className="justify-end gap-2">

@@ -1,7 +1,7 @@
 import { ConvexQueryClient } from "@convex-dev/react-query";
 import { MutationCache, QueryClient } from "@tanstack/react-query";
 import { createRouteMask, createRouter } from "@tanstack/react-router";
-import { routerWithQueryClient } from "@tanstack/react-router-with-query";
+import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { ConvexProvider } from "convex/react";
 import { toast } from "sonner";
 import { env } from "#/env";
@@ -44,28 +44,28 @@ export function getRouter() {
 
 	convexQueryClient.connect(queryClient);
 
-	const router = routerWithQueryClient(
-		createRouter({
-			routeTree,
-			routeMasks: [createTagMask, createSeriesMask, createCategoryMask],
+	const router = createRouter({
+		routeTree,
+		routeMasks: [createTagMask, createSeriesMask, createCategoryMask],
 
-			scrollRestoration: true,
-			defaultPreload: "intent",
-			defaultPreloadStaleTime: 0,
+		scrollRestoration: true,
+		defaultPreload: "intent",
+		defaultPreloadStaleTime: 0,
 
-			context: {
-				queryClient,
-				convexQueryClient,
-			},
+		context: {
+			queryClient,
+			convexQueryClient,
+		},
 
-			Wrap: ({ children }) => (
-				<ConvexProvider client={convexQueryClient.convexClient}>
-					{children}
-				</ConvexProvider>
-			),
-		}),
-		queryClient,
-	);
+		// biome-ignore lint/correctness/noComponentHookFactories: required inline by TanStack Router's Wrap option; getRouter runs once per app so component identity is stable
+		Wrap: ({ children }) => (
+			<ConvexProvider client={convexQueryClient.convexClient}>
+				{children}
+			</ConvexProvider>
+		),
+	});
+
+	setupRouterSsrQueryIntegration({ router, queryClient });
 
 	return router;
 }

@@ -45,7 +45,16 @@ const listRecent = zAuthedQuery({
 			.take(limit);
 
 		return projects.map(
-			({ _id, title, slug, status, isFeatured, publishDate }) => ({
+			({
+				_creationTime,
+				_id,
+				title,
+				slug,
+				status,
+				isFeatured,
+				publishDate,
+			}) => ({
+				_creationTime,
 				_id,
 				title,
 				slug,

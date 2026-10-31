@@ -2,7 +2,7 @@ import { Dice, Edit, Plus, Trash } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import type { ColumnDef } from "@tanstack/react-table";
+import { cn } from "cn";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
 import { useMutation } from "convex/react";
@@ -17,6 +17,7 @@ import { toSlug } from "shared/slug";
 import { toast } from "sonner";
 import {
 	DataTable,
+	type DataTableColumnDef,
 	EditingProvider,
 	InlineInputCell,
 } from "#/components/data-table";
@@ -31,7 +32,6 @@ import {
 } from "#/components/ui/popover";
 import { getErrorMessage, toAsyncResult } from "#/lib/async-result";
 import { getCursor, type TableSearchParams } from "#/lib/table-search-params";
-import { cn } from "#/lib/utils";
 import { listTechnologies } from "#/queries/admin";
 
 const PAGE_SIZE = 10;
@@ -62,7 +62,7 @@ function ColorSwatch({ color }: { color: string }) {
 	const palette = COLORS[color as ColorKey];
 
 	if (!palette) {
-		return <span className="size-6 rounded-full bg-muted" />;
+		return <span className="bg-muted size-6 rounded-full" />;
 	}
 
 	return (
@@ -122,7 +122,7 @@ function ColorPicker({ value, onChange, isSaving }: ColorPickerProps) {
 										"flex size-7 items-center justify-center rounded-md border transition-colors",
 										palette.bg,
 										palette.border,
-										isSelected && "ring-2 ring-ring ring-offset-1",
+										isSelected && "ring-ring ring-2 ring-offset-1",
 									)}
 									title={key}
 									onClick={() => handleColorChange(key)}
@@ -216,7 +216,7 @@ export function TechnologiesAdminResource({
 		}
 	}, [deleteTechnology, queryClient, search, techToDelete]);
 
-	const columns = React.useMemo<Array<ColumnDef<TechRow>>>(
+	const columns = React.useMemo<Array<DataTableColumnDef<TechRow>>>(
 		() => [
 			{
 				id: "actions",

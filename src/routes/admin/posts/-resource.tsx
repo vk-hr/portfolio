@@ -2,7 +2,6 @@ import { Eye, EyeOff, Pencil, Plus } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import type { ColumnDef } from "@tanstack/react-table";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
 import { useMutation } from "convex/react";
@@ -10,6 +9,7 @@ import * as React from "react";
 import { toSlug } from "shared/slug";
 import {
 	DataTable,
+	type DataTableColumnDef,
 	EditingProvider,
 	InlineInputCell,
 } from "#/components/data-table";
@@ -65,7 +65,7 @@ export function PostsAdminResource({
 	const { data: result } = useQuery(getPostsAdminQuery(search));
 	const posts = result?.page ?? [];
 
-	const columns = React.useMemo<Array<ColumnDef<PostRow>>>(
+	const columns = React.useMemo<Array<DataTableColumnDef<PostRow>>>(
 		() => [
 			{
 				id: "actions",

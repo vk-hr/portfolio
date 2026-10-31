@@ -5,10 +5,10 @@ import { DragHandle } from "@tiptap/extension-drag-handle-react";
 import { DOMSerializer } from "@tiptap/pm/model";
 import { TextSelection } from "@tiptap/pm/state";
 import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
+import { cn } from "cn";
 import * as React from "react";
 import { Button } from "#/components/ui/button";
 import { Skeleton } from "#/components/ui/skeleton";
-import { cn } from "#/lib/utils";
 import { EditorBubbleMenu } from "./bubble-menu";
 import { defaultActiveState, getBlockOptions } from "./constants";
 import { buildExtensions } from "./extensions";
@@ -105,11 +105,11 @@ export function Editor({
 	const lastEmittedValueRef = React.useRef<string>(value);
 
 	const tiptapSurfaceClass = cn(
-		"min-h-16 w-full rounded-md border border-input bg-transparent px-4 text-base shadow-xs outline-none transition-[color,box-shadow] md:px-8",
-		"selection:bg-primary placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 md:text-sm dark:bg-input/30",
-		"[&_.ProseMirror-selectednode]:bg-primary/15 [&_.ProseMirror-selectednode]:outline-none [&_li.ProseMirror-selectednode::after]:border-0 [&_li.ProseMirror-selectednode::after]:bg-primary/15",
-		"[&_img[data-upload-error]]:ring-2 [&_img[data-upload-error]]:ring-destructive [&_img[data-upload-error]]:ring-offset-2 [&_img[data-upload-error]]:ring-offset-background [&_img[data-uploading=true]]:animate-pulse [&_img[data-uploading=true]]:opacity-70",
-		"[&_p.is-empty::before]:pointer-events-none [&_p.is-empty::before]:float-left [&_p.is-empty::before]:h-0 [&_p.is-empty::before]:text-muted-foreground [&_p.is-empty::before]:content-[attr(data-placeholder)]",
+		"border-input min-h-16 w-full rounded-md border bg-transparent px-4 text-base shadow-xs transition-[color,box-shadow] outline-none md:px-8",
+		"selection:bg-primary placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 dark:bg-input/30 focus-visible:ring-[3px] md:text-sm",
+		"[&_.ProseMirror-selectednode]:bg-primary/15 [&_li.ProseMirror-selectednode::after]:bg-primary/15 [&_.ProseMirror-selectednode]:outline-none [&_li.ProseMirror-selectednode::after]:border-0",
+		"[&_img[data-upload-error]]:ring-destructive [&_img[data-upload-error]]:ring-offset-background [&_img[data-upload-error]]:ring-2 [&_img[data-upload-error]]:ring-offset-2 [&_img[data-uploading=true]]:animate-pulse [&_img[data-uploading=true]]:opacity-70",
+		"[&_p.is-empty::before]:text-muted-foreground [&_p.is-empty::before]:pointer-events-none [&_p.is-empty::before]:float-left [&_p.is-empty::before]:h-0 [&_p.is-empty::before]:content-[attr(data-placeholder)]",
 		"touch-manipulation",
 		editorClassName,
 	);

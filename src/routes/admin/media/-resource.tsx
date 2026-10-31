@@ -2,11 +2,14 @@ import { Photo, Upload } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import type { ColumnDef } from "@tanstack/react-table";
 import type { Id } from "convex/_generated/dataModel";
 import * as React from "react";
 import { toast } from "sonner";
-import { DataTable, EditingProvider } from "#/components/data-table";
+import {
+	DataTable,
+	type DataTableColumnDef,
+	EditingProvider,
+} from "#/components/data-table";
 import { Page } from "#/components/page";
 import { Button } from "#/components/ui/button";
 import { Skeleton } from "#/components/ui/skeleton";
@@ -64,7 +67,10 @@ export function MediaAdminResource({
 }: MediaAdminResourceProps) {
 	const { data: result } = useQuery(getMediaAdminQuery(search));
 	const media = result?.page ?? [];
-	const columns = React.useMemo<Array<ColumnDef<MediaRow>>>(() => [], []);
+	const columns = React.useMemo<Array<DataTableColumnDef<MediaRow>>>(
+		() => [],
+		[],
+	);
 
 	return (
 		<EditingProvider>
@@ -106,7 +112,7 @@ export function MediaAdminResource({
 								<HugeiconsIcon
 									icon={Photo}
 									strokeWidth={2}
-									className="size-10 text-muted-foreground/40"
+									className="text-muted-foreground/40 size-10"
 								/>
 								<p className="text-muted-foreground text-sm">
 									No images uploaded yet.
@@ -119,9 +125,9 @@ export function MediaAdminResource({
 										key={item._id}
 										to="/admin/media/$slugId"
 										params={{ slugId: item.slug }}
-										className="group flex flex-col gap-1.5 rounded-lg outline-none ring-ring/50 focus-visible:ring-2"
+										className="group ring-ring/50 flex flex-col gap-1.5 rounded-lg outline-none focus-visible:ring-2"
 									>
-										<div className="overflow-hidden rounded-lg border bg-muted/30">
+										<div className="bg-muted/30 overflow-hidden rounded-lg border">
 											{item.url ? (
 												<img
 													src={item.url}
@@ -133,7 +139,7 @@ export function MediaAdminResource({
 													<HugeiconsIcon
 														icon={Photo}
 														strokeWidth={2}
-														className="size-8 text-muted-foreground/40"
+														className="text-muted-foreground/40 size-8"
 													/>
 												</div>
 											)}

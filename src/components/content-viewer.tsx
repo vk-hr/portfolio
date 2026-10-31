@@ -1,8 +1,8 @@
 import { Markdown } from "@tiptap/markdown";
 import { EditorContent, useEditor } from "@tiptap/react";
+import { cn } from "cn";
 import * as React from "react";
 import { renderContentExtensions } from "#/lib/tiptap-extensions";
-import { cn } from "#/lib/utils";
 
 const viewerExtensions = [...renderContentExtensions, Markdown];
 

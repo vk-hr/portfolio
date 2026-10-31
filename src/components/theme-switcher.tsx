@@ -3,6 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "motion/react";
 import type * as React from "react";
 import { type Theme, useTheme } from "start-theme";
+import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
 
 const THEME_CONFIG: Record<Theme, { icon: React.ReactNode; label: string }> = {
 	system: {

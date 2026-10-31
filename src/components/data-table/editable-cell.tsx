@@ -1,4 +1,4 @@
-import { cn } from "#/lib/utils";
+import { cn } from "cn";
 import type { EditableCellProps } from "./types";
 
 export function DataTableEditableCell({
@@ -16,7 +16,7 @@ export function DataTableEditableCell({
 		<button
 			type="button"
 			className={cn(
-				"w-full cursor-text select-none truncate text-left",
+				"w-full cursor-text truncate text-left select-none",
 				className,
 			)}
 			title="Double-click to edit"

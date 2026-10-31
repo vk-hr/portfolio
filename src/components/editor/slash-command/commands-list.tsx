@@ -66,7 +66,7 @@ function CommandsList({ items, command, ref }: CommandsListProps) {
 	}));
 
 	return (
-		<Command className="min-w-44 overflow-hidden rounded-md border border-border shadow-md">
+		<Command className="border-border min-w-44 overflow-hidden rounded-md border shadow-md">
 			<CommandList>
 				{items.length ? (
 					items.map((item, index) => (
@@ -86,7 +86,7 @@ function CommandsList({ items, command, ref }: CommandsListProps) {
 						</CommandItem>
 					))
 				) : (
-					<div className="flex items-center px-2 py-1.5 text-muted-foreground text-sm">
+					<div className="text-muted-foreground flex items-center px-2 py-1.5 text-sm">
 						<HugeiconsIcon
 							icon={UnavailableIcon}
 							strokeWidth={2}

@@ -1,8 +1,8 @@
 import { Edit, Loader } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { cn } from "cn";
 import * as React from "react";
 import { Input } from "#/components/ui/input";
-import { cn } from "#/lib/utils";
 import { useEditing } from "./editing-context";
 
 type InlineInputCellProps = {
@@ -88,7 +88,7 @@ export function InlineInputCell({
 					<HugeiconsIcon
 						icon={Loader}
 						strokeWidth={2}
-						className="absolute right-2 size-4 animate-spin text-muted-foreground"
+						className="text-muted-foreground absolute right-2 size-4 animate-spin"
 					/>
 				)}
 			</div>
@@ -105,7 +105,7 @@ export function InlineInputCell({
 			<HugeiconsIcon
 				icon={Edit}
 				strokeWidth={2}
-				className="size-3.5 text-muted-foreground opacity-0 transition-opacity group-hover/cell:opacity-50"
+				className="text-muted-foreground size-3.5 opacity-0 transition-opacity group-hover/cell:opacity-50"
 			/>
 		</button>
 	);

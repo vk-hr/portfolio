@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getCookie } from "@tanstack/react-start/server";
-import { SIDEBAR_COOKIE_NAME } from "#/components/ui/sidebar";
+
+// Kept in sync with the cookie set by the sidebar component (see ui/sidebar).
+const SIDEBAR_COOKIE_NAME = "sidebar_state";
 
 export const getSidebarOpenState = createServerFn({ method: "GET" }).handler(
 	async () => {

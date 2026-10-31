@@ -1,7 +1,11 @@
 import type { Store } from "@tanstack/react-store";
-import type { ColumnDef, SortingState } from "@tanstack/react-table";
+import type { SortingState } from "@tanstack/react-table";
 import type * as React from "react";
 import type { TableSearchParams } from "#/lib/table-search-params";
+
+export type { DataTableColumnDef } from "./features";
+
+import type { DataTableColumnDef } from "./features";
 
 export type CursorHistoryEntry = {
 	cursor: null | string;
@@ -18,7 +22,7 @@ export type DataTableStoreState = {
 };
 
 export type DataTableMeta = {
-	columns: Array<ColumnDef<object>>;
+	columns: Array<DataTableColumnDef>;
 	data: Array<object>;
 	loadingLabel: string;
 	emptyLabel: string;
@@ -45,7 +49,7 @@ export type DataTableContextValue = {
 
 export type DataTableRootProps<TData extends object, TField extends string> = {
 	children: React.ReactNode;
-	columns: Array<ColumnDef<TData>>;
+	columns: Array<DataTableColumnDef<TData>>;
 	data: Array<TData>;
 	loadingLabel: string;
 	emptyLabel: string;

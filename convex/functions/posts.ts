@@ -44,13 +44,16 @@ const listRecent = zAuthedQuery({
 			.order("desc")
 			.take(limit);
 
-		return posts.map(({ _id, title, slug, status, publishDate }) => ({
-			_id,
-			title,
-			slug,
-			status,
-			publishDate,
-		}));
+		return posts.map(
+			({ _creationTime, _id, title, slug, status, publishDate }) => ({
+				_creationTime,
+				_id,
+				title,
+				slug,
+				status,
+				publishDate,
+			}),
+		);
 	},
 });
 

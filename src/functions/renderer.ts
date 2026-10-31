@@ -3,7 +3,7 @@ import { renderToHTMLString } from "@tiptap/static-renderer/pm/html-string";
 import { renderContentExtensions } from "#/lib/tiptap-extensions";
 
 export const getRendered = createServerFn()
-	.inputValidator((input: string) => input)
+	.validator((input: string) => input)
 	.handler(async ({ data: content }) => {
 		if (!content) return "";
 

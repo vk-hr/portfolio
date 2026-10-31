@@ -15,7 +15,7 @@ export function Header() {
 					>
 						VKHR.dev
 					</Button>
-					<div className="mx-2.5 border-2 bg-background px-1">
+					<div className="bg-background mx-2.5 border-2 px-1">
 						<ThemeSwitcher />
 					</div>
 				</div>

@@ -1,6 +1,6 @@
+import { cn } from "cn";
 import type * as React from "react";
 import { CardHeader } from "#/components/ui/card";
-import { cn } from "#/lib/utils";
 
 export function PageHeader({
 	className,

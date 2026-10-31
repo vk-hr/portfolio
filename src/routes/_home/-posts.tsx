@@ -17,10 +17,10 @@ export function Posts({ posts }: PostsProps) {
 	return (
 		<section>
 			<div className="flex items-center px-4">
-				<h2 className="font-semibold text-xl sm:text-2xl">Recent posts</h2>
+				<h2 className="text-xl font-semibold sm:text-2xl">Recent posts</h2>
 				<Link
 					to="/posts"
-					className="group ml-2 flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
+					className="group text-muted-foreground hover:text-foreground ml-2 flex items-center gap-2 transition-colors"
 				>
 					<HugeiconsIcon icon={ArrowRight} strokeWidth={2} className="size-5" />
 					<span className="max-w-0 overflow-hidden whitespace-nowrap transition-all group-hover:max-w-xs">
@@ -29,11 +29,11 @@ export function Posts({ posts }: PostsProps) {
 				</Link>
 			</div>
 			{posts.length === 0 ? (
-				<div className="mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed bg-muted/50 p-12 text-center">
+				<div className="bg-muted/50 mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed p-12 text-center">
 					<HugeiconsIcon
 						icon={FileText}
 						strokeWidth={2}
-						className="mb-4 size-8 text-muted-foreground/50"
+						className="text-muted-foreground/50 mb-4 size-8"
 					/>
 					<p className="text-muted-foreground">No posts yet.</p>
 				</div>
@@ -59,16 +59,16 @@ function PostCard({ post }: PostCardProps) {
 		<Link
 			to="/posts/$slugId"
 			params={{ slugId: post.slug }}
-			className="group relative flex flex-col justify-between gap-4 border-2 bg-background p-4 transition-colors hover:bg-muted sm:flex-row sm:items-center"
+			className="group bg-background hover:bg-muted relative flex flex-col justify-between gap-4 border-2 p-4 transition-colors sm:flex-row sm:items-center"
 		>
 			<CornerSquare position="top-left" mode="offset" />
 			<CornerSquare position="top-right" mode="offset" />
 			<CornerSquare position="bottom-left" mode="offset" />
 			<CornerSquare position="bottom-right" mode="offset" />
 
-			<h3 className="font-semibold text-base sm:text-lg">{post.title}</h3>
+			<h3 className="text-base font-semibold sm:text-lg">{post.title}</h3>
 
-			<div className="flex shrink-0 items-center gap-4 text-muted-foreground text-sm">
+			<div className="text-muted-foreground flex shrink-0 items-center gap-4 text-sm">
 				<time dateTime={new Date(post.publishDate).toISOString()}>
 					{mediumDate.format(new Date(post.publishDate))}
 				</time>

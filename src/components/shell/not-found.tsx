@@ -22,7 +22,7 @@ export function NotFoundPage() {
 						<HugeiconsIcon
 							icon={SearchRemoveIcon}
 							strokeWidth={2}
-							className="size-4 text-muted-foreground"
+							className="text-muted-foreground size-4"
 						/>
 						Page not found
 					</CardTitle>

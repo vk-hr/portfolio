@@ -9,86 +9,56 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as HomeRouteRouteImport } from './routes/_home/route'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as HomeIndexRouteImport } from './routes/_home/index'
-import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
-import { Route as AdminLoginRouteImport } from './routes/admin/login'
-import { Route as AdminTechnologiesRouteRouteImport } from './routes/admin/technologies/route'
-import { Route as AdminTagsRouteRouteImport } from './routes/admin/tags/route'
-import { Route as AdminSeriesRouteRouteImport } from './routes/admin/series/route'
-import { Route as AdminMediaRouteRouteImport } from './routes/admin/media/route'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminCategoriesRouteRouteImport } from './routes/admin/categories/route'
-import { Route as AdminTechnologiesIndexRouteImport } from './routes/admin/technologies/index'
-import { Route as AdminTagsIndexRouteImport } from './routes/admin/tags/index'
-import { Route as AdminSeriesIndexRouteImport } from './routes/admin/series/index'
-import { Route as AdminProjectsIndexRouteImport } from './routes/admin/projects/index'
-import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
-import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
-import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categories/index'
-import { Route as HomeProjectsIndexRouteImport } from './routes/_home/projects/index'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminMediaRouteRouteImport } from './routes/admin/media/route'
+import { Route as AdminSeriesRouteRouteImport } from './routes/admin/series/route'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminTagsRouteRouteImport } from './routes/admin/tags/route'
+import { Route as AdminTechnologiesRouteRouteImport } from './routes/admin/technologies/route'
 import { Route as HomePostsIndexRouteImport } from './routes/_home/posts/index'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
-import { Route as AdminTechnologiesNewRouteImport } from './routes/admin/technologies/new'
-import { Route as AdminTagsNewRouteImport } from './routes/admin/tags/new'
-import { Route as AdminSeriesNewRouteImport } from './routes/admin/series/new'
-import { Route as AdminProjectsNewRouteImport } from './routes/admin/projects/new'
-import { Route as AdminProjectsSlugIdRouteImport } from './routes/admin/projects/$slugId'
-import { Route as AdminPostsNewRouteImport } from './routes/admin/posts/new'
-import { Route as AdminPostsSlugIdRouteImport } from './routes/admin/posts/$slugId'
-import { Route as AdminMediaSlugIdRouteImport } from './routes/admin/media/$slugId'
-import { Route as AdminCategoriesNewRouteImport } from './routes/admin/categories/new'
-import { Route as HomeProjectsSlugIdRouteImport } from './routes/_home/projects/$slugId'
 import { Route as HomePostsSlugIdRouteImport } from './routes/_home/posts/$slugId'
+import { Route as HomeProjectsIndexRouteImport } from './routes/_home/projects/index'
+import { Route as HomeProjectsSlugIdRouteImport } from './routes/_home/projects/$slugId'
+import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categories/index'
+import { Route as AdminCategoriesNewRouteImport } from './routes/admin/categories/new'
+import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
+import { Route as AdminMediaSlugIdRouteImport } from './routes/admin/media/$slugId'
+import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
+import { Route as AdminPostsSlugIdRouteImport } from './routes/admin/posts/$slugId'
+import { Route as AdminPostsNewRouteImport } from './routes/admin/posts/new'
+import { Route as AdminProjectsIndexRouteImport } from './routes/admin/projects/index'
+import { Route as AdminProjectsSlugIdRouteImport } from './routes/admin/projects/$slugId'
+import { Route as AdminProjectsNewRouteImport } from './routes/admin/projects/new'
+import { Route as AdminSeriesIndexRouteImport } from './routes/admin/series/index'
+import { Route as AdminSeriesNewRouteImport } from './routes/admin/series/new'
+import { Route as AdminTagsIndexRouteImport } from './routes/admin/tags/index'
+import { Route as AdminTagsNewRouteImport } from './routes/admin/tags/new'
+import { Route as AdminTechnologiesIndexRouteImport } from './routes/admin/technologies/index'
+import { Route as AdminTechnologiesNewRouteImport } from './routes/admin/technologies/new'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
-const AdminRouteRoute = AdminRouteRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const HomeRouteRoute = HomeRouteRouteImport.update({
   id: '/_home',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRouteRoute,
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const HomeIndexRoute = HomeIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => HomeRouteRoute,
 } as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminTechnologiesRouteRoute = AdminTechnologiesRouteRouteImport.update({
-  id: '/technologies',
-  path: '/technologies',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminTagsRouteRoute = AdminTagsRouteRouteImport.update({
-  id: '/tags',
-  path: '/tags',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminSeriesRouteRoute = AdminSeriesRouteRouteImport.update({
-  id: '/series',
-  path: '/series',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminMediaRouteRoute = AdminMediaRouteRouteImport.update({
-  id: '/media',
-  path: '/media',
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminCategoriesRouteRoute = AdminCategoriesRouteRouteImport.update({
@@ -96,84 +66,79 @@ const AdminCategoriesRouteRoute = AdminCategoriesRouteRouteImport.update({
   path: '/categories',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminTechnologiesIndexRoute = AdminTechnologiesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminTechnologiesRouteRoute,
-} as any)
-const AdminTagsIndexRoute = AdminTagsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminTagsRouteRoute,
-} as any)
-const AdminSeriesIndexRoute = AdminSeriesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminSeriesRouteRoute,
-} as any)
-const AdminProjectsIndexRoute = AdminProjectsIndexRouteImport.update({
-  id: '/projects/',
-  path: '/projects/',
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
-  id: '/posts/',
-  path: '/posts/',
+const AdminMediaRouteRoute = AdminMediaRouteRouteImport.update({
+  id: '/media',
+  path: '/media',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminMediaIndexRoute = AdminMediaIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminMediaRouteRoute,
+const AdminSeriesRouteRoute = AdminSeriesRouteRouteImport.update({
+  id: '/series',
+  path: '/series',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminCategoriesIndexRoute = AdminCategoriesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminCategoriesRouteRoute,
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const HomeProjectsIndexRoute = HomeProjectsIndexRouteImport.update({
-  id: '/projects/',
-  path: '/projects/',
-  getParentRoute: () => HomeRouteRoute,
+const AdminTagsRouteRoute = AdminTagsRouteRouteImport.update({
+  id: '/tags',
+  path: '/tags',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminTechnologiesRouteRoute = AdminTechnologiesRouteRouteImport.update({
+  id: '/technologies',
+  path: '/technologies',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const HomePostsIndexRoute = HomePostsIndexRouteImport.update({
   id: '/posts/',
   path: '/posts/',
   getParentRoute: () => HomeRouteRoute,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
+const HomePostsSlugIdRoute = HomePostsSlugIdRouteImport.update({
+  id: '/posts/$slugId',
+  path: '/posts/$slugId',
+  getParentRoute: () => HomeRouteRoute,
 } as any)
-const AdminTechnologiesNewRoute = AdminTechnologiesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminTechnologiesRouteRoute,
+const HomeProjectsIndexRoute = HomeProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => HomeRouteRoute,
 } as any)
-const AdminTagsNewRoute = AdminTagsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminTagsRouteRoute,
-} as any)
-const AdminSeriesNewRoute = AdminSeriesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminSeriesRouteRoute,
-} as any)
-const AdminProjectsNewRoute = AdminProjectsNewRouteImport.update({
-  id: '/projects/new',
-  path: '/projects/new',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminProjectsSlugIdRoute = AdminProjectsSlugIdRouteImport.update({
+const HomeProjectsSlugIdRoute = HomeProjectsSlugIdRouteImport.update({
   id: '/projects/$slugId',
   path: '/projects/$slugId',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => HomeRouteRoute,
 } as any)
-const AdminPostsNewRoute = AdminPostsNewRouteImport.update({
-  id: '/posts/new',
-  path: '/posts/new',
+const AdminCategoriesIndexRoute = AdminCategoriesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminCategoriesRouteRoute,
+} as any)
+const AdminCategoriesNewRoute = AdminCategoriesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AdminCategoriesRouteRoute,
+} as any)
+const AdminMediaIndexRoute = AdminMediaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminMediaRouteRoute,
+} as any)
+const AdminMediaSlugIdRoute = AdminMediaSlugIdRouteImport.update({
+  id: '/$slugId',
+  path: '/$slugId',
+  getParentRoute: () => AdminMediaRouteRoute,
+} as any)
+const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminPostsSlugIdRoute = AdminPostsSlugIdRouteImport.update({
@@ -181,25 +146,60 @@ const AdminPostsSlugIdRoute = AdminPostsSlugIdRouteImport.update({
   path: '/posts/$slugId',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminMediaSlugIdRoute = AdminMediaSlugIdRouteImport.update({
-  id: '/$slugId',
-  path: '/$slugId',
-  getParentRoute: () => AdminMediaRouteRoute,
+const AdminPostsNewRoute = AdminPostsNewRouteImport.update({
+  id: '/posts/new',
+  path: '/posts/new',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminCategoriesNewRoute = AdminCategoriesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminCategoriesRouteRoute,
+const AdminProjectsIndexRoute = AdminProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const HomeProjectsSlugIdRoute = HomeProjectsSlugIdRouteImport.update({
+const AdminProjectsSlugIdRoute = AdminProjectsSlugIdRouteImport.update({
   id: '/projects/$slugId',
   path: '/projects/$slugId',
-  getParentRoute: () => HomeRouteRoute,
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const HomePostsSlugIdRoute = HomePostsSlugIdRouteImport.update({
-  id: '/posts/$slugId',
-  path: '/posts/$slugId',
-  getParentRoute: () => HomeRouteRoute,
+const AdminProjectsNewRoute = AdminProjectsNewRouteImport.update({
+  id: '/projects/new',
+  path: '/projects/new',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminSeriesIndexRoute = AdminSeriesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminSeriesRouteRoute,
+} as any)
+const AdminSeriesNewRoute = AdminSeriesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AdminSeriesRouteRoute,
+} as any)
+const AdminTagsIndexRoute = AdminTagsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminTagsRouteRoute,
+} as any)
+const AdminTagsNewRoute = AdminTagsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AdminTagsRouteRoute,
+} as any)
+const AdminTechnologiesIndexRoute = AdminTechnologiesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminTechnologiesRouteRoute,
+} as any)
+const AdminTechnologiesNewRoute = AdminTechnologiesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AdminTechnologiesRouteRoute,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -402,13 +402,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_home': {
       id: '/_home'
       path: ''
@@ -416,12 +409,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/': {
-      id: '/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_home/': {
       id: '/_home/'
@@ -430,46 +423,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeIndexRouteImport
       parentRoute: typeof HomeRouteRoute
     }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/login': {
-      id: '/admin/login'
-      path: '/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/technologies': {
-      id: '/admin/technologies'
-      path: '/technologies'
-      fullPath: '/admin/technologies'
-      preLoaderRoute: typeof AdminTechnologiesRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/tags': {
-      id: '/admin/tags'
-      path: '/tags'
-      fullPath: '/admin/tags'
-      preLoaderRoute: typeof AdminTagsRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/series': {
-      id: '/admin/series'
-      path: '/series'
-      fullPath: '/admin/series'
-      preLoaderRoute: typeof AdminSeriesRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/media': {
-      id: '/admin/media'
-      path: '/media'
-      fullPath: '/admin/media'
-      preLoaderRoute: typeof AdminMediaRouteRouteImport
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/categories': {
@@ -479,61 +437,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCategoriesRouteRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/technologies/': {
-      id: '/admin/technologies/'
-      path: '/'
-      fullPath: '/admin/technologies/'
-      preLoaderRoute: typeof AdminTechnologiesIndexRouteImport
-      parentRoute: typeof AdminTechnologiesRouteRoute
-    }
-    '/admin/tags/': {
-      id: '/admin/tags/'
-      path: '/'
-      fullPath: '/admin/tags/'
-      preLoaderRoute: typeof AdminTagsIndexRouteImport
-      parentRoute: typeof AdminTagsRouteRoute
-    }
-    '/admin/series/': {
-      id: '/admin/series/'
-      path: '/'
-      fullPath: '/admin/series/'
-      preLoaderRoute: typeof AdminSeriesIndexRouteImport
-      parentRoute: typeof AdminSeriesRouteRoute
-    }
-    '/admin/projects/': {
-      id: '/admin/projects/'
-      path: '/projects'
-      fullPath: '/admin/projects/'
-      preLoaderRoute: typeof AdminProjectsIndexRouteImport
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/posts/': {
-      id: '/admin/posts/'
-      path: '/posts'
-      fullPath: '/admin/posts/'
-      preLoaderRoute: typeof AdminPostsIndexRouteImport
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/media/': {
-      id: '/admin/media/'
-      path: '/'
-      fullPath: '/admin/media/'
-      preLoaderRoute: typeof AdminMediaIndexRouteImport
-      parentRoute: typeof AdminMediaRouteRoute
+    '/admin/series': {
+      id: '/admin/series'
+      path: '/series'
+      fullPath: '/admin/series'
+      preLoaderRoute: typeof AdminSeriesRouteRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/admin/categories/': {
-      id: '/admin/categories/'
-      path: '/'
-      fullPath: '/admin/categories/'
-      preLoaderRoute: typeof AdminCategoriesIndexRouteImport
-      parentRoute: typeof AdminCategoriesRouteRoute
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_home/projects/': {
-      id: '/_home/projects/'
-      path: '/projects'
-      fullPath: '/projects/'
-      preLoaderRoute: typeof HomeProjectsIndexRouteImport
-      parentRoute: typeof HomeRouteRoute
+    '/admin/tags': {
+      id: '/admin/tags'
+      path: '/tags'
+      fullPath: '/admin/tags'
+      preLoaderRoute: typeof AdminTagsRouteRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/technologies': {
+      id: '/admin/technologies'
+      path: '/technologies'
+      fullPath: '/admin/technologies'
+      preLoaderRoute: typeof AdminTechnologiesRouteRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/_home/posts/': {
       id: '/_home/posts/'
@@ -542,53 +486,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomePostsIndexRouteImport
       parentRoute: typeof HomeRouteRoute
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_home/posts/$slugId': {
+      id: '/_home/posts/$slugId'
+      path: '/posts/$slugId'
+      fullPath: '/posts/$slugId'
+      preLoaderRoute: typeof HomePostsSlugIdRouteImport
+      parentRoute: typeof HomeRouteRoute
     }
-    '/admin/technologies/new': {
-      id: '/admin/technologies/new'
-      path: '/new'
-      fullPath: '/admin/technologies/new'
-      preLoaderRoute: typeof AdminTechnologiesNewRouteImport
-      parentRoute: typeof AdminTechnologiesRouteRoute
+    '/_home/projects/': {
+      id: '/_home/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof HomeProjectsIndexRouteImport
+      parentRoute: typeof HomeRouteRoute
     }
-    '/admin/tags/new': {
-      id: '/admin/tags/new'
-      path: '/new'
-      fullPath: '/admin/tags/new'
-      preLoaderRoute: typeof AdminTagsNewRouteImport
-      parentRoute: typeof AdminTagsRouteRoute
-    }
-    '/admin/series/new': {
-      id: '/admin/series/new'
-      path: '/new'
-      fullPath: '/admin/series/new'
-      preLoaderRoute: typeof AdminSeriesNewRouteImport
-      parentRoute: typeof AdminSeriesRouteRoute
-    }
-    '/admin/projects/new': {
-      id: '/admin/projects/new'
-      path: '/projects/new'
-      fullPath: '/admin/projects/new'
-      preLoaderRoute: typeof AdminProjectsNewRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/projects/$slugId': {
-      id: '/admin/projects/$slugId'
+    '/_home/projects/$slugId': {
+      id: '/_home/projects/$slugId'
       path: '/projects/$slugId'
-      fullPath: '/admin/projects/$slugId'
-      preLoaderRoute: typeof AdminProjectsSlugIdRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/projects/$slugId'
+      preLoaderRoute: typeof HomeProjectsSlugIdRouteImport
+      parentRoute: typeof HomeRouteRoute
     }
-    '/admin/posts/new': {
-      id: '/admin/posts/new'
-      path: '/posts/new'
-      fullPath: '/admin/posts/new'
-      preLoaderRoute: typeof AdminPostsNewRouteImport
+    '/admin/categories/': {
+      id: '/admin/categories/'
+      path: '/'
+      fullPath: '/admin/categories/'
+      preLoaderRoute: typeof AdminCategoriesIndexRouteImport
+      parentRoute: typeof AdminCategoriesRouteRoute
+    }
+    '/admin/categories/new': {
+      id: '/admin/categories/new'
+      path: '/new'
+      fullPath: '/admin/categories/new'
+      preLoaderRoute: typeof AdminCategoriesNewRouteImport
+      parentRoute: typeof AdminCategoriesRouteRoute
+    }
+    '/admin/media/': {
+      id: '/admin/media/'
+      path: '/'
+      fullPath: '/admin/media/'
+      preLoaderRoute: typeof AdminMediaIndexRouteImport
+      parentRoute: typeof AdminMediaRouteRoute
+    }
+    '/admin/media/$slugId': {
+      id: '/admin/media/$slugId'
+      path: '/$slugId'
+      fullPath: '/admin/media/$slugId'
+      preLoaderRoute: typeof AdminMediaSlugIdRouteImport
+      parentRoute: typeof AdminMediaRouteRoute
+    }
+    '/admin/posts/': {
+      id: '/admin/posts/'
+      path: '/posts'
+      fullPath: '/admin/posts/'
+      preLoaderRoute: typeof AdminPostsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/posts/$slugId': {
@@ -598,33 +549,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPostsSlugIdRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/media/$slugId': {
-      id: '/admin/media/$slugId'
-      path: '/$slugId'
-      fullPath: '/admin/media/$slugId'
-      preLoaderRoute: typeof AdminMediaSlugIdRouteImport
-      parentRoute: typeof AdminMediaRouteRoute
+    '/admin/posts/new': {
+      id: '/admin/posts/new'
+      path: '/posts/new'
+      fullPath: '/admin/posts/new'
+      preLoaderRoute: typeof AdminPostsNewRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/admin/categories/new': {
-      id: '/admin/categories/new'
-      path: '/new'
-      fullPath: '/admin/categories/new'
-      preLoaderRoute: typeof AdminCategoriesNewRouteImport
-      parentRoute: typeof AdminCategoriesRouteRoute
+    '/admin/projects/': {
+      id: '/admin/projects/'
+      path: '/projects'
+      fullPath: '/admin/projects/'
+      preLoaderRoute: typeof AdminProjectsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_home/projects/$slugId': {
-      id: '/_home/projects/$slugId'
+    '/admin/projects/$slugId': {
+      id: '/admin/projects/$slugId'
       path: '/projects/$slugId'
-      fullPath: '/projects/$slugId'
-      preLoaderRoute: typeof HomeProjectsSlugIdRouteImport
-      parentRoute: typeof HomeRouteRoute
+      fullPath: '/admin/projects/$slugId'
+      preLoaderRoute: typeof AdminProjectsSlugIdRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_home/posts/$slugId': {
-      id: '/_home/posts/$slugId'
-      path: '/posts/$slugId'
-      fullPath: '/posts/$slugId'
-      preLoaderRoute: typeof HomePostsSlugIdRouteImport
-      parentRoute: typeof HomeRouteRoute
+    '/admin/projects/new': {
+      id: '/admin/projects/new'
+      path: '/projects/new'
+      fullPath: '/admin/projects/new'
+      preLoaderRoute: typeof AdminProjectsNewRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/series/': {
+      id: '/admin/series/'
+      path: '/'
+      fullPath: '/admin/series/'
+      preLoaderRoute: typeof AdminSeriesIndexRouteImport
+      parentRoute: typeof AdminSeriesRouteRoute
+    }
+    '/admin/series/new': {
+      id: '/admin/series/new'
+      path: '/new'
+      fullPath: '/admin/series/new'
+      preLoaderRoute: typeof AdminSeriesNewRouteImport
+      parentRoute: typeof AdminSeriesRouteRoute
+    }
+    '/admin/tags/': {
+      id: '/admin/tags/'
+      path: '/'
+      fullPath: '/admin/tags/'
+      preLoaderRoute: typeof AdminTagsIndexRouteImport
+      parentRoute: typeof AdminTagsRouteRoute
+    }
+    '/admin/tags/new': {
+      id: '/admin/tags/new'
+      path: '/new'
+      fullPath: '/admin/tags/new'
+      preLoaderRoute: typeof AdminTagsNewRouteImport
+      parentRoute: typeof AdminTagsRouteRoute
+    }
+    '/admin/technologies/': {
+      id: '/admin/technologies/'
+      path: '/'
+      fullPath: '/admin/technologies/'
+      preLoaderRoute: typeof AdminTechnologiesIndexRouteImport
+      parentRoute: typeof AdminTechnologiesRouteRoute
+    }
+    '/admin/technologies/new': {
+      id: '/admin/technologies/new'
+      path: '/new'
+      fullPath: '/admin/technologies/new'
+      preLoaderRoute: typeof AdminTechnologiesNewRouteImport
+      parentRoute: typeof AdminTechnologiesRouteRoute
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }

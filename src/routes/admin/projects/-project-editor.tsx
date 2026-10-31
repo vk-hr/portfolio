@@ -609,7 +609,7 @@ export function ProjectEditor({
 				{/* Hero Image Area */}
 				<form.Subscribe selector={(state) => state.values.imageId}>
 					{(imageId) => (
-						<div className="relative min-h-[35vh] overflow-hidden rounded-2xl bg-muted/30">
+						<div className="bg-muted/30 relative min-h-[35vh] overflow-hidden rounded-2xl">
 							{imageId && heroImageUrl ? (
 								<>
 									<img
@@ -663,7 +663,7 @@ export function ProjectEditor({
 								</>
 							) : (
 								<>
-									<div className="flex h-full min-h-[35vh] flex-col items-center justify-center gap-3 rounded-2xl border-2 border-muted-foreground/25 border-dashed">
+									<div className="border-muted-foreground/25 flex h-full min-h-[35vh] flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed">
 										<Button
 											type="button"
 											variant="ghost"
@@ -673,7 +673,7 @@ export function ProjectEditor({
 											<HugeiconsIcon
 												icon={Upload}
 												strokeWidth={2}
-												className="size-8 text-muted-foreground"
+												className="text-muted-foreground size-8"
 											/>
 											<span className="text-muted-foreground text-sm">
 												Upload hero image
@@ -701,7 +701,7 @@ export function ProjectEditor({
 							)}
 
 							{/* Title + Slug overlay */}
-							<div className="absolute inset-x-4 bottom-4 z-10 rounded-lg border border-foreground/20 border-dashed bg-background/60 p-4 backdrop-blur-md">
+							<div className="border-foreground/20 bg-background/60 absolute inset-x-4 bottom-4 z-10 rounded-lg border border-dashed p-4 backdrop-blur-md">
 								<div className="flex flex-wrap items-center gap-3">
 									<form.Field name="title">
 										{(field) => (
@@ -717,14 +717,14 @@ export function ProjectEditor({
 														form.setFieldValue("slug", toSlug(nextTitle));
 													}
 												}}
-												className="h-auto min-w-[18rem] flex-1 border-0 bg-transparent px-0 py-0 font-semibold text-4xl leading-tight shadow-none ring-0 placeholder:text-muted-foreground/70 focus-visible:ring-0 md:text-5xl"
+												className="placeholder:text-muted-foreground/70 h-auto min-w-[18rem] flex-1 border-0 bg-transparent px-0 py-0 text-4xl leading-tight font-semibold shadow-none ring-0 focus-visible:ring-0 md:text-5xl"
 											/>
 										)}
 									</form.Field>
 
 									<form.Field name="slug">
 										{(field) => (
-											<InputGroup className="h-9 max-w-xs rounded-full border-dashed bg-muted/30">
+											<InputGroup className="bg-muted/30 h-9 max-w-xs rounded-full border-dashed">
 												<InputGroupAddon>
 													<InputGroupButton
 														size="icon-xs"
@@ -812,7 +812,7 @@ export function ProjectEditor({
 							</form.Subscribe>
 						</div>
 
-						<ButtonGroup className="rounded-lg border border-input bg-background dark:bg-input/30">
+						<ButtonGroup className="border-input bg-background dark:bg-input/30 rounded-lg border">
 							<form.Field name="status">
 								{(field) => (
 									<Select
@@ -824,7 +824,7 @@ export function ProjectEditor({
 									>
 										<SelectTrigger
 											size="sm"
-											className="rounded-r-none! border-transparent bg-transparent shadow-none hover:bg-muted focus-visible:border-transparent focus-visible:ring-0"
+											className="hover:bg-muted rounded-r-none! border-transparent bg-transparent shadow-none focus-visible:border-transparent focus-visible:ring-0"
 										>
 											<SelectValue />
 										</SelectTrigger>
@@ -849,7 +849,7 @@ export function ProjectEditor({
 												<Button
 													variant="ghost"
 													size="sm"
-													className="border-input border-y-0 border-r border-l-0 bg-transparent px-3 font-normal hover:bg-muted"
+													className="border-input hover:bg-muted border-y-0 border-r border-l-0 bg-transparent px-3 font-normal"
 												>
 													<HugeiconsIcon
 														icon={CalendarIcon}
@@ -869,7 +869,6 @@ export function ProjectEditor({
 														field.handleChange(date.getTime());
 													}
 												}}
-												initialFocus
 											/>
 										</PopoverContent>
 									</Popover>
@@ -896,7 +895,7 @@ export function ProjectEditor({
 					<div className="flex flex-wrap items-start gap-3">
 						<form.Field name="repositoryUrl">
 							{(field) => (
-								<InputGroup className="h-9 max-w-xs rounded-full border-dashed bg-muted/30">
+								<InputGroup className="bg-muted/30 h-9 max-w-xs rounded-full border-dashed">
 									<InputGroupAddon>
 										<InputGroupButton
 											size="icon-xs"
@@ -919,7 +918,7 @@ export function ProjectEditor({
 
 						<form.Field name="demoUrl">
 							{(field) => (
-								<InputGroup className="h-9 max-w-xs rounded-full border-dashed bg-muted/30">
+								<InputGroup className="bg-muted/30 h-9 max-w-xs rounded-full border-dashed">
 									<InputGroupAddon>
 										<InputGroupButton
 											size="icon-xs"

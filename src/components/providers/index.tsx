@@ -26,7 +26,10 @@ export function RootProviders({ children, theme }: RootProvidersProps) {
 			authClient={authClient}
 			initialToken={context.token}
 		>
-			<ThemeProvider theme={initialTheme} setThemeFn={setTheme}>
+			<ThemeProvider
+				theme={initialTheme}
+				setThemeFn={(theme) => setTheme({ data: theme })}
+			>
 				<TooltipProvider>
 					<html lang="en" suppressHydrationWarning>
 						<head>

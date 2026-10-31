@@ -6,15 +6,14 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "@tanstack/react-router";
+import { cn } from "cn";
 import type { api } from "convex/_generated/api";
 import type { FunctionReturnType } from "convex/server";
 import { AnimatePresence, motion } from "motion/react";
 import * as React from "react";
 import { Badge } from "#/components/ui/badge";
-
 import { Separator } from "#/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { cn } from "#/lib/utils";
 import { CornerSquare } from "./-layout";
 
 const springTransition = { type: "spring", bounce: 0, duration: 0.3 } as const;
@@ -49,9 +48,9 @@ export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
 			<div className="flex flex-col gap-4 px-4 sm:flex-row sm:items-center sm:justify-between">
 				<Link
 					to="/projects"
-					className="group flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
+					className="group text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
 				>
-					<h2 className="font-semibold text-foreground text-xl sm:text-2xl">
+					<h2 className="text-foreground text-xl font-semibold sm:text-2xl">
 						{tab === "recent" ? "Recent Projects" : "Featured Projects"}
 					</h2>
 					<HugeiconsIcon icon={ArrowRight} strokeWidth={2} className="size-5" />
@@ -60,7 +59,7 @@ export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
 					</span>
 				</Link>
 
-				<div className="self-start border-2 bg-background px-1 sm:self-auto">
+				<div className="bg-background self-start border-2 px-1 sm:self-auto">
 					<Tabs
 						value={tab}
 						onValueChange={(value) => setTab(value as "recent" | "featured")}
@@ -74,11 +73,11 @@ export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
 			</div>
 
 			{!projects || projects.length === 0 ? (
-				<div className="mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed bg-muted/50 p-12 text-center">
+				<div className="bg-muted/50 mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed p-12 text-center">
 					<HugeiconsIcon
 						icon={Briefcase}
 						strokeWidth={2}
-						className="mb-4 size-8 text-muted-foreground/50"
+						className="text-muted-foreground/50 mb-4 size-8"
 					/>
 					<p className="text-muted-foreground">
 						{tab === "recent" ? "No projects yet." : "No featured projects."}
@@ -123,7 +122,7 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 			transition={springTransition}
 			style={{ willChange: "transform, opacity" }}
 			className={cn(
-				"group relative transform-gpu rounded-none bg-background py-0 ring-0",
+				"group bg-background relative transform-gpu rounded-none py-0 ring-0",
 				"border-t-2 border-r-0 border-b-0",
 				"transition-[border-width] duration-300",
 				"last:border-b-2",
@@ -173,7 +172,7 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 				>
 					<motion.h3
 						layoutId={`project-title-${project._id}`}
-						className="font-semibold text-base sm:text-lg"
+						className="text-base font-semibold sm:text-lg"
 						transition={springTransition}
 					>
 						{project.title}
@@ -181,7 +180,7 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 					{project.description && (
 						<motion.p
 							layoutId={`project-description-${project._id}`}
-							className="mt-2 line-clamp-2 text-muted-foreground text-sm"
+							className="text-muted-foreground mt-2 line-clamp-2 text-sm"
 							transition={springTransition}
 						>
 							{project.description}
@@ -194,14 +193,14 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 						<motion.div
 							layoutId={`project-links-${project._id}`}
 							transition={springTransition}
-							className="flex border-2 bg-background"
+							className="bg-background flex border-2"
 						>
 							{project.repositoryUrl && (
 								<a
 									href={project.repositoryUrl}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="flex items-center justify-center p-2 transition-colors hover:bg-muted"
+									className="hover:bg-muted flex items-center justify-center p-2 transition-colors"
 									onClick={(e) => e.stopPropagation()}
 									aria-label="View repository"
 								>
@@ -220,7 +219,7 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 									href={project.demoUrl}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="flex items-center justify-center p-2 transition-colors hover:bg-muted"
+									className="hover:bg-muted flex items-center justify-center p-2 transition-colors"
 									onClick={(e) => e.stopPropagation()}
 									aria-label="View demo"
 								>
@@ -272,7 +271,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 				style={{ willChange: "transform, opacity" }}
 				className="fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 transform-gpu"
 			>
-				<div className="relative border-2 bg-background">
+				<div className="bg-background relative border-2">
 					<CornerSquare
 						position="top-left"
 						mode="offset"
@@ -308,8 +307,8 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 								/>
 							</div>
 						) : (
-							<div className="relative h-64 w-full overflow-hidden bg-linear-to-br from-muted via-muted/80 to-muted/60">
-								<div className="pointer-events-none absolute inset-0 bg-diagonal-dashed opacity-20" />
+							<div className="from-muted via-muted/80 to-muted/60 relative h-64 w-full overflow-hidden bg-linear-to-br">
+								<div className="bg-diagonal-dashed pointer-events-none absolute inset-0 opacity-20" />
 								<svg
 									className="pointer-events-none absolute inset-0 size-full"
 									role="img"
@@ -339,7 +338,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 							<div className="mb-4 flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
 								<motion.h2
 									layoutId={`project-title-${project._id}`}
-									className="font-bold text-xl sm:text-2xl"
+									className="text-xl font-bold sm:text-2xl"
 									transition={springTransition}
 								>
 									{project.title}
@@ -349,14 +348,14 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 									<motion.div
 										layoutId={`project-links-${project._id}`}
 										transition={springTransition}
-										className="flex w-full shrink-0 border-2 bg-background sm:w-auto"
+										className="bg-background flex w-full shrink-0 border-2 sm:w-auto"
 									>
 										{project.repositoryUrl && (
 											<a
 												href={project.repositoryUrl}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-muted sm:flex-none"
+												className="hover:bg-muted flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm transition-colors sm:flex-none"
 											>
 												<HugeiconsIcon
 													icon={Github}
@@ -374,7 +373,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 												href={project.demoUrl}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-muted sm:flex-none"
+												className="hover:bg-muted flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm transition-colors sm:flex-none"
 											>
 												<HugeiconsIcon
 													icon={LinkIcon}
@@ -390,7 +389,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 
 							{project.technologies && project.technologies.length > 0 && (
 								<div className="mb-4">
-									<div className="mb-2 font-medium text-muted-foreground text-xs uppercase tracking-wide">
+									<div className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
 										Tech Stack
 									</div>
 									<div className="flex flex-wrap gap-2">
@@ -413,7 +412,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 
 							{project.description && (
 								<div className="mb-6">
-									<div className="mb-2 font-medium text-muted-foreground text-xs uppercase tracking-wide">
+									<div className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
 										Description
 									</div>
 									<motion.p
@@ -431,7 +430,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 									to="/projects/$slugId"
 									params={{ slugId: project.slug }}
 									onClick={onClose}
-									className="group flex items-center gap-2 border-2 bg-background px-4 py-2 font-medium transition-colors hover:bg-muted"
+									className="group bg-background hover:bg-muted flex items-center gap-2 border-2 px-4 py-2 font-medium transition-colors"
 								>
 									See Full Project
 									<HugeiconsIcon

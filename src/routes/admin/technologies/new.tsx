@@ -2,6 +2,7 @@ import { Dice } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useForm } from "@tanstack/react-form";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { cn } from "cn";
 import { api } from "convex/_generated/api";
 import { useMutation } from "convex/react";
 import * as React from "react";
@@ -32,7 +33,6 @@ import {
 import { Input } from "#/components/ui/input";
 import { Spinner } from "#/components/ui/spinner";
 import { getErrorMessage, toAsyncResult } from "#/lib/async-result";
-import { cn } from "#/lib/utils";
 
 const createTechnologySchema = z.object({
 	name: z.string().trim().min(1, "Name is required."),
@@ -187,7 +187,7 @@ function RouteComponent() {
 											type="button"
 											variant="ghost"
 											size="sm"
-											className="-mr-1 h-auto px-2 py-1 text-muted-foreground"
+											className="text-muted-foreground -mr-1 h-auto px-2 py-1"
 											onClick={() => field.handleChange(getRandomColorKey())}
 										>
 											<HugeiconsIcon
@@ -211,7 +211,7 @@ function RouteComponent() {
 														"flex size-8 items-center justify-center rounded-md border transition-colors",
 														palette.bg,
 														palette.border,
-														isSelected && "ring-2 ring-ring ring-offset-1",
+														isSelected && "ring-ring ring-2 ring-offset-1",
 													)}
 													title={key}
 													onClick={() => field.handleChange(key)}

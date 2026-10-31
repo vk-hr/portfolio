@@ -42,7 +42,7 @@ function ProjectsPage() {
 		<Layout>
 			<Header />
 			<div className="flex h-full flex-1 flex-col px-4">
-				<main className="container relative mx-auto min-h-full max-w-4xl flex-1 border-x-2 bg-background">
+				<main className="bg-background relative container mx-auto min-h-full max-w-4xl flex-1 border-x-2">
 					<CornerSquare position="top-left" />
 					<CornerSquare position="top-right" />
 					<CornerSquare position="bottom-left" />
@@ -51,7 +51,7 @@ function ProjectsPage() {
 					<div className="relative mb-2 flex items-center gap-4 border-b-2 p-2 sm:p-4">
 						<Link
 							to="/"
-							className="inline-flex items-center justify-center border-2 bg-background p-1.5 transition-colors hover:bg-muted"
+							className="bg-background hover:bg-muted inline-flex items-center justify-center border-2 p-1.5 transition-colors"
 							aria-label="Back to home"
 						>
 							<HugeiconsIcon
@@ -60,17 +60,17 @@ function ProjectsPage() {
 								className="size-5"
 							/>
 						</Link>
-						<h1 className="font-bold text-xl sm:text-2xl">Projects</h1>
+						<h1 className="text-xl font-bold sm:text-2xl">Projects</h1>
 						<CornerSquare position="bottom-left" />
 						<CornerSquare position="bottom-right" />
 					</div>
 
 					{!projects || projects.length === 0 ? (
-						<div className="mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed bg-muted/50 p-12 text-center">
+						<div className="bg-muted/50 mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed p-12 text-center">
 							<HugeiconsIcon
 								icon={Briefcase}
 								strokeWidth={2}
-								className="mb-4 size-8 text-muted-foreground/50"
+								className="text-muted-foreground/50 mb-4 size-8"
 							/>
 							<p className="text-muted-foreground">No projects yet.</p>
 						</div>
@@ -78,14 +78,14 @@ function ProjectsPage() {
 						<div className="space-y-12 p-2 sm:p-4">
 							{years.map((year) => (
 								<section key={year}>
-									<h2 className="mb-6 font-bold text-xl">{year}</h2>
+									<h2 className="mb-6 text-xl font-bold">{year}</h2>
 									<div className="flex flex-col gap-4">
 										{groupedProjects[year].map((project) => (
 											<Link
 												key={project._id}
 												to="/projects/$slugId"
 												params={{ slugId: project.slug }}
-												className="group relative flex flex-col justify-between gap-4 border-2 bg-background p-4 transition-colors hover:bg-muted sm:flex-row sm:items-center"
+												className="group bg-background hover:bg-muted relative flex flex-col justify-between gap-4 border-2 p-4 transition-colors sm:flex-row sm:items-center"
 											>
 												<CornerSquare position="top-left" mode="offset" />
 												<CornerSquare position="top-right" mode="offset" />
@@ -93,11 +93,11 @@ function ProjectsPage() {
 												<CornerSquare position="bottom-right" mode="offset" />
 
 												<div className="flex-1">
-													<h3 className="font-semibold text-base sm:text-lg">
+													<h3 className="text-base font-semibold sm:text-lg">
 														{project.title}
 													</h3>
 													{project.description && (
-														<p className="mt-1 line-clamp-2 text-muted-foreground text-sm">
+														<p className="text-muted-foreground mt-1 line-clamp-2 text-sm">
 															{project.description}
 														</p>
 													)}
@@ -111,7 +111,7 @@ function ProjectsPage() {
 																	href={project.repositoryUrl}
 																	target="_blank"
 																	rel="noopener noreferrer"
-																	className="inline-flex border-2 bg-background p-2 transition-colors hover:bg-muted"
+																	className="bg-background hover:bg-muted inline-flex border-2 p-2 transition-colors"
 																	onClick={(e) => {
 																		e.stopPropagation();
 																	}}
@@ -129,7 +129,7 @@ function ProjectsPage() {
 																	href={project.demoUrl}
 																	target="_blank"
 																	rel="noopener noreferrer"
-																	className="inline-flex border-2 bg-background p-2 transition-colors hover:bg-muted"
+																	className="bg-background hover:bg-muted inline-flex border-2 p-2 transition-colors"
 																	onClick={(e) => {
 																		e.stopPropagation();
 																	}}

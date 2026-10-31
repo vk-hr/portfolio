@@ -97,12 +97,12 @@ function RouteComponent() {
 
 					{/* Image preview */}
 					{media.url && (
-						<Card className="relative gap-0 overflow-hidden bg-muted/30 py-0">
+						<Card className="bg-muted/30 relative gap-0 overflow-hidden py-0">
 							<Button
 								type="button"
 								variant="outline"
 								size="icon-xs"
-								className="absolute top-3 right-3 z-10 bg-background/90 supports-backdrop-filter:backdrop-blur-xs"
+								className="bg-background/90 absolute top-3 right-3 z-10 supports-backdrop-filter:backdrop-blur-xs"
 								onClick={() => setIsImageExpanded(true)}
 								title="Expand image"
 								aria-label="Expand image"
@@ -129,7 +129,7 @@ function RouteComponent() {
 						<>
 							<Separator />
 							<div className="flex flex-col gap-1">
-								<p className="font-medium text-muted-foreground text-xs">
+								<p className="text-muted-foreground text-xs font-medium">
 									Alt text
 								</p>
 								<p className="text-sm">{media.alt}</p>
@@ -142,7 +142,7 @@ function RouteComponent() {
 					{/* Usage */}
 					<div className="flex flex-col gap-3">
 						<div className="flex items-center justify-between gap-3">
-							<p className="font-medium text-sm">
+							<p className="text-sm font-medium">
 								Usage{" "}
 								<span className="text-muted-foreground">({usageCount})</span>
 							</p>
@@ -152,12 +152,12 @@ function RouteComponent() {
 						</div>
 
 						{!isInUse && (
-							<div className="rounded-xl border border-dashed bg-muted/20 px-4 py-5 text-center text-muted-foreground text-sm">
+							<div className="bg-muted/20 text-muted-foreground rounded-xl border border-dashed px-4 py-5 text-center text-sm">
 								Not used in any posts or projects.
 							</div>
 						)}
 						{isInUse && (
-							<div className="overflow-hidden rounded-xl border bg-muted/20">
+							<div className="bg-muted/20 overflow-hidden rounded-xl border">
 								{usageSections.map((section, sectionIndex) => (
 									<div
 										key={section.key}
@@ -165,22 +165,22 @@ function RouteComponent() {
 											sectionIndex < usageSections.length - 1 ? "border-b" : ""
 										}
 									>
-										<div className="flex items-center justify-between gap-3 border-b bg-background/80 px-3 py-2">
-											<p className="font-medium text-[11px] text-muted-foreground uppercase tracking-[0.18em]">
+										<div className="bg-background/80 flex items-center justify-between gap-3 border-b px-3 py-2">
+											<p className="text-muted-foreground text-[11px] font-medium tracking-[0.18em] uppercase">
 												{section.title}
 											</p>
 											<Badge variant="outline">{section.count}</Badge>
 										</div>
-										<ul className="divide-y divide-border/70">
+										<ul className="divide-border/70 divide-y">
 											{section.items.map((item) => (
 												<li key={item._id}>
 													<Link
 														to={section.to}
 														params={{ slugId: item.slug }}
-														className="group/usage flex items-center justify-between gap-3 px-3 py-1.5 outline-none transition-colors hover:bg-background/80 focus-visible:bg-background focus-visible:ring-2 focus-visible:ring-ring/50"
+														className="group/usage hover:bg-background/80 focus-visible:bg-background focus-visible:ring-ring/50 flex items-center justify-between gap-3 px-3 py-1.5 transition-colors outline-none focus-visible:ring-2"
 													>
 														<div className="min-w-0">
-															<span className="block truncate font-medium text-sm transition-colors group-hover/usage:text-foreground">
+															<span className="group-hover/usage:text-foreground block truncate text-sm font-medium transition-colors">
 																{item.title}
 															</span>
 														</div>
@@ -189,7 +189,7 @@ function RouteComponent() {
 															render={<span />}
 															variant="outline"
 															size="icon-xs"
-															className="pointer-events-none shrink-0 text-muted-foreground transition-colors group-hover/usage:text-foreground"
+															className="text-muted-foreground group-hover/usage:text-foreground pointer-events-none shrink-0 transition-colors"
 															aria-hidden="true"
 														>
 															<HugeiconsIcon
@@ -240,7 +240,7 @@ function RouteComponent() {
 								<Button
 									variant="outline"
 									size="icon-sm"
-									className="absolute top-3 right-3 z-10 bg-background/90 supports-backdrop-filter:backdrop-blur-xs"
+									className="bg-background/90 absolute top-3 right-3 z-10 supports-backdrop-filter:backdrop-blur-xs"
 								/>
 							}
 						>

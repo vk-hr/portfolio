@@ -26,7 +26,6 @@ const config = defineConfig({
 		tailwindcss(),
 		tanstackStart(),
 		react(),
-		//@ts-expect-error
 		babel({
 			presets: [reactCompilerPreset()],
 		}),
