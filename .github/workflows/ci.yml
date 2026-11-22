@@ -20,7 +20,8 @@ permissions:
 
 # Budgets fail the job (see .github/scripts/budget.sh and
 # .github/actions/budget): fmt 1 s, lint 1 s, typecheck 5 s, tests 30 s,
-# setup 15 s, whole job 35 s. timeout-minutes is only a hang guard.
+# whole job 35 s. Setup (15 s) only warns until the runners move off
+# GitHub-hosted machines; see enforce-setup. timeout-minutes is a hang guard.
 
 # Independent jobs, no `needs`: the result is the slowest job, not the sum.
 # hk.pkl's pre-push hook runs the same commands; keep the two in sync.

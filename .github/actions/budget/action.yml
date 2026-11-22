@@ -8,6 +8,13 @@ inputs:
   job-seconds:
     description: Budget from job start until this step.
     default: "35"
+  enforce-setup:
+    description: >-
+      Fail (not just warn) when setup is over budget. Off on GitHub-hosted
+      runners: their setup varies 4-17 s for reasons outside the code
+      (checkout and registry latency), which turned 2 of 11 measured PR runs
+      red. Turn it on with the move to Blacksmith.
+    default: "false"
 
 runs:
   using: composite
@@ -17,6 +24,7 @@ runs:
         GH_TOKEN: ${{ github.token }}
         SETUP_BUDGET: ${{ inputs.setup-seconds }}
         JOB_BUDGET: ${{ inputs.job-seconds }}
+        ENFORCE_SETUP: ${{ inputs.enforce-setup }}
       run: |
         started=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/attempts/$GITHUB_RUN_ATTEMPT/jobs?per_page=100" \
           --jq ".jobs[] | select(.name == \"$GITHUB_JOB\") | .started_at | fromdateiso8601")
@@ -28,8 +36,12 @@ runs:
           setup=$(( SETUP_DONE - started ))
           echo "budget: setup ${setup} s (budget ${SETUP_BUDGET} s)"
           if [ "$setup" -gt "$SETUP_BUDGET" ]; then
-            echo "::error title=Setup over budget::setup took ${setup} s; its budget is ${SETUP_BUDGET} s"
-            failed=1
+            if [ "$ENFORCE_SETUP" = "true" ]; then
+              echo "::error title=Setup over budget::setup took ${setup} s; its budget is ${SETUP_BUDGET} s"
+              failed=1
+            else
+              echo "::warning title=Setup over budget::setup took ${setup} s; its budget is ${SETUP_BUDGET} s (warning only on GitHub-hosted runners)"
+            fi
           fi
         fi
         if [ "$job" -gt "$JOB_BUDGET" ]; then
