@@ -23,7 +23,25 @@ jobs:
         with:
           bun-version-file: package.json
 
+      # node_modules, keyed on the lockfile and package.json (which pins the
+      # Bun version). Exact key only: a partial match could leave stale
+      # packages behind. Install still runs on a hit, so the lockfile is
+      # always verified and postinstall regenerates the content module.
+      - id: node-modules
+        uses: actions/cache/restore@v6
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('bun.lock', 'package.json') }}
+
       - run: bun install --frozen-lockfile
+
+      # Saved on a miss. Caches saved on main are readable by every PR;
+      # a PR's own cache only by that PR.
+      - if: steps.node-modules.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: node_modules
+          key: ${{ steps.node-modules.outputs.cache-primary-key }}
       - run: bun fmt --check
       - run: bun lint
       - run: bun check
