@@ -102,15 +102,23 @@ Content Collections, configured in `content-collections.ts`:
   * Pages use `Page` from `src/routes/_home/-layout.tsx` (header, framed
     `main#main`, footer) and `SectionHeading` for ruled section bars.
     Technologies and status render through `src/components/tech-list.tsx`.
-  - **View transitions:** the router has `defaultViewTransition: true`, and
-    project parts (`frame`, `title`, `description`, `cover`) get shared
-    `view-transition-name`s from `projectTransition()` in
-    `src/lib/view-transition.ts`. That makes the home modal or card, and the
-    `/projects` row, morph into `/projects/$slugId` and back. A name must be
-    unique on the page when the snapshot is taken, so a card drops its names
-    while its modal is open. The modal's "Full project" link must not close
-    the modal first, or there is nothing to morph from. Animation timing is
-    in `src/styles.css`.
+  - **View transitions:** native, started by the router on every navigation
+    (`defaultViewTransition` in `src/router.tsx`, which also sets the
+    transition type `to-project` / `from-project` / `page`). React's
+    `<ViewTransition>` and Motion's `<AnimateView>` don't fire here: TanStack
+    Router commits route changes through `useSyncExternalStore`, which React
+    never renders as a transition.
+    - Shared parts get names from `morph()` / `<MorphFrame>` in
+      `src/components/project-morph.tsx`: the home modal (frame, title,
+      cover), the `/projects` rows (title) and the project page (frame,
+      title, cover). Names must be unique per page, so the home cards are
+      never named, and the modal's "Full project" link must not close the
+      modal before navigating.
+    - Rules that keep the morph clean: the frame is an empty surface (not a
+      snapshot of the content), and it is transparent on the project page;
+      titles are `w-fit` with identical weight, tracking and `leading-none`;
+      covers are `aspect-[2/1]` on both sides. Timing, layer order and the
+      "show only the larger title" rule are in `src/styles.css`.
 - Icons: `@hugeicons/react` + `@hugeicons/core-free-icons`.
 - Animations: `motion`.
 

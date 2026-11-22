@@ -7,10 +7,10 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 import { MarkdownContent } from "#/components/markdown-content";
+import { morph, MorphFrame } from "#/components/project-morph";
 import { StatusLabel, TechList } from "#/components/tech-list";
 import { longDate } from "#/lib/format";
 import { getProject } from "#/lib/projects";
-import { projectTransition } from "#/lib/view-transition";
 
 import { CornerSquare, Page } from "../-layout";
 
@@ -61,21 +61,17 @@ function ProjectPage() {
 				<CornerSquare position="bottom-right" />
 			</div>
 
-			<header
-				style={projectTransition(project.slug, "frame")}
-				className="relative border-b-2 px-4 pt-12 pb-8 sm:pt-16 sm:pb-10"
-			>
+			<header className="relative isolate border-b-2 px-4 pt-12 pb-8 sm:pt-16 sm:pb-10">
+				{/* Transparent landing rect for the modal surface, which dissolves into the page. */}
+				<MorphFrame slug={project.slug} />
 				<StatusLabel status={project.status} className="mb-6" />
 				<h1
-					style={projectTransition(project.slug, "title")}
-					className="text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.9] font-extrabold tracking-[-0.045em]"
+					style={morph(project.slug, "title")}
+					className="w-fit text-[clamp(2.5rem,8vw,5.5rem)] leading-none font-extrabold tracking-[-0.04em]"
 				>
 					{project.title}
 				</h1>
-				<p
-					style={projectTransition(project.slug, "description")}
-					className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
-				>
+				<p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
 					{project.description}
 				</p>
 				<CornerSquare position="bottom-left" />
@@ -150,10 +146,10 @@ function ProjectPage() {
 
 			{project.cover && (
 				<img
+					style={morph(project.slug, "cover")}
 					src={project.cover}
 					alt=""
-					style={projectTransition(project.slug, "cover")}
-					className="aspect-video w-full border-b-2 object-cover"
+					className="aspect-[2/1] w-full border-b-2 object-cover"
 				/>
 			)}
 

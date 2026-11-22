@@ -2,10 +2,10 @@ import { ArrowUpRight01Icon, Github } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { morph } from "#/components/project-morph";
 import { StatusLabel } from "#/components/tech-list";
 import { shortDate } from "#/lib/format";
 import { listProjects, type ProjectSummary } from "#/lib/projects";
-import { projectTransition } from "#/lib/view-transition";
 
 import { Page, SectionHeading } from "../-layout";
 
@@ -72,7 +72,6 @@ function ProjectsPage() {
 							{rows.map(({ project, n }) => (
 								<li
 									key={project.slug}
-									style={projectTransition(project.slug, "frame")}
 									className="group relative grid grid-cols-[2rem_1fr] gap-x-4 gap-y-3 border-b-2 px-4 py-5 transition-colors last:border-b-0 hover:bg-muted sm:grid-cols-[2rem_1fr_auto]"
 								>
 									<span className="pt-1.5 type-label text-muted-foreground">
@@ -81,8 +80,8 @@ function ProjectsPage() {
 
 									<div className="min-w-0">
 										<h3
-											style={projectTransition(project.slug, "title")}
-											className="text-xl leading-tight font-bold tracking-tight"
+											style={morph(project.slug, "title")}
+											className="w-fit text-xl leading-none font-extrabold tracking-[-0.04em]"
 										>
 											{/* Stretched link: the whole row is clickable without nesting the external links. */}
 											<Link

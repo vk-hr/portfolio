@@ -10,11 +10,11 @@ import { cn } from "cn";
 import { AnimatePresence, motion } from "motion/react";
 import * as React from "react";
 
+import { morph, MorphFrame } from "#/components/project-morph";
 import { StatusLabel, TechList } from "#/components/tech-list";
 import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { mediumDate } from "#/lib/format";
 import type { ProjectSummary } from "#/lib/projects";
-import { projectTransition } from "#/lib/view-transition";
 
 import { CornerSquare, SectionHeading } from "./-layout";
 
@@ -82,7 +82,6 @@ export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
 							key={project.slug}
 							project={project}
 							index={index + 1}
-							isOpen={selected?.project.slug === project.slug}
 							onOpen={() => setSelected({ project, index: index + 1 })}
 						/>
 					))}
@@ -105,21 +104,16 @@ export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
 type ProjectCardProps = {
 	project: Project;
 	index: number;
-	isOpen: boolean;
 	onOpen: () => void;
 };
 
-function ProjectCard({ project, index, isOpen, onOpen }: ProjectCardProps) {
+function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
 	"use no memo";
-	// While the modal is open it owns the view-transition names.
-	const vt = (part: Parameters<typeof projectTransition>[1]) =>
-		isOpen ? undefined : projectTransition(project.slug, part);
 
 	return (
 		<motion.div
 			layoutId={`project-${project.slug}`}
 			transition={springTransition}
-			style={vt("frame")}
 			className={cn(
 				"group relative bg-background",
 				"border-b-2",
@@ -157,7 +151,6 @@ function ProjectCard({ project, index, isOpen, onOpen }: ProjectCardProps) {
 					<motion.span
 						layoutId={`project-title-${project.slug}`}
 						transition={springTransition}
-						style={vt("title")}
 						className="line-clamp-3 text-2xl leading-tight font-bold tracking-tight"
 					>
 						{project.title}
@@ -165,7 +158,6 @@ function ProjectCard({ project, index, isOpen, onOpen }: ProjectCardProps) {
 					<motion.span
 						layoutId={`project-description-${project.slug}`}
 						transition={springTransition}
-						style={vt("description")}
 						className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground"
 					>
 						{project.description}
@@ -236,9 +228,10 @@ function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby={titleId}
-				style={projectTransition(project.slug, "frame")}
-				className="fixed inset-x-4 top-1/2 z-50 mx-auto max-w-3xl -translate-y-1/2 border-2 bg-background outline-none"
+				className="fixed inset-x-4 top-1/2 z-50 mx-auto max-w-3xl -translate-y-1/2 p-0.5 outline-none"
 			>
+				{/* Border and surface live on the frame so they can morph into the project page. */}
+				<MorphFrame slug={project.slug} className="border-2 bg-background" />
 				<CornerSquare position="top-left" />
 				<CornerSquare position="top-right" />
 				<CornerSquare
@@ -273,10 +266,10 @@ function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 
 					{project.cover ? (
 						<img
+							style={morph(project.slug, "cover")}
 							src={project.cover}
 							alt=""
-							style={projectTransition(project.slug, "cover")}
-							className="aspect-video max-h-72 w-full border-b-2 object-cover"
+							className="aspect-[2/1] w-full border-b-2 object-cover"
 						/>
 					) : (
 						<div
@@ -293,18 +286,17 @@ function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 						<div className="space-y-3">
 							<StatusLabel status={project.status} />
 							<motion.h2
+								style={morph(project.slug, "title")}
 								id={titleId}
 								layoutId={`project-title-${project.slug}`}
 								transition={springTransition}
-								style={projectTransition(project.slug, "title")}
-								className="text-3xl leading-tight font-bold tracking-tight sm:text-4xl"
+								className="w-fit text-3xl leading-none font-extrabold tracking-[-0.04em] sm:text-4xl"
 							>
 								{project.title}
 							</motion.h2>
 							<motion.p
 								layoutId={`project-description-${project.slug}`}
 								transition={springTransition}
-								style={projectTransition(project.slug, "description")}
 								className="leading-relaxed text-muted-foreground"
 							>
 								{project.description}

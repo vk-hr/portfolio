@@ -7,9 +7,13 @@ const navLinkClassName =
 
 export function Header() {
 	return (
+		// Same name on every page: the header holds still while the page changes.
 		<header
 			className="border-b-2"
-			style={{ viewTransitionName: "site-header" }}
+			style={{
+				viewTransitionName: "site-header",
+				viewTransitionClass: "site-header",
+			}}
 		>
 			<a
 				href="#main"
