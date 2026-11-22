@@ -4,28 +4,52 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Ready for a merge queue (needs an organization-owned repo).
+  merge_group:
 
+# A new commit on a PR cancels that PR's in-progress run. Pushes to main and
+# merge-queue runs are grouped per commit, so every commit that lands is
+# checked and none is cancelled.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
 
+# Independent jobs, no `needs`: the result is the slowest job, not the sum.
+# hk.pkl's pre-push hook runs the same commands; keep the two in sync.
 jobs:
-  ci:
+  # Small checks folded into one job. Each step runs even if an earlier one
+  # failed, so a red run lists every failure.
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - id: setup
+        uses: ./.github/actions/setup
+      - if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: bun fmt --check
+      - if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: bun lint
 
-      # Reads the Bun version from package.json's "packageManager" field.
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: package.json
-
-      - run: bun install --frozen-lockfile
-      - run: bun fmt --check
-      - run: bun lint
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
       - run: bun check
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
       - run: bun test --isolate
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
       - run: bun --bun vite build

@@ -1,0 +1,12 @@
+name: Set up
+description: Bun from package.json's packageManager, then a frozen-lockfile install (which also builds the content module).
+
+runs:
+  using: composite
+  steps:
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: package.json
+
+    - shell: bash
+      run: bun install --frozen-lockfile
