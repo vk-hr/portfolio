@@ -13,7 +13,7 @@ bun dev                      # bun --bun vite dev --port 3000
 bun run build                # bun --bun vite build
 bun run preview              # bun --bun vite preview
 
-bun test                     # all tests
+bun test --isolate           # all tests, as CI runs them (random order is on in bunfig)
 bun test src/lib/projects    # tests matching a path
 bun check                    # type check (Bun built-in, same errors as tsc 7)
 bun fmt                      # format (config in bunfig.toml [fmt])
@@ -22,7 +22,7 @@ bun lint                     # package.json "lint" script = biome lint
 ```
 
 CI (`.github/workflows/ci.yml`) runs `bun install --frozen-lockfile`,
-`bun fmt --check`, `bun lint`, `bun check`, `bun test` and
+`bun fmt --check`, `bun lint`, `bun check`, `bun test --isolate` and
 `bun --bun vite build`. Run the same before handing work back.
 
 Always use `bun` (never npm/yarn/pnpm).
