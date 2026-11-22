@@ -245,12 +245,20 @@ type ProjectModalProps = {
 
 function ProjectModal({ project, onClose }: ProjectModalProps) {
 	"use no memo";
+	const dialogRef = React.useRef<HTMLDivElement>(null);
+
 	React.useEffect(() => {
+		const previouslyFocused = document.activeElement as HTMLElement | null;
+		dialogRef.current?.focus();
+
 		const handleEscape = (e: KeyboardEvent) => {
 			if (e.key === "Escape") onClose();
 		};
 		document.addEventListener("keydown", handleEscape);
-		return () => document.removeEventListener("keydown", handleEscape);
+		return () => {
+			document.removeEventListener("keydown", handleEscape);
+			previouslyFocused?.focus();
+		};
 	}, [onClose]);
 
 	return (
@@ -269,7 +277,12 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 				layoutId={`project-${project.slug}`}
 				transition={springTransition}
 				style={{ willChange: "transform, opacity" }}
-				className="fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 transform-gpu"
+				ref={dialogRef}
+				tabIndex={-1}
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby={`project-dialog-title-${project.slug}`}
+				className="fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 transform-gpu outline-none"
 			>
 				<div className="relative border-2 bg-background">
 					<CornerSquare
@@ -337,6 +350,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 						<div className="p-4 sm:p-6">
 							<div className="mb-4 flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
 								<motion.h2
+									id={`project-dialog-title-${project.slug}`}
 									layoutId={`project-title-${project.slug}`}
 									className="text-xl font-bold sm:text-2xl"
 									transition={springTransition}

@@ -1,6 +1,7 @@
 import { ArrowLeft, ExternalLink, Github } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { cn } from "cn";
 
 import { MarkdownContent } from "#/components/markdown-content";
 import { Badge } from "#/components/ui/badge";
@@ -8,6 +9,8 @@ import { COLORS } from "#/lib/colors";
 import { longDate } from "#/lib/format";
 import { getProject } from "#/lib/projects";
 
+import { Footer } from "../-footer";
+import { Header } from "../-header";
 import { CornerSquare, Layout } from "../-layout";
 
 export const Route = createFileRoute("/_home/projects/$slugId")({
@@ -21,51 +24,102 @@ export const Route = createFileRoute("/_home/projects/$slugId")({
 			? [
 					{ title: `${loaderData.title} | VKHR` },
 					{ name: "description", content: loaderData.description },
+					{ property: "og:title", content: loaderData.title },
+					{ property: "og:description", content: loaderData.description },
 				]
 			: [],
 	}),
-	component: RouteComponent,
+	component: ProjectPage,
 });
 
-function RouteComponent() {
+const linkClassName =
+	"inline-flex items-center gap-2 border-2 bg-background px-3 py-1.5 text-sm transition-colors hover:bg-muted";
+
+function ProjectPage() {
 	const project = Route.useLoaderData();
 
 	return (
 		<Layout>
-			<article className="relative mx-4 my-4 max-w-4xl border-2 bg-background sm:mx-auto sm:my-8 sm:w-full">
-				<CornerSquare position="top-left" mode="offset" />
-				<CornerSquare position="top-right" mode="offset" />
-				<CornerSquare position="bottom-left" mode="offset" />
-				<CornerSquare position="bottom-right" mode="offset" />
+			<Header />
+			<div className="flex h-full flex-1 flex-col px-4">
+				<main className="relative container mx-auto max-w-4xl flex-1 border-x-2 bg-background">
+					<CornerSquare position="top-left" />
+					<CornerSquare position="top-right" />
+					<CornerSquare position="bottom-left" />
+					<CornerSquare position="bottom-right" />
 
-				{project.cover && (
-					<div className="relative border-b-2">
-						<img
-							src={project.cover}
-							alt=""
-							className="h-[35vh] w-full object-cover"
-						/>
-						<div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
+					<div className="relative flex items-center gap-4 border-b-2 p-2 sm:p-4">
 						<Link
 							to="/projects"
-							className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-background/60 px-3 py-1.5 text-sm backdrop-blur-md transition-colors hover:bg-background/80"
+							className="inline-flex items-center justify-center border-2 bg-background p-1.5 transition-colors hover:bg-muted"
+							aria-label="Back to projects"
 						>
 							<HugeiconsIcon
 								icon={ArrowLeft}
 								strokeWidth={2}
-								className="size-4"
+								className="size-5"
 							/>
-							Back
 						</Link>
+						<h1 className="text-xl font-bold sm:text-2xl">{project.title}</h1>
+						<CornerSquare position="bottom-left" />
+						<CornerSquare position="bottom-right" />
+					</div>
+
+					{project.cover && (
+						<img
+							src={project.cover}
+							alt=""
+							className="h-[35vh] w-full border-b-2 object-cover"
+						/>
+					)}
+
+					<article className="px-4 py-6 sm:py-8">
+						<div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+							<Badge
+								variant={project.status === "active" ? "default" : "secondary"}
+								className="tracking-wider uppercase"
+							>
+								{project.status}
+							</Badge>
+							<time dateTime={project.date}>
+								{longDate.format(new Date(project.date))}
+							</time>
+						</div>
+
+						{project.technologies.length > 0 && (
+							<ul
+								className="mb-6 flex flex-wrap gap-1.5"
+								aria-label="Technologies"
+							>
+								{project.technologies.map((tech) => (
+									<li key={tech.slug}>
+										<Badge
+											variant="outline"
+											className={cn(
+												COLORS[tech.color].text,
+												COLORS[tech.color].border,
+												"bg-transparent",
+											)}
+										>
+											{tech.name}
+										</Badge>
+									</li>
+								))}
+							</ul>
+						)}
+
+						<p className="mb-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+							{project.description}
+						</p>
 
 						{(project.repository || project.demo) && (
-							<div className="absolute top-4 right-4 flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-3">
+							<div className="mb-8 flex flex-wrap gap-3">
 								{project.repository && (
 									<a
 										href={project.repository}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="inline-flex items-center gap-1.5 rounded-full bg-background/60 px-3 py-1.5 text-sm backdrop-blur-md transition-colors hover:bg-background/80"
+										className={linkClassName}
 									>
 										<HugeiconsIcon
 											icon={Github}
@@ -80,123 +134,29 @@ function RouteComponent() {
 										href={project.demo}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="inline-flex items-center gap-1.5 rounded-full bg-background/60 px-3 py-1.5 text-sm backdrop-blur-md transition-colors hover:bg-background/80"
+										className={linkClassName}
 									>
 										<HugeiconsIcon
 											icon={ExternalLink}
 											strokeWidth={2}
 											className="size-4"
 										/>
-										Live Demo
+										Live demo
 									</a>
 								)}
 							</div>
 						)}
-					</div>
-				)}
 
-				<div className="mx-auto w-full max-w-3xl px-4 pb-10">
-					{!project.cover && (
-						<div className="mt-10 mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-							<Link
-								to="/projects"
-								className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-							>
-								<HugeiconsIcon
-									icon={ArrowLeft}
-									strokeWidth={2}
-									className="size-4"
-								/>
-								Back to projects
-							</Link>
-
-							{(project.repository || project.demo) && (
-								<div className="flex items-center gap-3 text-sm">
-									{project.repository && (
-										<a
-											href={project.repository}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
-										>
-											<HugeiconsIcon
-												icon={Github}
-												strokeWidth={2}
-												className="size-4"
-											/>
-											Repository
-										</a>
-									)}
-									{project.demo && (
-										<a
-											href={project.demo}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
-										>
-											<HugeiconsIcon
-												icon={ExternalLink}
-												strokeWidth={2}
-												className="size-4"
-											/>
-											Live Demo
-										</a>
-									)}
-								</div>
-							)}
-						</div>
-					)}
-
-					<div
-						className={`${project.cover ? "mt-4" : ""} mb-4 flex flex-wrap items-end gap-3`}
-					>
-						<h1 className="text-3xl leading-tight font-bold tracking-tight sm:text-4xl">
-							{project.title}
-						</h1>
-						<div className="mb-1 flex items-center gap-3 text-sm text-muted-foreground">
-							<Badge
-								variant={project.status === "active" ? "default" : "secondary"}
-								className="h-6 rounded-none border-2 border-border bg-transparent py-2 text-sm font-bold tracking-wider uppercase"
-							>
-								{project.status}
-							</Badge>
-							<span aria-hidden="true">|</span>
-							<time dateTime={project.date}>
-								{longDate.format(new Date(project.date))}
-							</time>
-						</div>
-					</div>
-
-					{project.technologies.length > 0 && (
-						<div className="mb-4 flex flex-wrap gap-1.5">
-							{project.technologies.map((tech) => {
-								const palette = COLORS[tech.color];
-
-								return (
-									<Badge
-										key={tech.slug}
-										variant="outline"
-										className={`${palette.text} ${palette.border} rounded-none border bg-transparent`}
-									>
-										{tech.name}
-									</Badge>
-								);
-							})}
-						</div>
-					)}
-
-					{project.description && (
-						<p className="mb-8 text-base leading-relaxed text-muted-foreground sm:text-lg">
-							{project.description}
-						</p>
-					)}
-
-					<MarkdownContent
-						html={project.html}
-						className="prose max-w-none prose-amber dark:prose-invert"
-					/>
-				</div>
-			</article>
+						{project.html && (
+							<MarkdownContent
+								html={project.html}
+								className="prose max-w-none dark:prose-invert prose-a:text-primary"
+							/>
+						)}
+					</article>
+				</main>
+			</div>
+			<Footer />
 		</Layout>
 	);
 }

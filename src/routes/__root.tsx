@@ -20,11 +20,20 @@ export const Route = createRootRoute({
 			{
 				title: "VKHR | Portfolio",
 			},
+			{
+				name: "description",
+				content:
+					"Viktor's portfolio: web projects across frontend, backend and DevOps.",
+			},
 		],
 		links: [
 			{
 				rel: "stylesheet",
 				href: appCss,
+			},
+			{
+				rel: "icon",
+				href: "/favicon.ico",
 			},
 		],
 	}),

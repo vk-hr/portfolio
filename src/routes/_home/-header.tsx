@@ -16,8 +16,18 @@ export function Header() {
 					>
 						VKHR.dev
 					</Button>
-					<div className="mx-2.5 border-2 bg-background px-1">
-						<ThemeSwitcher />
+					<div className="flex items-center gap-2">
+						<Button
+							nativeButton={false}
+							variant="link"
+							className="text-muted-foreground data-[status=active]:text-foreground"
+							render={<Link to="/projects" />}
+						>
+							Projects
+						</Button>
+						<div className="mx-2.5 border-2 bg-background px-1">
+							<ThemeSwitcher />
+						</div>
 					</div>
 				</div>
 			</div>

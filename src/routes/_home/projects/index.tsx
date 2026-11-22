@@ -79,10 +79,8 @@ function ProjectsPage() {
 									<h2 className="mb-6 text-xl font-bold">{year}</h2>
 									<div className="flex flex-col gap-4">
 										{groupedProjects[year].map((project) => (
-											<Link
+											<article
 												key={project.slug}
-												to="/projects/$slugId"
-												params={{ slugId: project.slug }}
 												className="group relative flex flex-col justify-between gap-4 border-2 bg-background p-4 transition-colors hover:bg-muted sm:flex-row sm:items-center"
 											>
 												<CornerSquare position="top-left" mode="offset" />
@@ -92,7 +90,14 @@ function ProjectsPage() {
 
 												<div className="flex-1">
 													<h3 className="text-base font-semibold sm:text-lg">
-														{project.title}
+														{/* Stretched link: the whole card is clickable without nesting the external links inside it. */}
+														<Link
+															to="/projects/$slugId"
+															params={{ slugId: project.slug }}
+															className="after:absolute after:inset-0 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:outline-ring"
+														>
+															{project.title}
+														</Link>
 													</h3>
 													{project.description && (
 														<p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
@@ -103,16 +108,13 @@ function ProjectsPage() {
 
 												<div className="flex shrink-0 items-center gap-4">
 													{(project.repository || project.demo) && (
-														<div className="flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+														<div className="relative z-10 flex items-center gap-2 transition-opacity sm:opacity-0 sm:group-focus-within:opacity-100 sm:group-hover:opacity-100">
 															{project.repository && (
 																<a
 																	href={project.repository}
 																	target="_blank"
 																	rel="noopener noreferrer"
 																	className="inline-flex border-2 bg-background p-2 transition-colors hover:bg-muted"
-																	onClick={(e) => {
-																		e.stopPropagation();
-																	}}
 																	aria-label="View repository"
 																>
 																	<HugeiconsIcon
@@ -128,9 +130,6 @@ function ProjectsPage() {
 																	target="_blank"
 																	rel="noopener noreferrer"
 																	className="inline-flex border-2 bg-background p-2 transition-colors hover:bg-muted"
-																	onClick={(e) => {
-																		e.stopPropagation();
-																	}}
 																	aria-label="View demo"
 																>
 																	<HugeiconsIcon
@@ -149,7 +148,7 @@ function ProjectsPage() {
 														{shortDate.format(new Date(project.date))}
 													</time>
 												</div>
-											</Link>
+											</article>
 										))}
 									</div>
 								</section>
