@@ -1,5 +1,7 @@
 import { describe, expect, test } from "bun:test";
+
 import { allProjects } from "content-collections";
+
 import { getProject, listFeaturedProjects, listProjects } from "./projects";
 
 describe("projects", () => {

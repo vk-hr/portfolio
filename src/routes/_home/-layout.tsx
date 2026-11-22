@@ -8,7 +8,7 @@ export function Layout({ children }: LayoutProps) {
 	return (
 		<div className="relative">
 			<div
-				className="bg-diagonal-dashed pointer-events-none absolute inset-0"
+				className="pointer-events-none absolute inset-0 bg-diagonal-dashed"
 				aria-hidden="true"
 			/>
 			<div className="relative z-10 flex min-h-screen flex-col overflow-hidden font-sans">
@@ -19,7 +19,7 @@ export function Layout({ children }: LayoutProps) {
 }
 
 const cornerSquareVariants = cva(
-	"bg-background absolute z-30 size-3 rotate-45 border-2",
+	"absolute z-30 size-3 rotate-45 border-2 bg-background",
 	{
 		variants: {
 			position: {

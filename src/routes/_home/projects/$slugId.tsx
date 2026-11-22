@@ -1,11 +1,13 @@
 import { ArrowLeft, ExternalLink, Github } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+
 import { MarkdownContent } from "#/components/markdown-content";
 import { Badge } from "#/components/ui/badge";
 import { COLORS } from "#/lib/colors";
 import { longDate } from "#/lib/format";
 import { getProject } from "#/lib/projects";
+
 import { CornerSquare, Layout } from "../-layout";
 
 export const Route = createFileRoute("/_home/projects/$slugId")({
@@ -30,7 +32,7 @@ function RouteComponent() {
 
 	return (
 		<Layout>
-			<article className="bg-background relative mx-4 my-4 max-w-4xl border-2 sm:mx-auto sm:my-8 sm:w-full">
+			<article className="relative mx-4 my-4 max-w-4xl border-2 bg-background sm:mx-auto sm:my-8 sm:w-full">
 				<CornerSquare position="top-left" mode="offset" />
 				<CornerSquare position="top-right" mode="offset" />
 				<CornerSquare position="bottom-left" mode="offset" />
@@ -43,10 +45,10 @@ function RouteComponent() {
 							alt=""
 							className="h-[35vh] w-full object-cover"
 						/>
-						<div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-linear-to-t to-transparent" />
+						<div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
 						<Link
 							to="/projects"
-							className="bg-background/60 hover:bg-background/80 absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm backdrop-blur-md transition-colors"
+							className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-background/60 px-3 py-1.5 text-sm backdrop-blur-md transition-colors hover:bg-background/80"
 						>
 							<HugeiconsIcon
 								icon={ArrowLeft}
@@ -63,7 +65,7 @@ function RouteComponent() {
 										href={project.repository}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="bg-background/60 hover:bg-background/80 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm backdrop-blur-md transition-colors"
+										className="inline-flex items-center gap-1.5 rounded-full bg-background/60 px-3 py-1.5 text-sm backdrop-blur-md transition-colors hover:bg-background/80"
 									>
 										<HugeiconsIcon
 											icon={Github}
@@ -78,7 +80,7 @@ function RouteComponent() {
 										href={project.demo}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="bg-background/60 hover:bg-background/80 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm backdrop-blur-md transition-colors"
+										className="inline-flex items-center gap-1.5 rounded-full bg-background/60 px-3 py-1.5 text-sm backdrop-blur-md transition-colors hover:bg-background/80"
 									>
 										<HugeiconsIcon
 											icon={ExternalLink}
@@ -98,7 +100,7 @@ function RouteComponent() {
 						<div className="mt-10 mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
 							<Link
 								to="/projects"
-								className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm transition-colors"
+								className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
 							>
 								<HugeiconsIcon
 									icon={ArrowLeft}
@@ -115,7 +117,7 @@ function RouteComponent() {
 											href={project.repository}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
+											className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
 										>
 											<HugeiconsIcon
 												icon={Github}
@@ -130,7 +132,7 @@ function RouteComponent() {
 											href={project.demo}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
+											className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
 										>
 											<HugeiconsIcon
 												icon={ExternalLink}
@@ -151,10 +153,10 @@ function RouteComponent() {
 						<h1 className="text-3xl leading-tight font-bold tracking-tight sm:text-4xl">
 							{project.title}
 						</h1>
-						<div className="text-muted-foreground mb-1 flex items-center gap-3 text-sm">
+						<div className="mb-1 flex items-center gap-3 text-sm text-muted-foreground">
 							<Badge
 								variant={project.status === "active" ? "default" : "secondary"}
-								className="border-border h-6 rounded-none border-2 bg-transparent py-2 text-sm font-bold tracking-wider uppercase"
+								className="h-6 rounded-none border-2 border-border bg-transparent py-2 text-sm font-bold tracking-wider uppercase"
 							>
 								{project.status}
 							</Badge>
@@ -184,14 +186,14 @@ function RouteComponent() {
 					)}
 
 					{project.description && (
-						<p className="text-muted-foreground mb-8 text-base leading-relaxed sm:text-lg">
+						<p className="mb-8 text-base leading-relaxed text-muted-foreground sm:text-lg">
 							{project.description}
 						</p>
 					)}
 
 					<MarkdownContent
 						html={project.html}
-						className="prose prose-amber dark:prose-invert max-w-none"
+						className="prose max-w-none prose-amber dark:prose-invert"
 					/>
 				</div>
 			</article>

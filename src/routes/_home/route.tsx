@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+
 import { Loading } from "./-loading";
 import { NotFound } from "./-not-found";
 

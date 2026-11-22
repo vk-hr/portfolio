@@ -4,9 +4,8 @@ const LazyDevtools =
 	import.meta.env.DEV &&
 	React.lazy(async () => {
 		const { TanStackDevtools } = await import("@tanstack/react-devtools");
-		const { TanStackRouterDevtoolsPanel } = await import(
-			"@tanstack/react-router-devtools"
-		);
+		const { TanStackRouterDevtoolsPanel } =
+			await import("@tanstack/react-router-devtools");
 
 		return {
 			default: () => (

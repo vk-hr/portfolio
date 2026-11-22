@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import type * as React from "react";
 import { type Theme, ThemeProvider } from "start-theme";
+
 import { Devtools } from "#/components/devtools";
 import { setTheme } from "#/functions/theme";
 

@@ -3,7 +3,12 @@
 useTabs = true
 sortImports = true
 sortPackageJson = true
-ignorePatterns = ["src/routeTree.gen.ts", ".content-collections/", ".output/", "flake.lock"]
+ignorePatterns = [
+	"src/routeTree.gen.ts",
+	".content-collections/",
+	".output/",
+	"flake.lock",
+]
 
 [fmt.sortTailwindcss]
 stylesheet = "src/styles.css"

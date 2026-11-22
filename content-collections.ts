@@ -6,6 +6,7 @@ import {
 import { compileMarkdown } from "@content-collections/markdown";
 import remarkGfm from "remark-gfm";
 import { z } from "zod";
+
 import { colorSchema } from "./src/lib/colors";
 
 const slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "kebab-case slug");

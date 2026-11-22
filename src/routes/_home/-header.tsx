@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+
 import { ThemeSwitcher } from "#/components/theme-switcher";
 import { Button } from "#/components/ui/button";
 
@@ -15,7 +16,7 @@ export function Header() {
 					>
 						VKHR.dev
 					</Button>
-					<div className="bg-background mx-2.5 border-2 px-1">
+					<div className="mx-2.5 border-2 bg-background px-1">
 						<ThemeSwitcher />
 					</div>
 				</div>

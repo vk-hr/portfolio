@@ -1,8 +1,11 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
+
 import { RootProviders } from "#/components/providers";
 import { getTheme } from "#/functions/theme";
-import appCss from "../styles.css?url";
+
 import { NotFound } from "./_home/-not-found";
+
+import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
 	head: () => ({

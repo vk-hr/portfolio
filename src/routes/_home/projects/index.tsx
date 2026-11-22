@@ -6,8 +6,10 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+
 import { shortDate } from "#/lib/format";
 import { listProjects } from "#/lib/projects";
+
 import { Footer } from "../-footer";
 import { Header } from "../-header";
 import { CornerSquare, Layout } from "../-layout";
@@ -38,7 +40,7 @@ function ProjectsPage() {
 		<Layout>
 			<Header />
 			<div className="flex h-full flex-1 flex-col px-4">
-				<main className="bg-background relative container mx-auto min-h-full max-w-4xl flex-1 border-x-2">
+				<main className="relative container mx-auto min-h-full max-w-4xl flex-1 border-x-2 bg-background">
 					<CornerSquare position="top-left" />
 					<CornerSquare position="top-right" />
 					<CornerSquare position="bottom-left" />
@@ -47,7 +49,7 @@ function ProjectsPage() {
 					<div className="relative mb-2 flex items-center gap-4 border-b-2 p-2 sm:p-4">
 						<Link
 							to="/"
-							className="bg-background hover:bg-muted inline-flex items-center justify-center border-2 p-1.5 transition-colors"
+							className="inline-flex items-center justify-center border-2 bg-background p-1.5 transition-colors hover:bg-muted"
 							aria-label="Back to home"
 						>
 							<HugeiconsIcon
@@ -62,11 +64,11 @@ function ProjectsPage() {
 					</div>
 
 					{!projects || projects.length === 0 ? (
-						<div className="bg-muted/50 mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed p-12 text-center">
+						<div className="mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed bg-muted/50 p-12 text-center">
 							<HugeiconsIcon
 								icon={Briefcase}
 								strokeWidth={2}
-								className="text-muted-foreground/50 mb-4 size-8"
+								className="mb-4 size-8 text-muted-foreground/50"
 							/>
 							<p className="text-muted-foreground">No projects yet.</p>
 						</div>
@@ -81,7 +83,7 @@ function ProjectsPage() {
 												key={project.slug}
 												to="/projects/$slugId"
 												params={{ slugId: project.slug }}
-												className="group bg-background hover:bg-muted relative flex flex-col justify-between gap-4 border-2 p-4 transition-colors sm:flex-row sm:items-center"
+												className="group relative flex flex-col justify-between gap-4 border-2 bg-background p-4 transition-colors hover:bg-muted sm:flex-row sm:items-center"
 											>
 												<CornerSquare position="top-left" mode="offset" />
 												<CornerSquare position="top-right" mode="offset" />
@@ -93,7 +95,7 @@ function ProjectsPage() {
 														{project.title}
 													</h3>
 													{project.description && (
-														<p className="text-muted-foreground mt-1 line-clamp-2 text-sm">
+														<p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
 															{project.description}
 														</p>
 													)}
@@ -107,7 +109,7 @@ function ProjectsPage() {
 																	href={project.repository}
 																	target="_blank"
 																	rel="noopener noreferrer"
-																	className="bg-background hover:bg-muted inline-flex border-2 p-2 transition-colors"
+																	className="inline-flex border-2 bg-background p-2 transition-colors hover:bg-muted"
 																	onClick={(e) => {
 																		e.stopPropagation();
 																	}}
@@ -125,7 +127,7 @@ function ProjectsPage() {
 																	href={project.demo}
 																	target="_blank"
 																	rel="noopener noreferrer"
-																	className="bg-background hover:bg-muted inline-flex border-2 p-2 transition-colors"
+																	className="inline-flex border-2 bg-background p-2 transition-colors hover:bg-muted"
 																	onClick={(e) => {
 																		e.stopPropagation();
 																	}}
@@ -142,7 +144,7 @@ function ProjectsPage() {
 													)}
 													<time
 														dateTime={project.date}
-														className="text-muted-foreground text-sm"
+														className="text-sm text-muted-foreground"
 													>
 														{shortDate.format(new Date(project.date))}
 													</time>
