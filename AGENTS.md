@@ -41,7 +41,6 @@ CI policy:
   `bunfig.toml` and the `test/` preloads, and it passed a run that broke
   `test/setup.ts`. The full suite takes under 1 s, so selection saves nothing.
 
-
 Always use `bun` (never npm/yarn/pnpm).
 
 ## Architecture
