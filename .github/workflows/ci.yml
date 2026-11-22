@@ -19,7 +19,8 @@ permissions:
   actions: read # the budget step reads its job's start time
 
 # Budgets fail the job (see .github/scripts/budget.sh and
-# .github/actions/budget): fmt 1 s, lint 1 s, typecheck 5 s, tests 30 s,
+# .github/actions/budget): fmt 1 s, lint 1 s, typecheck 5 s, tests and SSR
+# smoke tests 30 s each,
 # whole job 35 s. Setup (15 s) only warns until the runners move off
 # GitHub-hosted machines; see enforce-setup. timeout-minutes is a hang guard.
 
@@ -69,5 +70,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: bun --bun vite build
+      # SSR smoke tests against the build just made (e2e/ssr.e2e.ts).
+      - run: .github/scripts/budget.sh 30 bun test ./e2e/ssr.e2e.ts
       - if: ${{ !cancelled() }}
         uses: ./.github/actions/budget

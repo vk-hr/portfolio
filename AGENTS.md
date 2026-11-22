@@ -15,6 +15,7 @@ bun run preview              # bun --bun vite preview
 
 bun test --isolate           # all tests, as CI runs them (random order is on in bunfig)
 bun test src/lib/projects    # tests matching a path
+bun --bun vite build && bun test ./e2e/ssr.e2e.ts  # SSR smoke tests on the build
 bun check                    # type check (Bun built-in, same errors as tsc 7)
 bun fmt                      # format (config in bunfig.toml [fmt])
 bun fmt --check              # check formatting only
@@ -25,7 +26,7 @@ CI (`.github/workflows/ci.yml`) runs four independent jobs, each with its own
 checkout and `bun install --frozen-lockfile` (`.github/actions/setup`):
 `checks` (`bun fmt --check` and `bun lint`, both always run so every failure
 is listed), `typecheck` (`bun check`), `test` (`bun test --isolate`) and
-`build` (`bun --bun vite build`). No job waits on another. The pre-push hook
+`build` (`bun --bun vite build`, then the SSR smoke tests). No job waits on another. The pre-push hook
 runs the same commands. Run the same before handing work back.
 
 CI policy:
@@ -146,6 +147,13 @@ Everything is Bun-native except linting.
   `bunfig.toml` `[test]` preloads `test/happydom.ts` (registers happy-dom) and
   `test/setup.ts` (Testing Library cleanup + jest-dom matchers). Matcher types
   are in `test/matchers.d.ts`. Import test APIs from `bun:test`.
+- **SSR smoke tests:** `e2e/ssr.e2e.ts` starts the built server
+  (`.output/server/index.mjs`) and checks every route over HTTP: status codes
+  (404s included), titles and meta tags, the `/projects` order, the
+  stylesheet, and the theme cookie reaching the pre-paint script. Plain
+  `bun test` skips it because of the `*.e2e.ts` name. Run it with the file path
+  after a build. Pages, loaders and `head()` are tested here, not with unit
+  tests.
 - **Types:** `bun check`. The `typescript` devDependency is pinned to the
   version Bun bundles; don't bump it independently.
 - **Format:** `bun fmt`, configured in `bunfig.toml` `[fmt]`: tabs, sorted
