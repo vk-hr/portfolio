@@ -152,6 +152,11 @@ Everything is Bun-native except linting.
   imports, sorted `package.json`, Tailwind class sorting inside `cn`/`cva`.
 - **Lint:** Biome, lint-only (`biome.json`; formatter and assist disabled),
   run through the `lint` script.
+- **Git hooks:** hk (`hk.pkl`), installed by the Nix dev shell's
+  `shellHook`. Pre-commit formats and lints the staged files and re-stages
+  fixes; pre-push runs the CI commands on the whole repo and lists every
+  failure. Keep the pre-push steps identical to `.github/workflows/ci.yml`.
+  Don't bypass them (`--no-verify`, `HK=0`); fix what they report.
 - **Gotcha:** a `package.json` script named like a Bun built-in (`check`,
   `fmt`, `test`, `lint`) shadows the built-in. Don't add such scripts; `lint`
   is the one temporary exception.
