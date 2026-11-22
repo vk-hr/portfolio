@@ -28,6 +28,20 @@ is listed), `typecheck` (`bun check`), `test` (`bun test --isolate`) and
 `build` (`bun --bun vite build`). No job waits on another. The pre-push hook
 runs the same commands. Run the same before handing work back.
 
+CI policy:
+
+- **Budgets:** `fmt` 1 s, `lint` 1 s, `typecheck` 5 s, tests 30 s, each
+  job 35 s (`.github/scripts/budget.sh`, `.github/actions/budget`). Over budget
+  fails the job. Make the check faster; never raise a budget, add retries or
+  skip tests to get green. Setup (15 s) only warns while CI is on
+  GitHub-hosted runners.
+- **No test selection.** The full suite runs on every PR and on main.
+  `bun test --changed` follows imports only. It misses `content/` (which
+  reaches tests through the generated `content-collections` module),
+  `bunfig.toml` and the `test/` preloads, and it passed a run that broke
+  `test/setup.ts`. The full suite takes under 1 s, so selection saves nothing.
+
+
 Always use `bun` (never npm/yarn/pnpm).
 
 ## Architecture
