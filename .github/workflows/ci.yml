@@ -16,6 +16,11 @@ concurrency:
 
 permissions:
   contents: read
+  actions: read # the budget step reads its job's start time
+
+# Budgets fail the job (see .github/scripts/budget.sh and
+# .github/actions/budget): fmt 1 s, lint 1 s, typecheck 5 s, tests 30 s,
+# setup 15 s, whole job 35 s. timeout-minutes is only a hang guard.
 
 # Independent jobs, no `needs`: the result is the slowest job, not the sum.
 # hk.pkl's pre-push hook runs the same commands; keep the two in sync.
@@ -24,32 +29,44 @@ jobs:
   # failed, so a red run lists every failure.
   checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v7
       - id: setup
         uses: ./.github/actions/setup
       - if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
-        run: bun fmt --check
+        run: .github/scripts/budget.sh 1 bun fmt --check
       - if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
-        run: bun lint
+        run: .github/scripts/budget.sh 1 bun lint
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/budget
 
   typecheck:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
-      - run: bun check
+      - run: .github/scripts/budget.sh 5 bun check
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/budget
 
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
-      - run: bun test --isolate
+      - run: .github/scripts/budget.sh 30 bun test --isolate
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/budget
 
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: bun --bun vite build
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/budget

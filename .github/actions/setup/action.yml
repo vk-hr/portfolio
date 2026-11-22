@@ -10,3 +10,7 @@ runs:
 
     - shell: bash
       run: bun install --frozen-lockfile
+
+    # Read by ./.github/actions/budget.
+    - shell: bash
+      run: echo "SETUP_DONE=$(date +%s)" >> "$GITHUB_ENV"
