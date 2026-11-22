@@ -21,9 +21,12 @@ bun fmt --check              # check formatting only
 bun lint                     # package.json "lint" script = biome lint
 ```
 
-CI (`.github/workflows/ci.yml`) runs `bun install --frozen-lockfile`,
-`bun fmt --check`, `bun lint`, `bun check`, `bun test --isolate` and
-`bun --bun vite build`. Run the same before handing work back.
+CI (`.github/workflows/ci.yml`) runs four independent jobs, each with its own
+checkout and `bun install --frozen-lockfile` (`.github/actions/setup`):
+`checks` (`bun fmt --check` and `bun lint`, both always run so every failure
+is listed), `typecheck` (`bun check`), `test` (`bun test --isolate`) and
+`build` (`bun --bun vite build`). No job waits on another. The pre-push hook
+runs the same commands. Run the same before handing work back.
 
 Always use `bun` (never npm/yarn/pnpm).
 
