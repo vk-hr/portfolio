@@ -143,6 +143,10 @@ Everything is Bun-native except linting.
   `.envrc` is `use flake`, so direnv loads it. `packageManager: bun@1.4.4` in
   `package.json` pins the Bun version CI installs via `oven-sh/setup-bun`.
 
+- **Test failures:** until 2026-12-06, log every test failure you fix in
+  `docs/test-failures.md` as `regression`, `change-detector` or `flaky`.
+  The log decides which test files are deleted afterwards.
+
 ## Conventions
 
 - Named exports only (no default exports), except where a tool requires one
