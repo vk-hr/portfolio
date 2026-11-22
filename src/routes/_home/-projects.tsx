@@ -7,20 +7,18 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
-import type { api } from "convex/_generated/api";
-import type { FunctionReturnType } from "convex/server";
 import { AnimatePresence, motion } from "motion/react";
 import * as React from "react";
 import { Badge } from "#/components/ui/badge";
 import { Separator } from "#/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { COLORS } from "#/lib/colors";
+import type { ProjectSummary } from "#/lib/projects";
 import { CornerSquare } from "./-layout";
 
 const springTransition = { type: "spring", bounce: 0, duration: 0.3 } as const;
 
-type Project = FunctionReturnType<
-	typeof api.functions.projects.listPublicRecent
->[number];
+type Project = ProjectSummary;
 
 type ProjectsProps = {
 	recentProjects: Array<Project>;
@@ -87,7 +85,7 @@ export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
 				<div className="relative mt-6 grid sm:grid-cols-2 lg:grid-cols-3">
 					{projects.map((project) => (
 						<ProjectCard
-							key={project._id}
+							key={project.slug}
 							project={project}
 							onClick={handleProjectClick}
 						/>
@@ -114,11 +112,11 @@ type ProjectCardProps = {
 
 function ProjectCard({ project, onClick }: ProjectCardProps) {
 	"use no memo";
-	const hasLinks = project.repositoryUrl || project.demoUrl;
+	const hasLinks = project.repository || project.demo;
 
 	return (
 		<motion.div
-			layoutId={`project-${project._id}`}
+			layoutId={`project-${project.slug}`}
 			transition={springTransition}
 			style={{ willChange: "transform, opacity" }}
 			className={cn(
@@ -137,28 +135,28 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 				position="top-right"
 				mode="offset"
 				className="-mt-px -mr-px"
-				layoutId={`corner-tr-${project._id}`}
+				layoutId={`corner-tr-${project.slug}`}
 				transition={springTransition}
 			/>
 			<CornerSquare
 				position="top-left"
 				mode="offset"
 				className="-mt-px -ml-px"
-				layoutId={`corner-tl-${project._id}`}
+				layoutId={`corner-tl-${project.slug}`}
 				transition={springTransition}
 			/>
 			<CornerSquare
 				position="bottom-left"
 				mode="offset"
 				className="-mb-px -ml-px"
-				layoutId={`corner-bl-${project._id}`}
+				layoutId={`corner-bl-${project.slug}`}
 				transition={springTransition}
 			/>
 			<CornerSquare
 				position="bottom-right"
 				mode="offset"
 				className="-mr-px -mb-px"
-				layoutId={`corner-br-${project._id}`}
+				layoutId={`corner-br-${project.slug}`}
 				transition={springTransition}
 			/>
 
@@ -171,7 +169,7 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 					className="block w-full cursor-pointer p-4 text-left"
 				>
 					<motion.h3
-						layoutId={`project-title-${project._id}`}
+						layoutId={`project-title-${project.slug}`}
 						className="text-base font-semibold sm:text-lg"
 						transition={springTransition}
 					>
@@ -179,7 +177,7 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 					</motion.h3>
 					{project.description && (
 						<motion.p
-							layoutId={`project-description-${project._id}`}
+							layoutId={`project-description-${project.slug}`}
 							className="text-muted-foreground mt-2 line-clamp-2 text-sm"
 							transition={springTransition}
 						>
@@ -191,13 +189,13 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 				{hasLinks && (
 					<div className="pointer-events-none absolute top-4 right-4 z-10 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
 						<motion.div
-							layoutId={`project-links-${project._id}`}
+							layoutId={`project-links-${project.slug}`}
 							transition={springTransition}
 							className="bg-background flex border-2"
 						>
-							{project.repositoryUrl && (
+							{project.repository && (
 								<a
-									href={project.repositoryUrl}
+									href={project.repository}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="hover:bg-muted flex items-center justify-center p-2 transition-colors"
@@ -211,12 +209,12 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
 									/>
 								</a>
 							)}
-							{project.repositoryUrl && project.demoUrl && (
+							{project.repository && project.demo && (
 								<Separator className="w-0.5!" orientation="vertical" />
 							)}
-							{project.demoUrl && (
+							{project.demo && (
 								<a
-									href={project.demoUrl}
+									href={project.demo}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="hover:bg-muted flex items-center justify-center p-2 transition-colors"
@@ -266,7 +264,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 			/>
 
 			<motion.div
-				layoutId={`project-${project._id}`}
+				layoutId={`project-${project.slug}`}
 				transition={springTransition}
 				style={{ willChange: "transform, opacity" }}
 				className="fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 transform-gpu"
@@ -275,33 +273,33 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 					<CornerSquare
 						position="top-left"
 						mode="offset"
-						layoutId={`corner-tl-${project._id}`}
+						layoutId={`corner-tl-${project.slug}`}
 						transition={springTransition}
 					/>
 					<CornerSquare
 						position="top-right"
 						mode="offset"
-						layoutId={`corner-tr-${project._id}`}
+						layoutId={`corner-tr-${project.slug}`}
 						transition={springTransition}
 					/>
 					<CornerSquare
 						position="bottom-left"
 						mode="offset"
-						layoutId={`corner-bl-${project._id}`}
+						layoutId={`corner-bl-${project.slug}`}
 						transition={springTransition}
 					/>
 					<CornerSquare
 						position="bottom-right"
 						mode="offset"
-						layoutId={`corner-br-${project._id}`}
+						layoutId={`corner-br-${project.slug}`}
 						transition={springTransition}
 					/>
 
 					<div className="relative">
-						{project.imageUrl ? (
+						{project.cover ? (
 							<div className="h-64 w-full overflow-hidden">
 								<img
-									src={project.imageUrl}
+									src={project.cover}
 									alt={project.title}
 									className="h-full w-full object-cover"
 								/>
@@ -337,22 +335,22 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 						<div className="p-4 sm:p-6">
 							<div className="mb-4 flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
 								<motion.h2
-									layoutId={`project-title-${project._id}`}
+									layoutId={`project-title-${project.slug}`}
 									className="text-xl font-bold sm:text-2xl"
 									transition={springTransition}
 								>
 									{project.title}
 								</motion.h2>
 
-								{(project.repositoryUrl || project.demoUrl) && (
+								{(project.repository || project.demo) && (
 									<motion.div
-										layoutId={`project-links-${project._id}`}
+										layoutId={`project-links-${project.slug}`}
 										transition={springTransition}
 										className="bg-background flex w-full shrink-0 border-2 sm:w-auto"
 									>
-										{project.repositoryUrl && (
+										{project.repository && (
 											<a
-												href={project.repositoryUrl}
+												href={project.repository}
 												target="_blank"
 												rel="noopener noreferrer"
 												className="hover:bg-muted flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm transition-colors sm:flex-none"
@@ -365,12 +363,12 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 												Repository
 											</a>
 										)}
-										{project.repositoryUrl && project.demoUrl && (
+										{project.repository && project.demo && (
 											<Separator className="w-0.5!" orientation="vertical" />
 										)}
-										{project.demoUrl && (
+										{project.demo && (
 											<a
-												href={project.demoUrl}
+												href={project.demo}
 												target="_blank"
 												rel="noopener noreferrer"
 												className="hover:bg-muted flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm transition-colors sm:flex-none"
@@ -395,13 +393,13 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 									<div className="flex flex-wrap gap-2">
 										{project.technologies.map((tech) => (
 											<Badge
-												key={tech.name}
-												variant="secondary"
-												style={{
-													borderColor: tech.color,
-													color: tech.color,
-												}}
-												className="rounded-none border bg-transparent"
+												key={tech.slug}
+												variant="outline"
+												className={cn(
+													COLORS[tech.color].text,
+													COLORS[tech.color].border,
+													"rounded-none border bg-transparent",
+												)}
 											>
 												{tech.name}
 											</Badge>
@@ -416,7 +414,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 										Description
 									</div>
 									<motion.p
-										layoutId={`project-description-${project._id}`}
+										layoutId={`project-description-${project.slug}`}
 										className="text-muted-foreground text-sm leading-relaxed"
 										transition={springTransition}
 									>

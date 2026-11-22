@@ -5,28 +5,24 @@ import {
 	Github,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { listPublicProjects } from "#/queries/public";
+import { shortDate } from "#/lib/format";
+import { listProjects } from "#/lib/projects";
 import { Footer } from "../-footer";
 import { Header } from "../-header";
 import { CornerSquare, Layout } from "../-layout";
 
 export const Route = createFileRoute("/_home/projects/")({
-	loader: async ({ context }) => {
-		await context.queryClient.ensureQueryData(listPublicProjects());
-	},
+	loader: () => listProjects(),
 	component: ProjectsPage,
 });
 
-import { shortDate } from "#/lib/format";
-
 function ProjectsPage() {
-	const { data: projects } = useSuspenseQuery(listPublicProjects());
+	const projects = Route.useLoaderData();
 
 	const groupedProjects = projects.reduce(
 		(acc, project) => {
-			const year = new Date(project.publishDate).getFullYear();
+			const year = new Date(project.date).getUTCFullYear();
 			if (!acc[year]) acc[year] = [];
 			acc[year].push(project);
 			return acc;
@@ -82,7 +78,7 @@ function ProjectsPage() {
 									<div className="flex flex-col gap-4">
 										{groupedProjects[year].map((project) => (
 											<Link
-												key={project._id}
+												key={project.slug}
 												to="/projects/$slugId"
 												params={{ slugId: project.slug }}
 												className="group bg-background hover:bg-muted relative flex flex-col justify-between gap-4 border-2 p-4 transition-colors sm:flex-row sm:items-center"
@@ -104,11 +100,11 @@ function ProjectsPage() {
 												</div>
 
 												<div className="flex shrink-0 items-center gap-4">
-													{(project.repositoryUrl || project.demoUrl) && (
+													{(project.repository || project.demo) && (
 														<div className="flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-															{project.repositoryUrl && (
+															{project.repository && (
 																<a
-																	href={project.repositoryUrl}
+																	href={project.repository}
 																	target="_blank"
 																	rel="noopener noreferrer"
 																	className="bg-background hover:bg-muted inline-flex border-2 p-2 transition-colors"
@@ -124,9 +120,9 @@ function ProjectsPage() {
 																	/>
 																</a>
 															)}
-															{project.demoUrl && (
+															{project.demo && (
 																<a
-																	href={project.demoUrl}
+																	href={project.demo}
 																	target="_blank"
 																	rel="noopener noreferrer"
 																	className="bg-background hover:bg-muted inline-flex border-2 p-2 transition-colors"
@@ -145,12 +141,10 @@ function ProjectsPage() {
 														</div>
 													)}
 													<time
-														dateTime={new Date(
-															project.publishDate,
-														).toISOString()}
+														dateTime={project.date}
 														className="text-muted-foreground text-sm"
 													>
-														{shortDate.format(new Date(project.publishDate))}
+														{shortDate.format(new Date(project.date))}
 													</time>
 												</div>
 											</Link>

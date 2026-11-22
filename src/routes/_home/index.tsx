@@ -1,9 +1,5 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	listPublicFeaturedProjects,
-	listPublicProjects,
-} from "#/queries/public";
+import { listFeaturedProjects, listProjects } from "#/lib/projects";
 import { Footer } from "./-footer";
 import { Header } from "./-header";
 import { Hero } from "./-hero";
@@ -11,20 +7,15 @@ import { CornerSquare, Layout } from "./-layout";
 import { Projects } from "./-projects";
 
 export const Route = createFileRoute("/_home/")({
-	loader: async ({ context }) => {
-		await Promise.all([
-			context.queryClient.ensureQueryData(listPublicProjects(6)),
-			context.queryClient.ensureQueryData(listPublicFeaturedProjects(6)),
-		]);
-	},
+	loader: () => ({
+		recentProjects: listProjects(6),
+		featuredProjects: listFeaturedProjects(6),
+	}),
 	component: HomePage,
 });
 
 function HomePage() {
-	const { data: recentProjects } = useSuspenseQuery(listPublicProjects(6));
-	const { data: featuredProjects } = useSuspenseQuery(
-		listPublicFeaturedProjects(6),
-	);
+	const { recentProjects, featuredProjects } = Route.useLoaderData();
 
 	return (
 		<Layout>

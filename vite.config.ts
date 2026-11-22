@@ -1,3 +1,4 @@
+import contentCollections from "@content-collections/vite";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
@@ -11,20 +12,21 @@ const config = defineConfig({
 		tsconfigPaths: true,
 	},
 	plugins: [
+		contentCollections(),
 		devtools({
 			editor: {
 				name: "Zed",
 				open: async (path, lineNumber, columnNumber) => {
 					const { exec } = await import("node:child_process");
 					exec(
-						`zed "${(path).replaceAll("$", "\\$")}${lineNumber ? `:${lineNumber}` : ""}${columnNumber ? `:${columnNumber}` : ""}"`,
+						`zed "${path.replaceAll("$", "\\$")}${lineNumber ? `:${lineNumber}` : ""}${columnNumber ? `:${columnNumber}` : ""}"`,
 					);
 				},
 			},
 		}),
-		nitro(),
 		tailwindcss(),
 		tanstackStart(),
+		nitro(),
 		react(),
 		babel({
 			presets: [reactCompilerPreset()],
@@ -40,7 +42,7 @@ const config = defineConfig({
 		},
 	},
 	ssr: {
-		noExternal: ["@convex-dev/better-auth", "start-theme"],
+		noExternal: ["start-theme"],
 	},
 });
 

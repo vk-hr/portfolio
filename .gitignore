@@ -39,3 +39,9 @@ yarn-error.log*
 
 __unconfig*
 todos.json
+
+# direnv
+.direnv/
+
+# content-collections
+.content-collections

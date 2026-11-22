@@ -1,47 +1,32 @@
 import { ArrowLeft, ExternalLink, Github } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { COLORS, type ColorKey } from "shared/colors";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { MarkdownContent } from "#/components/markdown-content";
 import { Badge } from "#/components/ui/badge";
-import { getProjectBySlug } from "#/queries/public";
+import { COLORS } from "#/lib/colors";
+import { longDate } from "#/lib/format";
+import { getProject } from "#/lib/projects";
 import { CornerSquare, Layout } from "../-layout";
 
 export const Route = createFileRoute("/_home/projects/$slugId")({
-	loader: async ({ context, params }) => {
-		await context.queryClient.ensureQueryData(getProjectBySlug(params.slugId));
-		// Body rendering moves to build-time Markdown with content-collections.
-		return { contentHtml: "" };
+	loader: ({ params }) => {
+		const project = getProject(params.slugId);
+		if (!project) throw notFound();
+		return project;
 	},
+	head: ({ loaderData }) => ({
+		meta: loaderData
+			? [
+					{ title: `${loaderData.title} | VKHR` },
+					{ name: "description", content: loaderData.description },
+				]
+			: [],
+	}),
 	component: RouteComponent,
 });
 
-import { longDate } from "#/lib/format";
-
 function RouteComponent() {
-	const { contentHtml } = Route.useLoaderData();
-	const { slugId } = Route.useParams();
-	const { data: project } = useSuspenseQuery(getProjectBySlug(slugId));
-
-	if (!project) {
-		return (
-			<Layout>
-				<div className="flex flex-col items-center gap-4 py-20">
-					<h1 className="text-2xl font-bold">Project not found</h1>
-					<p className="text-muted-foreground">
-						This project doesn't exist or isn't available.
-					</p>
-					<Link
-						to="/projects"
-						className="text-primary text-sm underline underline-offset-4"
-					>
-						Back to projects
-					</Link>
-				</div>
-			</Layout>
-		);
-	}
+	const project = Route.useLoaderData();
 
 	return (
 		<Layout>
@@ -51,10 +36,10 @@ function RouteComponent() {
 				<CornerSquare position="bottom-left" mode="offset" />
 				<CornerSquare position="bottom-right" mode="offset" />
 
-				{project.imageUrl && (
+				{project.cover && (
 					<div className="relative border-b-2">
 						<img
-							src={project.imageUrl}
+							src={project.cover}
 							alt=""
 							className="h-[35vh] w-full object-cover"
 						/>
@@ -71,11 +56,11 @@ function RouteComponent() {
 							Back
 						</Link>
 
-						{(project.repositoryUrl || project.demoUrl) && (
+						{(project.repository || project.demo) && (
 							<div className="absolute top-4 right-4 flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-3">
-								{project.repositoryUrl && (
+								{project.repository && (
 									<a
-										href={project.repositoryUrl}
+										href={project.repository}
 										target="_blank"
 										rel="noopener noreferrer"
 										className="bg-background/60 hover:bg-background/80 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm backdrop-blur-md transition-colors"
@@ -88,9 +73,9 @@ function RouteComponent() {
 										Repository
 									</a>
 								)}
-								{project.demoUrl && (
+								{project.demo && (
 									<a
-										href={project.demoUrl}
+										href={project.demo}
 										target="_blank"
 										rel="noopener noreferrer"
 										className="bg-background/60 hover:bg-background/80 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm backdrop-blur-md transition-colors"
@@ -109,7 +94,7 @@ function RouteComponent() {
 				)}
 
 				<div className="mx-auto w-full max-w-3xl px-4 pb-10">
-					{!project.imageUrl && (
+					{!project.cover && (
 						<div className="mt-10 mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
 							<Link
 								to="/projects"
@@ -123,11 +108,11 @@ function RouteComponent() {
 								Back to projects
 							</Link>
 
-							{(project.repositoryUrl || project.demoUrl) && (
+							{(project.repository || project.demo) && (
 								<div className="flex items-center gap-3 text-sm">
-									{project.repositoryUrl && (
+									{project.repository && (
 										<a
-											href={project.repositoryUrl}
+											href={project.repository}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
@@ -140,9 +125,9 @@ function RouteComponent() {
 											Repository
 										</a>
 									)}
-									{project.demoUrl && (
+									{project.demo && (
 										<a
-											href={project.demoUrl}
+											href={project.demo}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
@@ -161,7 +146,7 @@ function RouteComponent() {
 					)}
 
 					<div
-						className={`${project.imageUrl ? "mt-4" : ""} mb-4 flex flex-wrap items-end gap-3`}
+						className={`${project.cover ? "mt-4" : ""} mb-4 flex flex-wrap items-end gap-3`}
 					>
 						<h1 className="text-3xl leading-tight font-bold tracking-tight sm:text-4xl">
 							{project.title}
@@ -174,8 +159,8 @@ function RouteComponent() {
 								{project.status}
 							</Badge>
 							<span aria-hidden="true">|</span>
-							<time dateTime={new Date(project.publishDate).toISOString()}>
-								{longDate.format(new Date(project.publishDate))}
+							<time dateTime={project.date}>
+								{longDate.format(new Date(project.date))}
 							</time>
 						</div>
 					</div>
@@ -183,11 +168,11 @@ function RouteComponent() {
 					{project.technologies.length > 0 && (
 						<div className="mb-4 flex flex-wrap gap-1.5">
 							{project.technologies.map((tech) => {
-								const palette = COLORS[tech.color as ColorKey] ?? COLORS.blue;
+								const palette = COLORS[tech.color];
 
 								return (
 									<Badge
-										key={tech.name}
+										key={tech.slug}
 										variant="outline"
 										className={`${palette.text} ${palette.border} rounded-none border bg-transparent`}
 									>
@@ -205,7 +190,7 @@ function RouteComponent() {
 					)}
 
 					<MarkdownContent
-						html={contentHtml}
+						html={project.html}
 						className="prose prose-amber dark:prose-invert max-w-none"
 					/>
 				</div>

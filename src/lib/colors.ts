@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 export const COLORS = {
 	red: {
@@ -65,13 +65,6 @@ export const COLORS = {
 
 export type ColorKey = keyof typeof COLORS;
 
-export const COLOR_KEYS = Object.keys(
-	COLORS,
-) as Array<ColorKey>;
-
-export function getRandomColorKey(): ColorKey {
-	const index = Math.floor(Math.random() * COLOR_KEYS.length);
-	return COLOR_KEYS[index] ?? "blue";
-}
-
-export const colorSchema = z.enum(COLOR_KEYS as [ColorKey, ...ColorKey[]]);
+export const colorSchema = z.enum(
+	Object.keys(COLORS) as [ColorKey, ...Array<ColorKey>],
+);

@@ -1,0 +1,18 @@
+# slug → display name and badge colour.
+# Colours are keys of src/lib/colors.ts (red, orange, amber, yellow, lime,
+# green, emerald, cyan, blue, indigo, violet, pink).
+react:
+  name: React
+  color: cyan
+typescript:
+  name: TypeScript
+  color: blue
+tanstack-start:
+  name: TanStack Start
+  color: amber
+tailwindcss:
+  name: Tailwind CSS
+  color: emerald
+bun:
+  name: Bun
+  color: orange
