@@ -11,18 +11,19 @@ import { SOCIAL_LINKS } from "#/lib/constants";
 
 import { CornerSquare } from "./-layout";
 
+// Email first: it is the main way to get in touch.
 const LINKS = [
-	{
-		label: "GitHub",
-		href: SOCIAL_LINKS.github,
-		icon: Github,
-		external: true,
-	},
 	{
 		label: "Email",
 		href: `mailto:${SOCIAL_LINKS.email}`,
 		icon: Mail,
 		external: false,
+	},
+	{
+		label: "GitHub",
+		href: SOCIAL_LINKS.github,
+		icon: Github,
+		external: true,
 	},
 	{
 		label: "LinkedIn",
@@ -38,27 +39,27 @@ export function Hero() {
 		<section aria-labelledby="hero-title">
 			<div className="relative border-b-2 px-4 pt-12 pb-8 sm:pt-20 sm:pb-10">
 				<p className="mb-8 type-label text-muted-foreground sm:mb-12">
-					Software developer — frontend, backend, DevOps
+					Full-stack developer — websites, web apps, automation
 				</p>
 				<h1 id="hero-title" className="type-display">
 					Hi, I'm
 					<br />
 					Viktor<span className="text-primary">.</span>
 				</h1>
+				<p className="mt-8 max-w-3xl text-2xl leading-tight font-bold tracking-tight sm:mt-10 sm:text-4xl">
+					I build websites, web applications, and automation tools.
+				</p>
 				<CornerSquare position="bottom-left" />
 				<CornerSquare position="bottom-right" />
 			</div>
 
 			<div className="relative grid grid-cols-1 border-b-2 sm:grid-cols-[1fr_15rem]">
-				<div className="max-w-prose space-y-4 px-4 py-8 text-lg leading-relaxed sm:py-10 sm:text-xl">
+				<div className="max-w-prose px-4 py-8 text-lg leading-relaxed sm:py-10 sm:text-xl">
 					<p>
-						I'm a software developer who loves building web applications,
-						whether it's frontend, backend, or DevOps — I've worked across all
-						of them.
-					</p>
-					<p className="text-muted-foreground">
-						Even if that sounds like a jack of all trades, I know I don't know
-						everything. I'm eager to learn new things and grow.
+						I work across frontend and backend development, using JavaScript,
+						TypeScript, and Python to turn requirements into working software —
+						from editable business websites to integrations and scripts that cut
+						down repetitive work.
 					</p>
 				</div>
 

@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { cn } from "cn";
 
 import { ThemeSwitcher } from "#/components/theme-switcher";
 
@@ -37,6 +38,23 @@ export function Header() {
 								aria-hidden="true"
 							/>
 							Projects
+						</Link>
+						{/*
+						 * Exact match: otherwise "/" counts as active on every page.
+						 * Hidden on phones, where it doesn't fit and the hero's Email
+						 * link is right below.
+						 */}
+						<Link
+							to="/"
+							hash="contact"
+							activeOptions={{ exact: true, includeHash: true }}
+							className={cn(navLinkClassName, "max-sm:hidden")}
+						>
+							<span
+								className="size-1.5 bg-primary opacity-0 transition-opacity group-data-[status=active]/nav:opacity-100"
+								aria-hidden="true"
+							/>
+							Contact
 						</Link>
 					</nav>
 					<div className="flex items-center border-l-2 px-2">

@@ -2,6 +2,7 @@ import { createRootRoute, Outlet } from "@tanstack/react-router";
 
 import { RootProviders } from "#/components/providers";
 import { getTheme } from "#/functions/theme";
+import { HOME_DESCRIPTION, HOME_TITLE } from "#/lib/site";
 
 import { NotFound } from "./_home/-not-found";
 
@@ -18,12 +19,11 @@ export const Route = createRootRoute({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "VKHR | Portfolio",
+				title: HOME_TITLE,
 			},
 			{
 				name: "description",
-				content:
-					"Viktor's portfolio: web projects across frontend, backend and DevOps.",
+				content: HOME_DESCRIPTION,
 			},
 		],
 		links: [

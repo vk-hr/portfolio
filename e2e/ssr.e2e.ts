@@ -14,7 +14,9 @@ import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { allProjects } from "content-collections";
 import { Window } from "happy-dom";
 
-import { listProjects } from "#/lib/projects";
+import { SOCIAL_LINKS } from "#/lib/constants";
+import { listProjects, listSelectedProjects } from "#/lib/projects";
+import { HOME_DESCRIPTION, HOME_TITLE } from "#/lib/site";
 
 const SERVER = ".output/server/index.mjs";
 
@@ -85,16 +87,47 @@ function themeBeforePaint(html: string) {
 const visible = listProjects();
 
 describe("home page", () => {
-	test("renders the hero and the most recent projects", async () => {
+	test("renders the hero and the selected work", async () => {
 		const { status, doc } = await get("/");
 		expect(status).toBe(200);
-		expect(text(doc.querySelector("title"))).toBe("VKHR | Portfolio");
 		expect(text(doc.querySelector("#hero-title"))).toBe("Hi, I'm Viktor.");
 		const cards = [...doc.querySelectorAll("button[aria-haspopup=dialog]")];
-		expect(cards).toHaveLength(Math.min(6, visible.length));
-		visible.slice(0, 6).forEach((project, i) => {
+		const selected = listSelectedProjects(6);
+		expect(cards).toHaveLength(selected.length);
+		selected.forEach((project, i) => {
 			expect(text(cards[i])).toContain(project.title);
 		});
+	});
+
+	test("has exactly one title and description, naming Viktor", async () => {
+		const { doc } = await get("/");
+		const titles = [...doc.querySelectorAll("title")];
+		const descriptions = [...doc.querySelectorAll('meta[name="description"]')];
+		expect(titles.map((t) => text(t))).toEqual([HOME_TITLE]);
+		expect(descriptions.map((m) => m.getAttribute("content"))).toEqual([
+			HOME_DESCRIPTION,
+		]);
+		expect(HOME_TITLE).toContain("Viktor");
+	});
+
+	test("the contact section and the header link lead to email", async () => {
+		const { doc } = await get("/");
+		expect(
+			doc.querySelector('#contact a[href^="mailto:"]')?.getAttribute("href"),
+		).toBe(`mailto:${SOCIAL_LINKS.email}`);
+		const headerLink = doc.querySelector('header a[href="/#contact"]');
+		expect(text(headerLink)).toBe("Contact");
+	});
+
+	test("every GitHub profile link points at vk-hr", async () => {
+		const { doc } = await get("/");
+		const github = [...doc.querySelectorAll('a[href*="github.com/"]')].map(
+			(a) => a.getAttribute("href") as string,
+		);
+		expect(github.length).toBeGreaterThan(0);
+		for (const href of github) {
+			expect(href).toStartWith("https://github.com/vk-hr");
+		}
 	});
 
 	test("links its stylesheet, and the stylesheet is served", async () => {

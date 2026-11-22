@@ -12,7 +12,6 @@ import * as React from "react";
 
 import { morph, MorphFrame } from "#/components/project-morph";
 import { StatusLabel, TechList } from "#/components/tech-list";
-import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { mediumDate } from "#/lib/format";
 import type { ProjectSummary } from "#/lib/projects";
 
@@ -21,59 +20,41 @@ import { CornerSquare, SectionHeading } from "./-layout";
 const springTransition = { type: "spring", bounce: 0, duration: 0.3 } as const;
 
 type Project = ProjectSummary;
-type Tab = "recent" | "featured";
 
-type ProjectsProps = {
-	recentProjects: Array<Project>;
-	featuredProjects: Array<Project>;
+type SelectedWorkProps = {
+	index: string;
+	projects: Array<Project>;
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
+/** The home page's project cards; each opens a dialog with the details. */
+export function SelectedWork({ index, projects }: SelectedWorkProps) {
 	"use no memo";
-	const [tab, setTab] = React.useState<Tab>("recent");
 	const [selected, setSelected] = React.useState<{
 		project: Project;
 		index: number;
 	} | null>(null);
 
-	const projects = tab === "recent" ? recentProjects : featuredProjects;
-
 	return (
-		<section aria-labelledby="projects-title" className="flex-1">
-			<SectionHeading index="01" title="Projects" id="projects-title">
-				<div className="flex items-stretch border-2">
-					<Tabs value={tab} onValueChange={(value: Tab) => setTab(value)}>
-						<TabsList variant="line" className="h-9 px-1">
-							<TabsTrigger value="recent" className="cursor-pointer type-label">
-								Recent
-							</TabsTrigger>
-							<TabsTrigger
-								value="featured"
-								className="cursor-pointer type-label"
-							>
-								Featured
-							</TabsTrigger>
-						</TabsList>
-					</Tabs>
-					<Link
-						to="/projects"
-						className="group flex items-center gap-2 border-l-2 px-3 type-label transition-colors hover:bg-foreground hover:text-background"
-					>
-						All
-						<HugeiconsIcon
-							icon={ArrowRight}
-							strokeWidth={2}
-							className="size-3.5 transition-transform group-hover:translate-x-0.5"
-						/>
-					</Link>
-				</div>
+		<section aria-labelledby="work-title">
+			<SectionHeading index={index} title="Selected work" id="work-title">
+				<Link
+					to="/projects"
+					className="group flex h-9 items-center gap-2 border-2 px-3 type-label transition-colors hover:bg-foreground hover:text-background"
+				>
+					All projects
+					<HugeiconsIcon
+						icon={ArrowRight}
+						strokeWidth={2}
+						className="size-3.5 transition-transform group-hover:translate-x-0.5"
+					/>
+				</Link>
 			</SectionHeading>
 
 			{projects.length === 0 ? (
 				<p className="m-4 border-2 border-dashed p-12 text-center type-label text-muted-foreground">
-					{tab === "recent" ? "No projects yet" : "No featured projects"}
+					No projects yet
 				</p>
 			) : (
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

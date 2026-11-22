@@ -60,7 +60,10 @@ Always use `bun` (never npm/yarn/pnpm).
   `useMemo`/`useCallback`/`memo`. Components using `motion` opt out with
   `"use no memo"`; keep that directive where it is.
 - **Routes** (`src/routes/_home/`, pathless layout `route.tsx`):
-  - `/` → `index.tsx`
+  - `/` → `index.tsx`: hero, What I can help with (`-services.tsx`),
+    Selected work (`-projects.tsx`, featured projects first, then the newest;
+    each card opens a dialog), Working together (`-working-together.tsx`) and
+    Contact (`-contact.tsx`, `#contact`)
   - `/projects` → `projects/index.tsx`
   - `/projects/$slugId` → `projects/$slugId.tsx`; unknown slug throws
     `notFound()`
@@ -71,6 +74,26 @@ Always use `bun` (never npm/yarn/pnpm).
 - **Data flow:** route loaders call the synchronous helpers in
   `src/lib/projects.ts` and components read `Route.useLoaderData()`. There is
   no TanStack Query, no database and no environment variables.
+
+## Public copy
+
+The site markets freelance work (full-stack web development and
+Python/JavaScript automation) to small businesses and technical clients, and
+keeps employment open (remote, or in Ukraine). Copy states only what is true
+today:
+
+- Languages: Ukrainian (native) and English (B2), nothing else. Location:
+  Ukraine, "Kyiv time" (never a fixed UTC offset).
+- Don't invent testimonials, client names, metrics, rates, working hours,
+  response times, availability dates, guarantees or a formal process. The
+  process is: discuss needs, clarify requirements in writing, share demos for
+  feedback.
+- Deployment and maintenance are "included depending on the project". Don't
+  advertise hosting or a managed-hosting service.
+- Email is the main contact. Don't add marketplace (e.g. Upwork) links or
+  platform-protection claims until a real profile URL exists.
+- Home title and description live in `src/lib/site.ts`. Profile links live in
+  `src/lib/constants.ts` (GitHub user: `vk-hr`).
 
 ## Content
 
