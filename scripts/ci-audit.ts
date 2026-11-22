@@ -92,8 +92,11 @@ for (const run of runs) {
 			`repos/${repo}/actions/runs/${run.id}/attempts/${attempt}/jobs?per_page=100`,
 		);
 		const start = t(info.run_started_at);
+		// Cancelled and skipped jobs say nothing about how long a check takes.
 		const done = jobs.filter(
-			(j) => j.completed_at && j.conclusion !== "skipped",
+			(j) =>
+				j.completed_at &&
+				(j.conclusion === "success" || j.conclusion === "failure"),
 		);
 		if (done.length === 0) continue;
 		walls.push(
