@@ -7,7 +7,10 @@ const navLinkClassName =
 
 export function Header() {
 	return (
-		<header className="border-b-2">
+		<header
+			className="border-b-2"
+			style={{ viewTransitionName: "site-header" }}
+		>
 			<a
 				href="#main"
 				className="sr-only z-50 bg-foreground px-4 py-2 type-label text-background focus:not-sr-only focus:absolute focus:top-2 focus:left-2"

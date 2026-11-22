@@ -7,6 +7,8 @@ export function getRouter() {
 		routeTree,
 		scrollRestoration: true,
 		defaultPreload: "intent",
+		// Morphs shared elements (see src/lib/view-transition.ts), including on back/forward.
+		defaultViewTransition: true,
 	});
 }
 

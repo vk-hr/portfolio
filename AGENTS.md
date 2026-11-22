@@ -102,6 +102,15 @@ Content Collections, configured in `content-collections.ts`:
   * Pages use `Page` from `src/routes/_home/-layout.tsx` (header, framed
     `main#main`, footer) and `SectionHeading` for ruled section bars.
     Technologies and status render through `src/components/tech-list.tsx`.
+  - **View transitions:** the router has `defaultViewTransition: true`, and
+    project parts (`frame`, `title`, `description`, `cover`) get shared
+    `view-transition-name`s from `projectTransition()` in
+    `src/lib/view-transition.ts`. That makes the home modal or card, and the
+    `/projects` row, morph into `/projects/$slugId` and back. A name must be
+    unique on the page when the snapshot is taken, so a card drops its names
+    while its modal is open. The modal's "Full project" link must not close
+    the modal first, or there is nothing to morph from. Animation timing is
+    in `src/styles.css`.
 - Icons: `@hugeicons/react` + `@hugeicons/core-free-icons`.
 - Animations: `motion`.
 

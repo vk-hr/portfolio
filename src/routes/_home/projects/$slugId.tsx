@@ -10,6 +10,7 @@ import { MarkdownContent } from "#/components/markdown-content";
 import { StatusLabel, TechList } from "#/components/tech-list";
 import { longDate } from "#/lib/format";
 import { getProject } from "#/lib/projects";
+import { projectTransition } from "#/lib/view-transition";
 
 import { CornerSquare, Page } from "../-layout";
 
@@ -60,12 +61,21 @@ function ProjectPage() {
 				<CornerSquare position="bottom-right" />
 			</div>
 
-			<header className="relative border-b-2 px-4 pt-12 pb-8 sm:pt-16 sm:pb-10">
+			<header
+				style={projectTransition(project.slug, "frame")}
+				className="relative border-b-2 px-4 pt-12 pb-8 sm:pt-16 sm:pb-10"
+			>
 				<StatusLabel status={project.status} className="mb-6" />
-				<h1 className="text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.9] font-extrabold tracking-[-0.045em]">
+				<h1
+					style={projectTransition(project.slug, "title")}
+					className="text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.9] font-extrabold tracking-[-0.045em]"
+				>
 					{project.title}
 				</h1>
-				<p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+				<p
+					style={projectTransition(project.slug, "description")}
+					className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
+				>
 					{project.description}
 				</p>
 				<CornerSquare position="bottom-left" />
@@ -142,6 +152,7 @@ function ProjectPage() {
 				<img
 					src={project.cover}
 					alt=""
+					style={projectTransition(project.slug, "cover")}
 					className="aspect-video w-full border-b-2 object-cover"
 				/>
 			)}

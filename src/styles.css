@@ -144,3 +144,45 @@
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 }
+
+/*
+ * View transitions (router defaultViewTransition). Project parts share names
+ * via src/lib/view-transition.ts so the modal/card/index row morphs into the
+ * project page and back.
+ */
+::view-transition-group(*) {
+	animation-duration: 420ms;
+	animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Unmatched parts (root, other projects' cards/rows) just fade, quickly. */
+::view-transition-old(root),
+::view-transition-old(*):only-child,
+::view-transition-new(*):only-child {
+	animation-duration: 200ms;
+}
+
+/* Scale text by height so it keeps its aspect ratio instead of stretching. */
+::view-transition-old(.project-title),
+::view-transition-new(.project-title),
+::view-transition-old(.project-description),
+::view-transition-new(.project-description) {
+	width: auto;
+	height: 100%;
+}
+
+::view-transition-old(.project-frame),
+::view-transition-new(.project-frame),
+::view-transition-old(.project-cover),
+::view-transition-new(.project-cover) {
+	height: 100%;
+	object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none;
+	}
+}
