@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin/posts/")({
 	component: PostsRouteComponent,
 });
 
-export function PostsRouteComponent() {
+function PostsRouteComponent() {
 	const navigate = Route.useNavigate();
 
 	return (

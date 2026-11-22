@@ -18,7 +18,7 @@ export const Route = createFileRoute("/admin/categories")({
 	component: CategoriesRouteComponent,
 });
 
-export function CategoriesRouteComponent() {
+function CategoriesRouteComponent() {
 	const navigate = Route.useNavigate();
 
 	return (

@@ -42,7 +42,7 @@ export const Route = createFileRoute("/admin")({
 	notFoundComponent: NotFoundPage,
 });
 
-export function AdminLayout() {
+function AdminLayout() {
 	const { isSidebarOpen } = Route.useLoaderData();
 
 	if (!Route.useRouteContext().isAuthenticated) {

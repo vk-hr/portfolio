@@ -18,7 +18,7 @@ export const Route = createFileRoute("/admin/technologies")({
 	component: TechnologiesRouteComponent,
 });
 
-export function TechnologiesRouteComponent() {
+function TechnologiesRouteComponent() {
 	const navigate = Route.useNavigate();
 
 	return (

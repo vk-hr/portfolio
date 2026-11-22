@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin/media")({
 	component: MediaRouteComponent,
 });
 
-export function MediaRouteComponent() {
+function MediaRouteComponent() {
 	const navigate = Route.useNavigate();
 
 	return (

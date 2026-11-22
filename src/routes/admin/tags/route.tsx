@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin/tags")({
 	component: TagsRouteComponent,
 });
 
-export function TagsRouteComponent() {
+function TagsRouteComponent() {
 	const navigate = Route.useNavigate();
 
 	return (

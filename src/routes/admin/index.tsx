@@ -104,7 +104,7 @@ export const Route = createFileRoute("/admin/")({
 	},
 });
 
-export function RouteComponent() {
+function RouteComponent() {
 	const navigate = useNavigate();
 	const updatePost = useMutation(api.functions.posts.updateSummary);
 	const updateProject = useMutation(api.functions.projects.updateSummary);

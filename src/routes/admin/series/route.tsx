@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin/series")({
 	component: SeriesRouteComponent,
 });
 
-export function SeriesRouteComponent() {
+function SeriesRouteComponent() {
 	const navigate = Route.useNavigate();
 
 	return (
