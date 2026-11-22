@@ -131,7 +131,7 @@
 @utility type-display {
 	font-size: clamp(3.25rem, 12vw, 8.5rem);
 	font-weight: 800;
-	line-height: 0.86;
+	line-height: 0.96;
 	letter-spacing: -0.055em;
 }
 
