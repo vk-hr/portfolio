@@ -43,6 +43,7 @@ hooks {
 			["typecheck"] { depends = "install"; check = "bun check" }
 			["test"] { depends = "install"; check = "bun test --isolate" }
 			["build"] { depends = "install"; check = "bun --bun vite build" }
+			["e2e"] { depends = "build"; check = "bun test ./e2e/ssr.e2e.ts" }
 		}
 	}
 }
