@@ -82,12 +82,26 @@ Content Collections, configured in `content-collections.ts`:
 
 - Tailwind CSS 4 (`src/styles.css`, `@tailwindcss/typography` for Markdown).
 - shadcn on Base UI, preset `b2CRD5abo`: style `base-lyra`, base color mist,
-  theme emerald, hugeicons, Geist font. Config in `components.json`.
+  theme emerald, hugeicons. Config in `components.json`. Re-applying the
+  preset overwrites `src/styles.css` tokens and fonts — reapply the design
+  below afterwards.
   - Add/update a component: `bunx --bun shadcn add <name> --overwrite --yes`
   - Re-apply or inspect the preset: `bunx --bun shadcn apply b2CRD5abo` /
     `bunx --bun shadcn preset decode b2CRD5abo`
   - shadcn may create `src/lib/utils.ts` — delete it. `cn` comes from the `cn`
     package: `import { cn } from "cn"`.
+- **Design: grotesque minimal.** Schibsted Grotesk (sans, headings and body)
+  - Geist Mono (labels), both via `@fontsource-variable/*`. Near-monochrome
+    tokens with a single emerald accent (`primary`), square corners
+    (`--radius: 0`), 2px rules, diamond corner marks (`CornerSquare`) and the
+    diagonal hatch (`bg-diagonal-dashed`) behind the framed column.
+  * Custom utilities in `src/styles.css`: `type-display` (oversized headline),
+    `type-label` (small uppercase mono for indexes, meta and nav),
+    `bg-diagonal-dashed`. Don't name custom utilities `text-*`: `cn`
+    (tailwind-merge) treats them as text colours and drops one of the two.
+  * Pages use `Page` from `src/routes/_home/-layout.tsx` (header, framed
+    `main#main`, footer) and `SectionHeading` for ruled section bars.
+    Technologies and status render through `src/components/tech-list.tsx`.
 - Icons: `@hugeicons/react` + `@hugeicons/core-free-icons`.
 - Animations: `motion`.
 
