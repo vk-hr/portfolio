@@ -27,5 +27,5 @@ jobs:
       - run: bun fmt --check
       - run: bun lint
       - run: bun check
-      - run: bun test
+      - run: bun test --isolate
       - run: bun --bun vite build

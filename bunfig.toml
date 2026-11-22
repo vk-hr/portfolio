@@ -18,3 +18,9 @@ functions = ["cn", "cva"]
 # happy-dom must be registered before anything imports Testing Library.
 # (Bun 1.4.5 adds `environment = "happy-dom"`; switch once nixpkgs has it.)
 preload = ["./test/happydom.ts", "./test/setup.ts"]
+# Random order flushes out tests that depend on each other. A failure prints
+# its seed; reproduce with `bun test --seed=<seed>`.
+randomize = true
+# Isolation (a fresh global and module registry per file) is the `--isolate`
+# flag, passed by CI. Bun 1.4.4 silently ignores `isolate = true` here:
+# verified with one file leaking a global into another.
