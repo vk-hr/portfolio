@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
+	"packageManager": "bun@1.4.4",
 	"imports": {
 		"#/*": "./src/*"
 	},
@@ -10,11 +11,8 @@
 		"dev": "bun --bun vite dev --port 3000",
 		"build": "bun --bun vite build",
 		"preview": "bun --bun vite preview",
-		"test": "vitest run",
-		"format": "biome format",
-		"lint": "biome lint",
-		"check": "biome check",
-		"typecheck": "tsc --noEmit"
+		"postinstall": "content-collections build",
+		"lint": "biome lint"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.9.0",
@@ -41,25 +39,27 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.6.8",
+		"@content-collections/cli": "^0.1.9",
 		"@content-collections/core": "^0.15.3",
 		"@content-collections/markdown": "^0.1.4",
 		"@content-collections/vite": "^0.3.1",
+		"@happy-dom/global-registrator": "^21.0.4",
 		"@tailwindcss/typography": "^0.5.20",
 		"@tanstack/devtools-vite": "^0.8.7",
 		"@tanstack/react-devtools": "^0.10.15",
 		"@tanstack/react-router-devtools": "^1.167.4",
 		"@testing-library/dom": "^10.4.2",
+		"@testing-library/jest-dom": "^8.0.0",
 		"@testing-library/react": "^16.3.3",
 		"@types/bun": "^1.4.5",
 		"@types/node": "^26.6.6",
 		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.3.0",
 		"babel-plugin-react-compiler": "^1.0.0",
-		"jsdom": "^31.0.1",
+		"happy-dom": "^21.0.4",
 		"remark-gfm": "^4.0.1",
 		"shadcn": "^4.23.0",
-		"typescript": "^7.0.2",
-		"vite": "^8.3.8",
-		"vitest": "^5.1.1"
+		"typescript": "7.0.2",
+		"vite": "^8.3.8"
 	}
 }

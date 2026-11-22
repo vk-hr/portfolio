@@ -1,0 +1,15 @@
+[fmt]
+# Matches the previous Biome style: tabs, double quotes, 80 columns.
+useTabs = true
+sortImports = true
+sortPackageJson = true
+ignorePatterns = ["src/routeTree.gen.ts", ".content-collections/", ".output/", "flake.lock"]
+
+[fmt.sortTailwindcss]
+stylesheet = "src/styles.css"
+functions = ["cn", "cva"]
+
+[test]
+# happy-dom must be registered before anything imports Testing Library.
+# (Bun 1.4.5 adds `environment = "happy-dom"`; switch once nixpkgs has it.)
+preload = ["./test/happydom.ts", "./test/setup.ts"]
