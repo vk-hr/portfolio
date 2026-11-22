@@ -1,34 +1,13 @@
 import { ConvexQueryClient } from "@convex-dev/react-query";
-import { MutationCache, QueryClient } from "@tanstack/react-query";
-import { createRouteMask, createRouter } from "@tanstack/react-router";
+import { QueryClient } from "@tanstack/react-query";
+import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { ConvexProvider } from "convex/react";
-import { toast } from "sonner";
 import { env } from "#/env";
 import { routeTree } from "./routeTree.gen";
 
-const createTagMask = createRouteMask({
-	routeTree,
-	from: "/admin/tags/new",
-	to: "/admin/tags",
-});
-
-const createSeriesMask = createRouteMask({
-	routeTree,
-	from: "/admin/series/new",
-	to: "/admin/series",
-});
-
-const createCategoryMask = createRouteMask({
-	routeTree,
-	from: "/admin/categories/new",
-	to: "/admin/categories",
-});
-
 export function getRouter() {
-	const convexQueryClient = new ConvexQueryClient(env.VITE_CONVEX_URL, {
-		expectAuth: true,
-	});
+	const convexQueryClient = new ConvexQueryClient(env.VITE_CONVEX_URL);
 
 	const queryClient: QueryClient = new QueryClient({
 		defaultOptions: {
@@ -37,17 +16,12 @@ export function getRouter() {
 				queryFn: convexQueryClient.queryFn(),
 			},
 		},
-		mutationCache: new MutationCache({
-			onError: (error) => toast.error(error.message),
-		}),
 	});
 
 	convexQueryClient.connect(queryClient);
 
 	const router = createRouter({
 		routeTree,
-		routeMasks: [createTagMask, createSeriesMask, createCategoryMask],
-
 		scrollRestoration: true,
 		defaultPreload: "intent",
 		defaultPreloadStaleTime: 0,

@@ -5,19 +5,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { COLORS, type ColorKey } from "shared/colors";
 import { MarkdownContent } from "#/components/markdown-content";
 import { Badge } from "#/components/ui/badge";
-import { getRendered } from "#/functions/renderer";
 import { getProjectBySlug } from "#/queries/public";
 import { CornerSquare, Layout } from "../-layout";
 
 export const Route = createFileRoute("/_home/projects/$slugId")({
 	loader: async ({ context, params }) => {
-		const project = await context.queryClient.ensureQueryData(
-			getProjectBySlug(params.slugId),
-		);
-		const contentHtml = project?.content
-			? await getRendered({ data: project.content })
-			: "";
-		return { contentHtml };
+		await context.queryClient.ensureQueryData(getProjectBySlug(params.slugId));
+		// Body rendering moves to build-time Markdown with content-collections.
+		return { contentHtml: "" };
 	},
 	component: RouteComponent,
 });

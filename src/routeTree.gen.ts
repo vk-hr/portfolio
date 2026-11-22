@@ -10,100 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as HomeRouteRouteImport } from './routes/_home/route'
-import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as HomeIndexRouteImport } from './routes/_home/index'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as AdminCategoriesRouteRouteImport } from './routes/admin/categories/route'
-import { Route as AdminLoginRouteImport } from './routes/admin/login'
-import { Route as AdminMediaRouteRouteImport } from './routes/admin/media/route'
-import { Route as AdminSeriesRouteRouteImport } from './routes/admin/series/route'
-import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
-import { Route as AdminTagsRouteRouteImport } from './routes/admin/tags/route'
-import { Route as AdminTechnologiesRouteRouteImport } from './routes/admin/technologies/route'
-import { Route as HomePostsIndexRouteImport } from './routes/_home/posts/index'
-import { Route as HomePostsSlugIdRouteImport } from './routes/_home/posts/$slugId'
 import { Route as HomeProjectsIndexRouteImport } from './routes/_home/projects/index'
 import { Route as HomeProjectsSlugIdRouteImport } from './routes/_home/projects/$slugId'
-import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categories/index'
-import { Route as AdminCategoriesNewRouteImport } from './routes/admin/categories/new'
-import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
-import { Route as AdminMediaSlugIdRouteImport } from './routes/admin/media/$slugId'
-import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
-import { Route as AdminPostsSlugIdRouteImport } from './routes/admin/posts/$slugId'
-import { Route as AdminPostsNewRouteImport } from './routes/admin/posts/new'
-import { Route as AdminProjectsIndexRouteImport } from './routes/admin/projects/index'
-import { Route as AdminProjectsSlugIdRouteImport } from './routes/admin/projects/$slugId'
-import { Route as AdminProjectsNewRouteImport } from './routes/admin/projects/new'
-import { Route as AdminSeriesIndexRouteImport } from './routes/admin/series/index'
-import { Route as AdminSeriesNewRouteImport } from './routes/admin/series/new'
-import { Route as AdminTagsIndexRouteImport } from './routes/admin/tags/index'
-import { Route as AdminTagsNewRouteImport } from './routes/admin/tags/new'
-import { Route as AdminTechnologiesIndexRouteImport } from './routes/admin/technologies/index'
-import { Route as AdminTechnologiesNewRouteImport } from './routes/admin/technologies/new'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
 const HomeRouteRoute = HomeRouteRouteImport.update({
   id: '/_home',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRouteRoute = AdminRouteRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const HomeIndexRoute = HomeIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => HomeRouteRoute,
-} as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminCategoriesRouteRoute = AdminCategoriesRouteRouteImport.update({
-  id: '/categories',
-  path: '/categories',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminMediaRouteRoute = AdminMediaRouteRouteImport.update({
-  id: '/media',
-  path: '/media',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminSeriesRouteRoute = AdminSeriesRouteRouteImport.update({
-  id: '/series',
-  path: '/series',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminTagsRouteRoute = AdminTagsRouteRouteImport.update({
-  id: '/tags',
-  path: '/tags',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminTechnologiesRouteRoute = AdminTechnologiesRouteRouteImport.update({
-  id: '/technologies',
-  path: '/technologies',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const HomePostsIndexRoute = HomePostsIndexRouteImport.update({
-  id: '/posts/',
-  path: '/posts/',
-  getParentRoute: () => HomeRouteRoute,
-} as any)
-const HomePostsSlugIdRoute = HomePostsSlugIdRouteImport.update({
-  id: '/posts/$slugId',
-  path: '/posts/$slugId',
   getParentRoute: () => HomeRouteRoute,
 } as any)
 const HomeProjectsIndexRoute = HomeProjectsIndexRouteImport.update({
@@ -116,288 +33,39 @@ const HomeProjectsSlugIdRoute = HomeProjectsSlugIdRouteImport.update({
   path: '/projects/$slugId',
   getParentRoute: () => HomeRouteRoute,
 } as any)
-const AdminCategoriesIndexRoute = AdminCategoriesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminCategoriesRouteRoute,
-} as any)
-const AdminCategoriesNewRoute = AdminCategoriesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminCategoriesRouteRoute,
-} as any)
-const AdminMediaIndexRoute = AdminMediaIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminMediaRouteRoute,
-} as any)
-const AdminMediaSlugIdRoute = AdminMediaSlugIdRouteImport.update({
-  id: '/$slugId',
-  path: '/$slugId',
-  getParentRoute: () => AdminMediaRouteRoute,
-} as any)
-const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
-  id: '/posts/',
-  path: '/posts/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminPostsSlugIdRoute = AdminPostsSlugIdRouteImport.update({
-  id: '/posts/$slugId',
-  path: '/posts/$slugId',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminPostsNewRoute = AdminPostsNewRouteImport.update({
-  id: '/posts/new',
-  path: '/posts/new',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminProjectsIndexRoute = AdminProjectsIndexRouteImport.update({
-  id: '/projects/',
-  path: '/projects/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminProjectsSlugIdRoute = AdminProjectsSlugIdRouteImport.update({
-  id: '/projects/$slugId',
-  path: '/projects/$slugId',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminProjectsNewRoute = AdminProjectsNewRouteImport.update({
-  id: '/projects/new',
-  path: '/projects/new',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminSeriesIndexRoute = AdminSeriesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminSeriesRouteRoute,
-} as any)
-const AdminSeriesNewRoute = AdminSeriesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminSeriesRouteRoute,
-} as any)
-const AdminTagsIndexRoute = AdminTagsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminTagsRouteRoute,
-} as any)
-const AdminTagsNewRoute = AdminTagsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminTagsRouteRoute,
-} as any)
-const AdminTechnologiesIndexRoute = AdminTechnologiesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminTechnologiesRouteRoute,
-} as any)
-const AdminTechnologiesNewRoute = AdminTechnologiesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminTechnologiesRouteRoute,
-} as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof HomeIndexRoute
-  '/admin': typeof AdminRouteRouteWithChildren
-  '/admin/categories': typeof AdminCategoriesRouteRouteWithChildren
-  '/admin/media': typeof AdminMediaRouteRouteWithChildren
-  '/admin/series': typeof AdminSeriesRouteRouteWithChildren
-  '/admin/tags': typeof AdminTagsRouteRouteWithChildren
-  '/admin/technologies': typeof AdminTechnologiesRouteRouteWithChildren
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/': typeof AdminIndexRoute
-  '/posts/$slugId': typeof HomePostsSlugIdRoute
   '/projects/$slugId': typeof HomeProjectsSlugIdRoute
-  '/admin/categories/new': typeof AdminCategoriesNewRoute
-  '/admin/media/$slugId': typeof AdminMediaSlugIdRoute
-  '/admin/posts/$slugId': typeof AdminPostsSlugIdRoute
-  '/admin/posts/new': typeof AdminPostsNewRoute
-  '/admin/projects/$slugId': typeof AdminProjectsSlugIdRoute
-  '/admin/projects/new': typeof AdminProjectsNewRoute
-  '/admin/series/new': typeof AdminSeriesNewRoute
-  '/admin/tags/new': typeof AdminTagsNewRoute
-  '/admin/technologies/new': typeof AdminTechnologiesNewRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/posts/': typeof HomePostsIndexRoute
   '/projects/': typeof HomeProjectsIndexRoute
-  '/admin/categories/': typeof AdminCategoriesIndexRoute
-  '/admin/media/': typeof AdminMediaIndexRoute
-  '/admin/posts/': typeof AdminPostsIndexRoute
-  '/admin/projects/': typeof AdminProjectsIndexRoute
-  '/admin/series/': typeof AdminSeriesIndexRoute
-  '/admin/tags/': typeof AdminTagsIndexRoute
-  '/admin/technologies/': typeof AdminTechnologiesIndexRoute
 }
 export interface FileRoutesByTo {
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/settings': typeof AdminSettingsRoute
   '/': typeof HomeIndexRoute
-  '/admin': typeof AdminIndexRoute
-  '/posts/$slugId': typeof HomePostsSlugIdRoute
   '/projects/$slugId': typeof HomeProjectsSlugIdRoute
-  '/admin/categories/new': typeof AdminCategoriesNewRoute
-  '/admin/media/$slugId': typeof AdminMediaSlugIdRoute
-  '/admin/posts/$slugId': typeof AdminPostsSlugIdRoute
-  '/admin/posts/new': typeof AdminPostsNewRoute
-  '/admin/projects/$slugId': typeof AdminProjectsSlugIdRoute
-  '/admin/projects/new': typeof AdminProjectsNewRoute
-  '/admin/series/new': typeof AdminSeriesNewRoute
-  '/admin/tags/new': typeof AdminTagsNewRoute
-  '/admin/technologies/new': typeof AdminTechnologiesNewRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/posts': typeof HomePostsIndexRoute
   '/projects': typeof HomeProjectsIndexRoute
-  '/admin/categories': typeof AdminCategoriesIndexRoute
-  '/admin/media': typeof AdminMediaIndexRoute
-  '/admin/posts': typeof AdminPostsIndexRoute
-  '/admin/projects': typeof AdminProjectsIndexRoute
-  '/admin/series': typeof AdminSeriesIndexRoute
-  '/admin/tags': typeof AdminTagsIndexRoute
-  '/admin/technologies': typeof AdminTechnologiesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_home': typeof HomeRouteRouteWithChildren
-  '/admin': typeof AdminRouteRouteWithChildren
-  '/admin/categories': typeof AdminCategoriesRouteRouteWithChildren
-  '/admin/media': typeof AdminMediaRouteRouteWithChildren
-  '/admin/series': typeof AdminSeriesRouteRouteWithChildren
-  '/admin/tags': typeof AdminTagsRouteRouteWithChildren
-  '/admin/technologies': typeof AdminTechnologiesRouteRouteWithChildren
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/settings': typeof AdminSettingsRoute
   '/_home/': typeof HomeIndexRoute
-  '/admin/': typeof AdminIndexRoute
-  '/_home/posts/$slugId': typeof HomePostsSlugIdRoute
   '/_home/projects/$slugId': typeof HomeProjectsSlugIdRoute
-  '/admin/categories/new': typeof AdminCategoriesNewRoute
-  '/admin/media/$slugId': typeof AdminMediaSlugIdRoute
-  '/admin/posts/$slugId': typeof AdminPostsSlugIdRoute
-  '/admin/posts/new': typeof AdminPostsNewRoute
-  '/admin/projects/$slugId': typeof AdminProjectsSlugIdRoute
-  '/admin/projects/new': typeof AdminProjectsNewRoute
-  '/admin/series/new': typeof AdminSeriesNewRoute
-  '/admin/tags/new': typeof AdminTagsNewRoute
-  '/admin/technologies/new': typeof AdminTechnologiesNewRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/_home/posts/': typeof HomePostsIndexRoute
   '/_home/projects/': typeof HomeProjectsIndexRoute
-  '/admin/categories/': typeof AdminCategoriesIndexRoute
-  '/admin/media/': typeof AdminMediaIndexRoute
-  '/admin/posts/': typeof AdminPostsIndexRoute
-  '/admin/projects/': typeof AdminProjectsIndexRoute
-  '/admin/series/': typeof AdminSeriesIndexRoute
-  '/admin/tags/': typeof AdminTagsIndexRoute
-  '/admin/technologies/': typeof AdminTechnologiesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/admin'
-    | '/admin/categories'
-    | '/admin/media'
-    | '/admin/series'
-    | '/admin/tags'
-    | '/admin/technologies'
-    | '/admin/login'
-    | '/admin/settings'
-    | '/admin/'
-    | '/posts/$slugId'
-    | '/projects/$slugId'
-    | '/admin/categories/new'
-    | '/admin/media/$slugId'
-    | '/admin/posts/$slugId'
-    | '/admin/posts/new'
-    | '/admin/projects/$slugId'
-    | '/admin/projects/new'
-    | '/admin/series/new'
-    | '/admin/tags/new'
-    | '/admin/technologies/new'
-    | '/api/auth/$'
-    | '/posts/'
-    | '/projects/'
-    | '/admin/categories/'
-    | '/admin/media/'
-    | '/admin/posts/'
-    | '/admin/projects/'
-    | '/admin/series/'
-    | '/admin/tags/'
-    | '/admin/technologies/'
+  fullPaths: '/' | '/projects/$slugId' | '/projects/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/admin/login'
-    | '/admin/settings'
-    | '/'
-    | '/admin'
-    | '/posts/$slugId'
-    | '/projects/$slugId'
-    | '/admin/categories/new'
-    | '/admin/media/$slugId'
-    | '/admin/posts/$slugId'
-    | '/admin/posts/new'
-    | '/admin/projects/$slugId'
-    | '/admin/projects/new'
-    | '/admin/series/new'
-    | '/admin/tags/new'
-    | '/admin/technologies/new'
-    | '/api/auth/$'
-    | '/posts'
-    | '/projects'
-    | '/admin/categories'
-    | '/admin/media'
-    | '/admin/posts'
-    | '/admin/projects'
-    | '/admin/series'
-    | '/admin/tags'
-    | '/admin/technologies'
+  to: '/' | '/projects/$slugId' | '/projects'
   id:
     | '__root__'
     | '/_home'
-    | '/admin'
-    | '/admin/categories'
-    | '/admin/media'
-    | '/admin/series'
-    | '/admin/tags'
-    | '/admin/technologies'
-    | '/admin/login'
-    | '/admin/settings'
     | '/_home/'
-    | '/admin/'
-    | '/_home/posts/$slugId'
     | '/_home/projects/$slugId'
-    | '/admin/categories/new'
-    | '/admin/media/$slugId'
-    | '/admin/posts/$slugId'
-    | '/admin/posts/new'
-    | '/admin/projects/$slugId'
-    | '/admin/projects/new'
-    | '/admin/series/new'
-    | '/admin/tags/new'
-    | '/admin/technologies/new'
-    | '/api/auth/$'
-    | '/_home/posts/'
     | '/_home/projects/'
-    | '/admin/categories/'
-    | '/admin/media/'
-    | '/admin/posts/'
-    | '/admin/projects/'
-    | '/admin/series/'
-    | '/admin/tags/'
-    | '/admin/technologies/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   HomeRouteRoute: typeof HomeRouteRouteWithChildren
-  AdminRouteRoute: typeof AdminRouteRouteWithChildren
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -409,88 +77,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_home/': {
       id: '/_home/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof HomeIndexRouteImport
-      parentRoute: typeof HomeRouteRoute
-    }
-    '/admin/': {
-      id: '/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/categories': {
-      id: '/admin/categories'
-      path: '/categories'
-      fullPath: '/admin/categories'
-      preLoaderRoute: typeof AdminCategoriesRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/login': {
-      id: '/admin/login'
-      path: '/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/media': {
-      id: '/admin/media'
-      path: '/media'
-      fullPath: '/admin/media'
-      preLoaderRoute: typeof AdminMediaRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/series': {
-      id: '/admin/series'
-      path: '/series'
-      fullPath: '/admin/series'
-      preLoaderRoute: typeof AdminSeriesRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/tags': {
-      id: '/admin/tags'
-      path: '/tags'
-      fullPath: '/admin/tags'
-      preLoaderRoute: typeof AdminTagsRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/technologies': {
-      id: '/admin/technologies'
-      path: '/technologies'
-      fullPath: '/admin/technologies'
-      preLoaderRoute: typeof AdminTechnologiesRouteRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_home/posts/': {
-      id: '/_home/posts/'
-      path: '/posts'
-      fullPath: '/posts/'
-      preLoaderRoute: typeof HomePostsIndexRouteImport
-      parentRoute: typeof HomeRouteRoute
-    }
-    '/_home/posts/$slugId': {
-      id: '/_home/posts/$slugId'
-      path: '/posts/$slugId'
-      fullPath: '/posts/$slugId'
-      preLoaderRoute: typeof HomePostsSlugIdRouteImport
       parentRoute: typeof HomeRouteRoute
     }
     '/_home/projects/': {
@@ -507,141 +98,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeProjectsSlugIdRouteImport
       parentRoute: typeof HomeRouteRoute
     }
-    '/admin/categories/': {
-      id: '/admin/categories/'
-      path: '/'
-      fullPath: '/admin/categories/'
-      preLoaderRoute: typeof AdminCategoriesIndexRouteImport
-      parentRoute: typeof AdminCategoriesRouteRoute
-    }
-    '/admin/categories/new': {
-      id: '/admin/categories/new'
-      path: '/new'
-      fullPath: '/admin/categories/new'
-      preLoaderRoute: typeof AdminCategoriesNewRouteImport
-      parentRoute: typeof AdminCategoriesRouteRoute
-    }
-    '/admin/media/': {
-      id: '/admin/media/'
-      path: '/'
-      fullPath: '/admin/media/'
-      preLoaderRoute: typeof AdminMediaIndexRouteImport
-      parentRoute: typeof AdminMediaRouteRoute
-    }
-    '/admin/media/$slugId': {
-      id: '/admin/media/$slugId'
-      path: '/$slugId'
-      fullPath: '/admin/media/$slugId'
-      preLoaderRoute: typeof AdminMediaSlugIdRouteImport
-      parentRoute: typeof AdminMediaRouteRoute
-    }
-    '/admin/posts/': {
-      id: '/admin/posts/'
-      path: '/posts'
-      fullPath: '/admin/posts/'
-      preLoaderRoute: typeof AdminPostsIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/posts/$slugId': {
-      id: '/admin/posts/$slugId'
-      path: '/posts/$slugId'
-      fullPath: '/admin/posts/$slugId'
-      preLoaderRoute: typeof AdminPostsSlugIdRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/posts/new': {
-      id: '/admin/posts/new'
-      path: '/posts/new'
-      fullPath: '/admin/posts/new'
-      preLoaderRoute: typeof AdminPostsNewRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/projects/': {
-      id: '/admin/projects/'
-      path: '/projects'
-      fullPath: '/admin/projects/'
-      preLoaderRoute: typeof AdminProjectsIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/projects/$slugId': {
-      id: '/admin/projects/$slugId'
-      path: '/projects/$slugId'
-      fullPath: '/admin/projects/$slugId'
-      preLoaderRoute: typeof AdminProjectsSlugIdRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/projects/new': {
-      id: '/admin/projects/new'
-      path: '/projects/new'
-      fullPath: '/admin/projects/new'
-      preLoaderRoute: typeof AdminProjectsNewRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/series/': {
-      id: '/admin/series/'
-      path: '/'
-      fullPath: '/admin/series/'
-      preLoaderRoute: typeof AdminSeriesIndexRouteImport
-      parentRoute: typeof AdminSeriesRouteRoute
-    }
-    '/admin/series/new': {
-      id: '/admin/series/new'
-      path: '/new'
-      fullPath: '/admin/series/new'
-      preLoaderRoute: typeof AdminSeriesNewRouteImport
-      parentRoute: typeof AdminSeriesRouteRoute
-    }
-    '/admin/tags/': {
-      id: '/admin/tags/'
-      path: '/'
-      fullPath: '/admin/tags/'
-      preLoaderRoute: typeof AdminTagsIndexRouteImport
-      parentRoute: typeof AdminTagsRouteRoute
-    }
-    '/admin/tags/new': {
-      id: '/admin/tags/new'
-      path: '/new'
-      fullPath: '/admin/tags/new'
-      preLoaderRoute: typeof AdminTagsNewRouteImport
-      parentRoute: typeof AdminTagsRouteRoute
-    }
-    '/admin/technologies/': {
-      id: '/admin/technologies/'
-      path: '/'
-      fullPath: '/admin/technologies/'
-      preLoaderRoute: typeof AdminTechnologiesIndexRouteImport
-      parentRoute: typeof AdminTechnologiesRouteRoute
-    }
-    '/admin/technologies/new': {
-      id: '/admin/technologies/new'
-      path: '/new'
-      fullPath: '/admin/technologies/new'
-      preLoaderRoute: typeof AdminTechnologiesNewRouteImport
-      parentRoute: typeof AdminTechnologiesRouteRoute
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 interface HomeRouteRouteChildren {
   HomeIndexRoute: typeof HomeIndexRoute
-  HomePostsSlugIdRoute: typeof HomePostsSlugIdRoute
   HomeProjectsSlugIdRoute: typeof HomeProjectsSlugIdRoute
-  HomePostsIndexRoute: typeof HomePostsIndexRoute
   HomeProjectsIndexRoute: typeof HomeProjectsIndexRoute
 }
 
 const HomeRouteRouteChildren: HomeRouteRouteChildren = {
   HomeIndexRoute: HomeIndexRoute,
-  HomePostsSlugIdRoute: HomePostsSlugIdRoute,
   HomeProjectsSlugIdRoute: HomeProjectsSlugIdRoute,
-  HomePostsIndexRoute: HomePostsIndexRoute,
   HomeProjectsIndexRoute: HomeProjectsIndexRoute,
 }
 
@@ -649,118 +117,8 @@ const HomeRouteRouteWithChildren = HomeRouteRoute._addFileChildren(
   HomeRouteRouteChildren,
 )
 
-interface AdminCategoriesRouteRouteChildren {
-  AdminCategoriesNewRoute: typeof AdminCategoriesNewRoute
-  AdminCategoriesIndexRoute: typeof AdminCategoriesIndexRoute
-}
-
-const AdminCategoriesRouteRouteChildren: AdminCategoriesRouteRouteChildren = {
-  AdminCategoriesNewRoute: AdminCategoriesNewRoute,
-  AdminCategoriesIndexRoute: AdminCategoriesIndexRoute,
-}
-
-const AdminCategoriesRouteRouteWithChildren =
-  AdminCategoriesRouteRoute._addFileChildren(AdminCategoriesRouteRouteChildren)
-
-interface AdminMediaRouteRouteChildren {
-  AdminMediaSlugIdRoute: typeof AdminMediaSlugIdRoute
-  AdminMediaIndexRoute: typeof AdminMediaIndexRoute
-}
-
-const AdminMediaRouteRouteChildren: AdminMediaRouteRouteChildren = {
-  AdminMediaSlugIdRoute: AdminMediaSlugIdRoute,
-  AdminMediaIndexRoute: AdminMediaIndexRoute,
-}
-
-const AdminMediaRouteRouteWithChildren = AdminMediaRouteRoute._addFileChildren(
-  AdminMediaRouteRouteChildren,
-)
-
-interface AdminSeriesRouteRouteChildren {
-  AdminSeriesNewRoute: typeof AdminSeriesNewRoute
-  AdminSeriesIndexRoute: typeof AdminSeriesIndexRoute
-}
-
-const AdminSeriesRouteRouteChildren: AdminSeriesRouteRouteChildren = {
-  AdminSeriesNewRoute: AdminSeriesNewRoute,
-  AdminSeriesIndexRoute: AdminSeriesIndexRoute,
-}
-
-const AdminSeriesRouteRouteWithChildren =
-  AdminSeriesRouteRoute._addFileChildren(AdminSeriesRouteRouteChildren)
-
-interface AdminTagsRouteRouteChildren {
-  AdminTagsNewRoute: typeof AdminTagsNewRoute
-  AdminTagsIndexRoute: typeof AdminTagsIndexRoute
-}
-
-const AdminTagsRouteRouteChildren: AdminTagsRouteRouteChildren = {
-  AdminTagsNewRoute: AdminTagsNewRoute,
-  AdminTagsIndexRoute: AdminTagsIndexRoute,
-}
-
-const AdminTagsRouteRouteWithChildren = AdminTagsRouteRoute._addFileChildren(
-  AdminTagsRouteRouteChildren,
-)
-
-interface AdminTechnologiesRouteRouteChildren {
-  AdminTechnologiesNewRoute: typeof AdminTechnologiesNewRoute
-  AdminTechnologiesIndexRoute: typeof AdminTechnologiesIndexRoute
-}
-
-const AdminTechnologiesRouteRouteChildren: AdminTechnologiesRouteRouteChildren =
-  {
-    AdminTechnologiesNewRoute: AdminTechnologiesNewRoute,
-    AdminTechnologiesIndexRoute: AdminTechnologiesIndexRoute,
-  }
-
-const AdminTechnologiesRouteRouteWithChildren =
-  AdminTechnologiesRouteRoute._addFileChildren(
-    AdminTechnologiesRouteRouteChildren,
-  )
-
-interface AdminRouteRouteChildren {
-  AdminCategoriesRouteRoute: typeof AdminCategoriesRouteRouteWithChildren
-  AdminMediaRouteRoute: typeof AdminMediaRouteRouteWithChildren
-  AdminSeriesRouteRoute: typeof AdminSeriesRouteRouteWithChildren
-  AdminTagsRouteRoute: typeof AdminTagsRouteRouteWithChildren
-  AdminTechnologiesRouteRoute: typeof AdminTechnologiesRouteRouteWithChildren
-  AdminLoginRoute: typeof AdminLoginRoute
-  AdminSettingsRoute: typeof AdminSettingsRoute
-  AdminIndexRoute: typeof AdminIndexRoute
-  AdminPostsSlugIdRoute: typeof AdminPostsSlugIdRoute
-  AdminPostsNewRoute: typeof AdminPostsNewRoute
-  AdminProjectsSlugIdRoute: typeof AdminProjectsSlugIdRoute
-  AdminProjectsNewRoute: typeof AdminProjectsNewRoute
-  AdminPostsIndexRoute: typeof AdminPostsIndexRoute
-  AdminProjectsIndexRoute: typeof AdminProjectsIndexRoute
-}
-
-const AdminRouteRouteChildren: AdminRouteRouteChildren = {
-  AdminCategoriesRouteRoute: AdminCategoriesRouteRouteWithChildren,
-  AdminMediaRouteRoute: AdminMediaRouteRouteWithChildren,
-  AdminSeriesRouteRoute: AdminSeriesRouteRouteWithChildren,
-  AdminTagsRouteRoute: AdminTagsRouteRouteWithChildren,
-  AdminTechnologiesRouteRoute: AdminTechnologiesRouteRouteWithChildren,
-  AdminLoginRoute: AdminLoginRoute,
-  AdminSettingsRoute: AdminSettingsRoute,
-  AdminIndexRoute: AdminIndexRoute,
-  AdminPostsSlugIdRoute: AdminPostsSlugIdRoute,
-  AdminPostsNewRoute: AdminPostsNewRoute,
-  AdminProjectsSlugIdRoute: AdminProjectsSlugIdRoute,
-  AdminProjectsNewRoute: AdminProjectsNewRoute,
-  AdminPostsIndexRoute: AdminPostsIndexRoute,
-  AdminProjectsIndexRoute: AdminProjectsIndexRoute,
-}
-
-const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
-  AdminRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   HomeRouteRoute: HomeRouteRouteWithChildren,
-  AdminRouteRoute: AdminRouteRouteWithChildren,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

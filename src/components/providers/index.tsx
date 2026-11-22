@@ -1,15 +1,10 @@
-import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
-import { HeadContent, Scripts, useRouteContext } from "@tanstack/react-router";
+import { HeadContent, Scripts } from "@tanstack/react-router";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import type * as React from "react";
 import { type Theme, ThemeProvider } from "start-theme";
-import { Devtools } from "#/components/shell";
-import { Toaster } from "#/components/ui/sonner";
-import { TooltipProvider } from "#/components/ui/tooltip";
+import { Devtools } from "#/components/devtools";
 import { setTheme } from "#/functions/theme";
-import { authClient } from "#/lib/auth-client";
-import { Route } from "#/routes/__root";
 
 type RootProvidersProps = {
 	children: React.ReactNode;
@@ -17,35 +12,23 @@ type RootProvidersProps = {
 };
 
 export function RootProviders({ children, theme }: RootProvidersProps) {
-	const context = useRouteContext({ from: Route.id });
-	const initialTheme = theme ?? "system";
-
 	return (
-		<ConvexBetterAuthProvider
-			client={context.convexQueryClient.convexClient}
-			authClient={authClient}
-			initialToken={context.token}
+		<ThemeProvider
+			theme={theme ?? "system"}
+			setThemeFn={(theme) => setTheme({ data: theme })}
 		>
-			<ThemeProvider
-				theme={initialTheme}
-				setThemeFn={(theme) => setTheme({ data: theme })}
-			>
-				<TooltipProvider>
-					<html lang="en" suppressHydrationWarning>
-						<head>
-							<HeadContent />
-						</head>
-						<body>
-							{children}
-							<Toaster position="top-center" />
-							<Devtools />
-							<Analytics />
-							<SpeedInsights />
-							<Scripts />
-						</body>
-					</html>
-				</TooltipProvider>
-			</ThemeProvider>
-		</ConvexBetterAuthProvider>
+			<html lang="en" suppressHydrationWarning>
+				<head>
+					<HeadContent />
+				</head>
+				<body>
+					{children}
+					<Devtools />
+					<Analytics />
+					<SpeedInsights />
+					<Scripts />
+				</body>
+			</html>
+		</ThemeProvider>
 	);
 }
