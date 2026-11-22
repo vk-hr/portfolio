@@ -1,26 +1,24 @@
-import { Footer } from "./-footer";
-import { CornerSquare, Layout } from "./-layout";
+import { Page } from "./-layout";
 
 export function Loading() {
 	return (
-		<Layout>
-			<div className="flex h-full flex-1 flex-col px-4">
-				<main className="relative container mx-auto max-w-4xl flex-1 border-r-2 border-l-2 bg-background">
-					<CornerSquare position="top-left" />
-					<CornerSquare position="top-right" />
-
-					<div className="flex flex-col items-center justify-center gap-4 px-4 py-24">
-						<div className="size-8 animate-spin rounded-full border-4 border-muted-foreground border-t-transparent" />
-						<p className="font-mono text-lg text-muted-foreground">
-							Loading ...
-						</p>
-					</div>
-
-					<CornerSquare position="bottom-left" />
-					<CornerSquare position="bottom-right" />
-				</main>
+		<Page header={false} className="items-center justify-center">
+			<div
+				className="flex flex-col items-center gap-4 py-24"
+				role="status"
+				aria-live="polite"
+			>
+				<div className="flex gap-1.5" aria-hidden="true">
+					{[0, 1, 2].map((i) => (
+						<span
+							key={i}
+							className="size-2.5 bg-foreground motion-safe:animate-pulse"
+							style={{ animationDelay: `${i * 150}ms` }}
+						/>
+					))}
+				</div>
+				<p className="type-label text-muted-foreground">Loading</p>
 			</div>
-			<Footer />
-		</Layout>
+		</Page>
 	);
 }

@@ -1,6 +1,7 @@
 import { HeadContent, Scripts } from "@tanstack/react-router";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { MotionConfig } from "motion/react";
 import type * as React from "react";
 import { type Theme, ThemeProvider } from "start-theme";
 
@@ -23,7 +24,7 @@ export function RootProviders({ children, theme }: RootProvidersProps) {
 					<HeadContent />
 				</head>
 				<body>
-					{children}
+					<MotionConfig reducedMotion="user">{children}</MotionConfig>
 					<Devtools />
 					<Analytics />
 					<SpeedInsights />

@@ -1,25 +1,14 @@
 import { Desktop, Moon, Sun } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "motion/react";
-import type * as React from "react";
 import { type Theme, useTheme } from "start-theme";
 
 import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
 
-const THEME_CONFIG: Record<Theme, { icon: React.ReactNode; label: string }> = {
-	system: {
-		icon: <HugeiconsIcon icon={Desktop} strokeWidth={2} />,
-		label: "System",
-	},
-	light: {
-		icon: <HugeiconsIcon icon={Sun} strokeWidth={2} />,
-		label: "Light",
-	},
-	dark: {
-		icon: <HugeiconsIcon icon={Moon} strokeWidth={2} />,
-		label: "Dark",
-	},
-};
+const THEMES = [
+	{ value: "system", icon: Desktop, label: "System theme" },
+	{ value: "light", icon: Sun, label: "Light theme" },
+	{ value: "dark", icon: Moon, label: "Dark theme" },
+] as const;
 
 type ThemeSwitcherProps = {
 	className?: string;
@@ -30,22 +19,19 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
 	const { theme, setTheme } = useTheme();
 
 	return (
-		<Tabs value={theme} onValueChange={(theme) => setTheme(theme)}>
-			<TabsList variant="line" className={className}>
-				{(["system", "light", "dark"] as const).map((t) => {
-					const config = THEME_CONFIG[t];
-					return (
-						<TabsTrigger key={t} value={t} className="size-7">
-							<motion.div
-								whileHover={{ scale: 1.1 }}
-								whileTap={{ scale: 0.95 }}
-								transition={{ duration: 0.15 }}
-							>
-								{config.icon}
-							</motion.div>
-						</TabsTrigger>
-					);
-				})}
+		<Tabs value={theme} onValueChange={(value: Theme) => setTheme(value)}>
+			<TabsList variant="line" aria-label="Colour theme" className={className}>
+				{THEMES.map(({ value, icon, label }) => (
+					<TabsTrigger
+						key={value}
+						value={value}
+						aria-label={label}
+						title={label}
+						className="size-8 cursor-pointer"
+					>
+						<HugeiconsIcon icon={icon} strokeWidth={1.75} />
+					</TabsTrigger>
+				))}
 			</TabsList>
 		</Tabs>
 	);

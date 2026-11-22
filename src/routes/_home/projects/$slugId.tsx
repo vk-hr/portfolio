@@ -1,17 +1,17 @@
-import { ArrowLeft, ExternalLink, Github } from "@hugeicons/core-free-icons";
+import {
+	ArrowLeft,
+	ArrowUpRight01Icon,
+	Github,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { cn } from "cn";
 
 import { MarkdownContent } from "#/components/markdown-content";
-import { Badge } from "#/components/ui/badge";
-import { COLORS } from "#/lib/colors";
+import { StatusLabel, TechList } from "#/components/tech-list";
 import { longDate } from "#/lib/format";
 import { getProject } from "#/lib/projects";
 
-import { Footer } from "../-footer";
-import { Header } from "../-header";
-import { CornerSquare, Layout } from "../-layout";
+import { CornerSquare, Page } from "../-layout";
 
 export const Route = createFileRoute("/_home/projects/$slugId")({
 	loader: ({ params }) => {
@@ -32,131 +32,128 @@ export const Route = createFileRoute("/_home/projects/$slugId")({
 	component: ProjectPage,
 });
 
-const linkClassName =
-	"inline-flex items-center gap-2 border-2 bg-background px-3 py-1.5 text-sm transition-colors hover:bg-muted";
+const actionClassName =
+	"group flex items-center gap-2 px-4 py-3 type-label transition-colors hover:bg-foreground hover:text-background";
 
 function ProjectPage() {
 	const project = Route.useLoaderData();
+	const hasLinks = Boolean(project.repository || project.demo);
 
 	return (
-		<Layout>
-			<Header />
-			<div className="flex h-full flex-1 flex-col px-4">
-				<main className="relative container mx-auto max-w-4xl flex-1 border-x-2 bg-background">
-					<CornerSquare position="top-left" />
-					<CornerSquare position="top-right" />
-					<CornerSquare position="bottom-left" />
-					<CornerSquare position="bottom-right" />
-
-					<div className="relative flex items-center gap-4 border-b-2 p-2 sm:p-4">
-						<Link
-							to="/projects"
-							className="inline-flex items-center justify-center border-2 bg-background p-1.5 transition-colors hover:bg-muted"
-							aria-label="Back to projects"
-						>
-							<HugeiconsIcon
-								icon={ArrowLeft}
-								strokeWidth={2}
-								className="size-5"
-							/>
-						</Link>
-						<h1 className="text-xl font-bold sm:text-2xl">{project.title}</h1>
-						<CornerSquare position="bottom-left" />
-						<CornerSquare position="bottom-right" />
-					</div>
-
-					{project.cover && (
-						<img
-							src={project.cover}
-							alt=""
-							className="h-[35vh] w-full border-b-2 object-cover"
-						/>
-					)}
-
-					<article className="px-4 py-6 sm:py-8">
-						<div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-							<Badge
-								variant={project.status === "active" ? "default" : "secondary"}
-								className="tracking-wider uppercase"
-							>
-								{project.status}
-							</Badge>
-							<time dateTime={project.date}>
-								{longDate.format(new Date(project.date))}
-							</time>
-						</div>
-
-						{project.technologies.length > 0 && (
-							<ul
-								className="mb-6 flex flex-wrap gap-1.5"
-								aria-label="Technologies"
-							>
-								{project.technologies.map((tech) => (
-									<li key={tech.slug}>
-										<Badge
-											variant="outline"
-											className={cn(
-												COLORS[tech.color].text,
-												COLORS[tech.color].border,
-												"bg-transparent",
-											)}
-										>
-											{tech.name}
-										</Badge>
-									</li>
-								))}
-							</ul>
-						)}
-
-						<p className="mb-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-							{project.description}
-						</p>
-
-						{(project.repository || project.demo) && (
-							<div className="mb-8 flex flex-wrap gap-3">
-								{project.repository && (
-									<a
-										href={project.repository}
-										target="_blank"
-										rel="noopener noreferrer"
-										className={linkClassName}
-									>
-										<HugeiconsIcon
-											icon={Github}
-											strokeWidth={2}
-											className="size-4"
-										/>
-										Repository
-									</a>
-								)}
-								{project.demo && (
-									<a
-										href={project.demo}
-										target="_blank"
-										rel="noopener noreferrer"
-										className={linkClassName}
-									>
-										<HugeiconsIcon
-											icon={ExternalLink}
-											strokeWidth={2}
-											className="size-4"
-										/>
-										Live demo
-									</a>
-								)}
-							</div>
-						)}
-
-						{project.html && (
-							<MarkdownContent
-								html={project.html}
-								className="prose max-w-none dark:prose-invert prose-a:text-primary"
-							/>
-						)}
-					</article>
-				</main>
+		<Page>
+			<div className="relative flex h-14 items-stretch justify-between border-b-2">
+				<Link
+					to="/projects"
+					className="group flex items-center gap-2 border-r-2 px-4 type-label transition-colors hover:bg-foreground hover:text-background"
+				>
+					<HugeiconsIcon
+						icon={ArrowLeft}
+						strokeWidth={2}
+						className="size-3.5 transition-transform group-hover:-translate-x-0.5"
+					/>
+					Projects
+				</Link>
+				<span className="flex items-center px-4 type-label text-muted-foreground">
+					{new Date(project.date).getUTCFullYear()}
+				</span>
+				<CornerSquare position="bottom-left" />
+				<CornerSquare position="bottom-right" />
 			</div>
-			<Footer />
-		</Layout>
+
+			<header className="relative border-b-2 px-4 pt-12 pb-8 sm:pt-16 sm:pb-10">
+				<StatusLabel status={project.status} className="mb-6" />
+				<h1 className="text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.9] font-extrabold tracking-[-0.045em]">
+					{project.title}
+				</h1>
+				<p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+					{project.description}
+				</p>
+				<CornerSquare position="bottom-left" />
+				<CornerSquare position="bottom-right" />
+			</header>
+
+			<dl className="grid grid-cols-1 border-b-2 sm:grid-cols-[12rem_1fr_auto]">
+				<div className="border-b-2 px-4 py-4 sm:border-r-2 sm:border-b-0">
+					<dt className="mb-2 type-label text-muted-foreground">Date</dt>
+					<dd className="font-medium">
+						<time dateTime={project.date}>
+							{longDate.format(new Date(project.date))}
+						</time>
+					</dd>
+				</div>
+				<div className="px-4 py-4">
+					<dt className="mb-2 type-label text-muted-foreground">Stack</dt>
+					<dd>
+						{project.technologies.length > 0 ? (
+							<TechList technologies={project.technologies} />
+						) : (
+							<span className="text-muted-foreground">—</span>
+						)}
+					</dd>
+				</div>
+				{hasLinks && (
+					<div className="flex border-t-2 sm:flex-col sm:border-t-0 sm:border-l-2">
+						<dt className="sr-only">Links</dt>
+						{project.repository && (
+							<dd className="flex-1">
+								<a
+									href={project.repository}
+									target="_blank"
+									rel="noopener noreferrer"
+									className={`${actionClassName} h-full`}
+								>
+									<HugeiconsIcon
+										icon={Github}
+										strokeWidth={2}
+										className="size-3.5"
+									/>
+									Repository
+								</a>
+							</dd>
+						)}
+						{project.demo && (
+							<dd
+								className={
+									project.repository
+										? "flex-1 border-l-2 sm:border-t-2 sm:border-l-0"
+										: "flex-1"
+								}
+							>
+								<a
+									href={project.demo}
+									target="_blank"
+									rel="noopener noreferrer"
+									className={`${actionClassName} h-full`}
+								>
+									<HugeiconsIcon
+										icon={ArrowUpRight01Icon}
+										strokeWidth={2}
+										className="size-3.5"
+									/>
+									Live demo
+								</a>
+							</dd>
+						)}
+					</div>
+				)}
+			</dl>
+
+			{project.cover && (
+				<img
+					src={project.cover}
+					alt=""
+					className="aspect-video w-full border-b-2 object-cover"
+				/>
+			)}
+
+			{project.html && (
+				<article className="px-4 py-10 sm:py-14">
+					<MarkdownContent
+						html={project.html}
+						className="mx-auto prose max-w-[68ch] dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-h2:mt-12 prose-h2:border-b-2 prose-h2:pb-3 prose-h2:text-2xl prose-a:text-primary prose-a:underline-offset-4 prose-blockquote:border-l-2 prose-blockquote:border-primary prose-blockquote:font-normal prose-blockquote:not-italic prose-code:font-mono prose-code:font-medium prose-code:before:content-none prose-code:after:content-none prose-pre:rounded-none prose-pre:border-2 prose-pre:bg-muted prose-pre:text-foreground prose-th:type-label prose-th:text-muted-foreground prose-img:border-2 prose-hr:border-t-2"
+					/>
+				</article>
+			)}
+		</Page>
 	);
 }

@@ -1,8 +1,8 @@
 import {
 	ArrowRight,
-	Briefcase,
+	ArrowUpRight01Icon,
+	Cancel01Icon,
 	Github,
-	Link as LinkIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "@tanstack/react-router";
@@ -10,96 +10,89 @@ import { cn } from "cn";
 import { AnimatePresence, motion } from "motion/react";
 import * as React from "react";
 
-import { Badge } from "#/components/ui/badge";
-import { Separator } from "#/components/ui/separator";
+import { StatusLabel, TechList } from "#/components/tech-list";
 import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
-import { COLORS } from "#/lib/colors";
+import { mediumDate } from "#/lib/format";
 import type { ProjectSummary } from "#/lib/projects";
 
-import { CornerSquare } from "./-layout";
+import { CornerSquare, SectionHeading } from "./-layout";
 
 const springTransition = { type: "spring", bounce: 0, duration: 0.3 } as const;
 
 type Project = ProjectSummary;
+type Tab = "recent" | "featured";
 
 type ProjectsProps = {
 	recentProjects: Array<Project>;
 	featuredProjects: Array<Project>;
 };
 
+const pad = (n: number) => String(n).padStart(2, "0");
+
 export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
 	"use no memo";
-	const [tab, setTab] = React.useState<"recent" | "featured">("recent");
-	const [selectedProject, setSelectedProject] = React.useState<Project | null>(
-		null,
-	);
-
-	const handleProjectClick = (project: Project) => {
-		setSelectedProject(project);
-	};
+	const [tab, setTab] = React.useState<Tab>("recent");
+	const [selected, setSelected] = React.useState<{
+		project: Project;
+		index: number;
+	} | null>(null);
 
 	const projects = tab === "recent" ? recentProjects : featuredProjects;
 
 	return (
-		<section className="relative border-t-2 py-8">
-			<CornerSquare position="top-left" />
-			<CornerSquare position="top-right" />
-
-			<div className="flex flex-col gap-4 px-4 sm:flex-row sm:items-center sm:justify-between">
-				<Link
-					to="/projects"
-					className="group flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
-				>
-					<h2 className="text-xl font-semibold text-foreground sm:text-2xl">
-						{tab === "recent" ? "Recent Projects" : "Featured Projects"}
-					</h2>
-					<HugeiconsIcon icon={ArrowRight} strokeWidth={2} className="size-5" />
-					<span className="max-w-0 overflow-hidden whitespace-nowrap transition-all duration-200 group-hover:max-w-20">
-						see more
-					</span>
-				</Link>
-
-				<div className="self-start border-2 bg-background px-1 sm:self-auto">
-					<Tabs
-						value={tab}
-						onValueChange={(value) => setTab(value as "recent" | "featured")}
-					>
-						<TabsList variant="line">
-							<TabsTrigger value="recent">Recent</TabsTrigger>
-							<TabsTrigger value="featured">Featured</TabsTrigger>
+		<section aria-labelledby="projects-title" className="flex-1">
+			<SectionHeading index="01" title="Projects" id="projects-title">
+				<div className="flex items-stretch border-2">
+					<Tabs value={tab} onValueChange={(value: Tab) => setTab(value)}>
+						<TabsList variant="line" className="h-9 px-1">
+							<TabsTrigger value="recent" className="cursor-pointer type-label">
+								Recent
+							</TabsTrigger>
+							<TabsTrigger
+								value="featured"
+								className="cursor-pointer type-label"
+							>
+								Featured
+							</TabsTrigger>
 						</TabsList>
 					</Tabs>
+					<Link
+						to="/projects"
+						className="group flex items-center gap-2 border-l-2 px-3 type-label transition-colors hover:bg-foreground hover:text-background"
+					>
+						All
+						<HugeiconsIcon
+							icon={ArrowRight}
+							strokeWidth={2}
+							className="size-3.5 transition-transform group-hover:translate-x-0.5"
+						/>
+					</Link>
 				</div>
-			</div>
+			</SectionHeading>
 
-			{!projects || projects.length === 0 ? (
-				<div className="mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed bg-muted/50 p-12 text-center">
-					<HugeiconsIcon
-						icon={Briefcase}
-						strokeWidth={2}
-						className="mb-4 size-8 text-muted-foreground/50"
-					/>
-					<p className="text-muted-foreground">
-						{tab === "recent" ? "No projects yet." : "No featured projects."}
-					</p>
-				</div>
+			{projects.length === 0 ? (
+				<p className="m-4 border-2 border-dashed p-12 text-center type-label text-muted-foreground">
+					{tab === "recent" ? "No projects yet" : "No featured projects"}
+				</p>
 			) : (
-				<div className="relative mt-6 grid sm:grid-cols-2 lg:grid-cols-3">
-					{projects.map((project) => (
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+					{projects.map((project, index) => (
 						<ProjectCard
 							key={project.slug}
 							project={project}
-							onClick={handleProjectClick}
+							index={index + 1}
+							onOpen={() => setSelected({ project, index: index + 1 })}
 						/>
 					))}
 				</div>
 			)}
 
 			<AnimatePresence>
-				{selectedProject && (
+				{selected && (
 					<ProjectModal
-						project={selectedProject}
-						onClose={() => setSelectedProject(null)}
+						project={selected.project}
+						index={selected.index}
+						onClose={() => setSelected(null)}
 					/>
 				)}
 			</AnimatePresence>
@@ -109,143 +102,96 @@ export function Projects({ recentProjects, featuredProjects }: ProjectsProps) {
 
 type ProjectCardProps = {
 	project: Project;
-	onClick: (project: Project) => void;
+	index: number;
+	onOpen: () => void;
 };
 
-function ProjectCard({ project, onClick }: ProjectCardProps) {
+function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
 	"use no memo";
-	const hasLinks = project.repository || project.demo;
 
 	return (
 		<motion.div
 			layoutId={`project-${project.slug}`}
 			transition={springTransition}
-			style={{ willChange: "transform, opacity" }}
 			className={cn(
-				"group relative transform-gpu rounded-none bg-background py-0 ring-0",
-				"border-t-2 border-r-0 border-b-0",
-				"transition-[border-width] duration-300",
-				"last:border-b-2",
-				"sm:odd:border-r-2",
-				"sm:nth-last-[-n+2]:border-b-2",
-				"lg:nth-[3n]:border-r-0",
+				"group relative bg-background",
+				"border-b-2",
+				"sm:max-lg:odd:border-r-2",
 				"lg:not-nth-[3n]:border-r-2",
-				"lg:nth-last-[-n+3]:border-b-2",
 			)}
 		>
 			<CornerSquare
-				position="top-right"
-				mode="offset"
-				className="-mt-px -mr-px"
-				layoutId={`corner-tr-${project.slug}`}
-				transition={springTransition}
-			/>
-			<CornerSquare
-				position="top-left"
-				mode="offset"
-				className="-mt-px -ml-px"
-				layoutId={`corner-tl-${project.slug}`}
-				transition={springTransition}
-			/>
-			<CornerSquare
 				position="bottom-left"
-				mode="offset"
 				className="-mb-px -ml-px"
 				layoutId={`corner-bl-${project.slug}`}
 				transition={springTransition}
 			/>
 			<CornerSquare
 				position="bottom-right"
-				mode="offset"
 				className="-mr-px -mb-px"
 				layoutId={`corner-br-${project.slug}`}
 				transition={springTransition}
 			/>
 
-			<div className="relative overflow-hidden py-4">
-				<span className="pointer-events-none absolute -top-1/2 -left-full z-10 h-[200%] w-3/4 skew-x-[-20deg] bg-linear-to-r from-transparent via-white/40 to-transparent transition-transform duration-0 group-hover:translate-x-[350%] group-hover:duration-1000" />
+			<button
+				type="button"
+				onClick={onOpen}
+				aria-haspopup="dialog"
+				className="flex h-full min-h-56 w-full cursor-pointer flex-col gap-6 p-4 text-left transition-colors hover:bg-muted focus-visible:-outline-offset-4"
+			>
+				<span className="flex w-full items-center justify-between type-label text-muted-foreground">
+					<span>{pad(index)}</span>
+					<time dateTime={project.date}>
+						{new Date(project.date).getUTCFullYear()}
+					</time>
+				</span>
 
-				<button
-					type="button"
-					onClick={() => onClick(project)}
-					className="block w-full cursor-pointer p-4 text-left"
-				>
-					<motion.h3
+				<span className="block">
+					<motion.span
 						layoutId={`project-title-${project.slug}`}
-						className="text-base font-semibold sm:text-lg"
 						transition={springTransition}
+						className="line-clamp-3 text-2xl leading-tight font-bold tracking-tight"
 					>
 						{project.title}
-					</motion.h3>
-					{project.description && (
-						<motion.p
-							layoutId={`project-description-${project.slug}`}
-							className="mt-2 line-clamp-2 text-sm text-muted-foreground"
-							transition={springTransition}
-						>
-							{project.description}
-						</motion.p>
-					)}
-				</button>
+					</motion.span>
+					<motion.span
+						layoutId={`project-description-${project.slug}`}
+						transition={springTransition}
+						className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground"
+					>
+						{project.description}
+					</motion.span>
+				</span>
 
-				{hasLinks && (
-					<div className="pointer-events-none absolute top-4 right-4 z-10 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
-						<motion.div
-							layoutId={`project-links-${project.slug}`}
-							transition={springTransition}
-							className="flex border-2 bg-background"
-						>
-							{project.repository && (
-								<a
-									href={project.repository}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="flex items-center justify-center p-2 transition-colors hover:bg-muted"
-									onClick={(e) => e.stopPropagation()}
-									aria-label="View repository"
-								>
-									<HugeiconsIcon
-										icon={Github}
-										strokeWidth={2}
-										className="size-4"
-									/>
-								</a>
-							)}
-							{project.repository && project.demo && (
-								<Separator className="w-0.5!" orientation="vertical" />
-							)}
-							{project.demo && (
-								<a
-									href={project.demo}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="flex items-center justify-center p-2 transition-colors hover:bg-muted"
-									onClick={(e) => e.stopPropagation()}
-									aria-label="View demo"
-								>
-									<HugeiconsIcon
-										icon={LinkIcon}
-										strokeWidth={2}
-										className="size-4"
-									/>
-								</a>
-							)}
-						</motion.div>
-					</div>
-				)}
-			</div>
+				<span className="mt-auto flex w-full items-end justify-between gap-4">
+					<span className="truncate type-label text-muted-foreground">
+						{project.technologies.map((tech) => tech.name).join(" / ")}
+					</span>
+					<HugeiconsIcon
+						icon={ArrowRight}
+						strokeWidth={2}
+						className="size-4 shrink-0 -translate-x-1 opacity-0 transition-[opacity,translate] group-hover:translate-x-0 group-hover:opacity-100"
+						aria-hidden="true"
+					/>
+				</span>
+			</button>
 		</motion.div>
 	);
 }
 
 type ProjectModalProps = {
 	project: Project;
+	index: number;
 	onClose: () => void;
 };
 
-function ProjectModal({ project, onClose }: ProjectModalProps) {
+const modalLinkClassName =
+	"flex flex-1 items-center justify-center gap-2 px-4 py-2.5 type-label transition-colors hover:bg-foreground hover:text-background sm:flex-none";
+
+function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 	"use no memo";
 	const dialogRef = React.useRef<HTMLDivElement>(null);
+	const titleId = `project-dialog-title-${project.slug}`;
 
 	React.useEffect(() => {
 		const previouslyFocused = document.activeElement as HTMLElement | null;
@@ -268,193 +214,142 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.2 }}
-				style={{ willChange: "opacity" }}
-				className="fixed inset-0 z-40 transform-gpu bg-black/10 backdrop-blur-xs"
+				className="fixed inset-0 z-40 bg-canvas/70 backdrop-blur-sm"
 				onClick={onClose}
+				aria-hidden="true"
 			/>
 
 			<motion.div
 				layoutId={`project-${project.slug}`}
 				transition={springTransition}
-				style={{ willChange: "transform, opacity" }}
 				ref={dialogRef}
 				tabIndex={-1}
 				role="dialog"
 				aria-modal="true"
-				aria-labelledby={`project-dialog-title-${project.slug}`}
-				className="fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 transform-gpu outline-none"
+				aria-labelledby={titleId}
+				className="fixed inset-x-4 top-1/2 z-50 mx-auto max-w-3xl -translate-y-1/2 border-2 bg-background outline-none"
 			>
-				<div className="relative border-2 bg-background">
-					<CornerSquare
-						position="top-left"
-						mode="offset"
-						layoutId={`corner-tl-${project.slug}`}
-						transition={springTransition}
-					/>
-					<CornerSquare
-						position="top-right"
-						mode="offset"
-						layoutId={`corner-tr-${project.slug}`}
-						transition={springTransition}
-					/>
-					<CornerSquare
-						position="bottom-left"
-						mode="offset"
-						layoutId={`corner-bl-${project.slug}`}
-						transition={springTransition}
-					/>
-					<CornerSquare
-						position="bottom-right"
-						mode="offset"
-						layoutId={`corner-br-${project.slug}`}
-						transition={springTransition}
-					/>
+				<CornerSquare
+					position="bottom-left"
+					layoutId={`corner-bl-${project.slug}`}
+					transition={springTransition}
+				/>
+				<CornerSquare
+					position="bottom-right"
+					layoutId={`corner-br-${project.slug}`}
+					transition={springTransition}
+				/>
 
-					<div className="relative">
-						{project.cover ? (
-							<div className="h-64 w-full overflow-hidden">
-								<img
-									src={project.cover}
-									alt={project.title}
-									className="h-full w-full object-cover"
-								/>
-							</div>
-						) : (
-							<div className="relative h-64 w-full overflow-hidden bg-linear-to-br from-muted via-muted/80 to-muted/60">
-								<div className="pointer-events-none absolute inset-0 bg-diagonal-dashed opacity-20" />
-								<svg
-									className="pointer-events-none absolute inset-0 size-full"
-									role="img"
-									aria-label="Grain texture overlay"
-								>
-									<title>Grain texture</title>
-									<filter id="grain" colorInterpolationFilters="sRGB">
-										<feTurbulence
-											type="fractalNoise"
-											baseFrequency="0.9"
-											numOctaves="2"
-											stitchTiles="stitch"
-										/>
-										<feColorMatrix type="saturate" values="0" />
-									</filter>
-									<rect
-										width="100%"
-										height="100%"
-										filter="url(#grain)"
-										opacity="0.15"
-									/>
-								</svg>
-							</div>
-						)}
+				<div className="max-h-[calc(100dvh-4rem)] overflow-y-auto">
+					<div className="flex h-12 items-stretch justify-between border-b-2">
+						<span className="flex items-center px-4 type-label text-muted-foreground">
+							{pad(index)} — {mediumDate.format(new Date(project.date))}
+						</span>
+						<button
+							type="button"
+							onClick={onClose}
+							className="flex cursor-pointer items-center gap-2 border-l-2 px-4 type-label transition-colors hover:bg-foreground hover:text-background"
+						>
+							Close
+							<HugeiconsIcon
+								icon={Cancel01Icon}
+								strokeWidth={2}
+								className="size-3.5"
+							/>
+						</button>
+					</div>
 
-						<div className="p-4 sm:p-6">
-							<div className="mb-4 flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
-								<motion.h2
-									id={`project-dialog-title-${project.slug}`}
-									layoutId={`project-title-${project.slug}`}
-									className="text-xl font-bold sm:text-2xl"
-									transition={springTransition}
-								>
-									{project.title}
-								</motion.h2>
+					{project.cover ? (
+						<img
+							src={project.cover}
+							alt=""
+							className="aspect-video max-h-72 w-full border-b-2 object-cover"
+						/>
+					) : (
+						<div
+							className="flex h-40 items-end border-b-2 bg-diagonal-dashed p-4"
+							aria-hidden="true"
+						>
+							<span className="bg-background px-2 type-display text-muted-foreground/30">
+								{pad(index)}
+							</span>
+						</div>
+					)}
 
-								{(project.repository || project.demo) && (
-									<motion.div
-										layoutId={`project-links-${project.slug}`}
-										transition={springTransition}
-										className="flex w-full shrink-0 border-2 bg-background sm:w-auto"
+					<div className="space-y-6 p-4 sm:p-6">
+						<div className="space-y-3">
+							<StatusLabel status={project.status} />
+							<motion.h2
+								id={titleId}
+								layoutId={`project-title-${project.slug}`}
+								transition={springTransition}
+								className="text-3xl leading-tight font-bold tracking-tight sm:text-4xl"
+							>
+								{project.title}
+							</motion.h2>
+							<motion.p
+								layoutId={`project-description-${project.slug}`}
+								transition={springTransition}
+								className="leading-relaxed text-muted-foreground"
+							>
+								{project.description}
+							</motion.p>
+						</div>
+
+						<TechList technologies={project.technologies} />
+					</div>
+
+					<div className="flex flex-col border-t-2 sm:flex-row sm:items-stretch">
+						{(project.repository || project.demo) && (
+							<div className="flex border-b-2 sm:border-r-2 sm:border-b-0">
+								{project.repository && (
+									<a
+										href={project.repository}
+										target="_blank"
+										rel="noopener noreferrer"
+										className={modalLinkClassName}
 									>
-										{project.repository && (
-											<a
-												href={project.repository}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-muted sm:flex-none"
-											>
-												<HugeiconsIcon
-													icon={Github}
-													strokeWidth={2}
-													className="size-4"
-												/>
-												Repository
-											</a>
+										<HugeiconsIcon
+											icon={Github}
+											strokeWidth={2}
+											className="size-3.5"
+										/>
+										Repository
+									</a>
+								)}
+								{project.demo && (
+									<a
+										href={project.demo}
+										target="_blank"
+										rel="noopener noreferrer"
+										className={cn(
+											modalLinkClassName,
+											project.repository && "border-l-2",
 										)}
-										{project.repository && project.demo && (
-											<Separator className="w-0.5!" orientation="vertical" />
-										)}
-										{project.demo && (
-											<a
-												href={project.demo}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="flex flex-1 items-center justify-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-muted sm:flex-none"
-											>
-												<HugeiconsIcon
-													icon={LinkIcon}
-													strokeWidth={2}
-													className="size-4"
-												/>
-												Demo
-											</a>
-										)}
-									</motion.div>
+									>
+										<HugeiconsIcon
+											icon={ArrowUpRight01Icon}
+											strokeWidth={2}
+											className="size-3.5"
+										/>
+										Demo
+									</a>
 								)}
 							</div>
-
-							{project.technologies && project.technologies.length > 0 && (
-								<div className="mb-4">
-									<div className="mb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-										Tech Stack
-									</div>
-									<div className="flex flex-wrap gap-2">
-										{project.technologies.map((tech) => (
-											<Badge
-												key={tech.slug}
-												variant="outline"
-												className={cn(
-													COLORS[tech.color].text,
-													COLORS[tech.color].border,
-													"rounded-none border bg-transparent",
-												)}
-											>
-												{tech.name}
-											</Badge>
-										))}
-									</div>
-								</div>
-							)}
-
-							{project.description && (
-								<div className="mb-6">
-									<div className="mb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-										Description
-									</div>
-									<motion.p
-										layoutId={`project-description-${project.slug}`}
-										className="text-sm leading-relaxed text-muted-foreground"
-										transition={springTransition}
-									>
-										{project.description}
-									</motion.p>
-								</div>
-							)}
-
-							<div className="flex justify-end border-t-2 pt-4">
-								<Link
-									to="/projects/$slugId"
-									params={{ slugId: project.slug }}
-									onClick={onClose}
-									className="group flex items-center gap-2 border-2 bg-background px-4 py-2 font-medium transition-colors hover:bg-muted"
-								>
-									See Full Project
-									<HugeiconsIcon
-										icon={ArrowRight}
-										strokeWidth={2}
-										className="size-4 transition-transform group-hover:translate-x-1"
-									/>
-								</Link>
-							</div>
-						</div>
+						)}
+						<Link
+							to="/projects/$slugId"
+							params={{ slugId: project.slug }}
+							onClick={onClose}
+							className="group ml-auto flex w-full items-center justify-center gap-2 bg-foreground px-4 py-3 type-label text-background transition-colors hover:bg-primary hover:text-primary-foreground sm:w-auto"
+						>
+							Full project
+							<HugeiconsIcon
+								icon={ArrowRight}
+								strokeWidth={2}
+								className="size-3.5 transition-transform group-hover:translate-x-0.5"
+							/>
+						</Link>
 					</div>
 				</div>
 			</motion.div>

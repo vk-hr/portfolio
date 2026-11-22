@@ -2,28 +2,33 @@ import { SOCIAL_LINKS } from "#/lib/constants";
 
 const SOURCE_URL = "https://github.com/vk-hr/portfolio";
 
+const footerLinkClassName =
+	"flex items-center border-l-2 px-4 transition-colors hover:bg-muted hover:text-foreground";
+
 export function Footer() {
 	return (
 		<footer className="border-t-2">
 			<div className="px-4">
-				<div className="container mx-auto flex h-13 max-w-4xl items-center justify-between gap-4 border-x-2 px-4 text-sm text-muted-foreground">
-					<span>© {new Date().getUTCFullYear()} VKHR</span>
-					<nav className="flex items-center gap-4" aria-label="Footer">
+				<div className="container mx-auto flex h-14 max-w-5xl items-stretch border-x-2 bg-background type-label text-muted-foreground">
+					<span className="flex items-center px-4">
+						© {new Date().getUTCFullYear()} VKHR
+					</span>
+					<nav className="ml-auto flex items-stretch" aria-label="Footer">
 						<a
 							href={SOCIAL_LINKS.github}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="transition-colors hover:text-foreground"
+							className={footerLinkClassName}
 						>
-							GitHub
+							GitHub ↗
 						</a>
 						<a
 							href={SOURCE_URL}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="transition-colors hover:text-foreground"
+							className={footerLinkClassName}
 						>
-							Source
+							Source ↗
 						</a>
 					</nav>
 				</div>

@@ -1,163 +1,154 @@
-import {
-	ArrowLeft,
-	Briefcase,
-	ExternalLink,
-	Github,
-} from "@hugeicons/core-free-icons";
+import { ArrowUpRight01Icon, Github } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { StatusLabel } from "#/components/tech-list";
 import { shortDate } from "#/lib/format";
-import { listProjects } from "#/lib/projects";
+import { listProjects, type ProjectSummary } from "#/lib/projects";
 
-import { Footer } from "../-footer";
-import { Header } from "../-header";
-import { CornerSquare, Layout } from "../-layout";
+import { Page, SectionHeading } from "../-layout";
 
 export const Route = createFileRoute("/_home/projects/")({
 	loader: () => listProjects(),
+	head: () => ({
+		meta: [
+			{ title: "Projects | VKHR" },
+			{ name: "description", content: "Everything I've built, by year." },
+		],
+	}),
 	component: ProjectsPage,
 });
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const iconLinkClassName =
+	"relative z-10 inline-flex size-9 items-center justify-center border-2 bg-background transition-colors hover:bg-foreground hover:text-background";
 
 function ProjectsPage() {
 	const projects = Route.useLoaderData();
 
-	const groupedProjects = projects.reduce(
-		(acc, project) => {
-			const year = new Date(project.date).getUTCFullYear();
-			if (!acc[year]) acc[year] = [];
-			acc[year].push(project);
-			return acc;
-		},
-		{} as Record<number, typeof projects>,
-	);
-
-	const years = Object.keys(groupedProjects)
-		.map(Number)
-		.sort((a, b) => b - a);
+	// Projects arrive newest first, so years and rows keep that order.
+	const years = new Map<
+		number,
+		Array<{ project: ProjectSummary; n: number }>
+	>();
+	projects.forEach((project, i) => {
+		const year = new Date(project.date).getUTCFullYear();
+		const rows = years.get(year) ?? [];
+		rows.push({ project, n: i + 1 });
+		years.set(year, rows);
+	});
 
 	return (
-		<Layout>
-			<Header />
-			<div className="flex h-full flex-1 flex-col px-4">
-				<main className="relative container mx-auto min-h-full max-w-4xl flex-1 border-x-2 bg-background">
-					<CornerSquare position="top-left" />
-					<CornerSquare position="top-right" />
-					<CornerSquare position="bottom-left" />
-					<CornerSquare position="bottom-right" />
+		<Page>
+			<SectionHeading as="h1" index="Index" title="Projects">
+				<span className="type-label text-muted-foreground">
+					{pad(projects.length)} total
+				</span>
+			</SectionHeading>
 
-					<div className="relative mb-2 flex items-center gap-4 border-b-2 p-2 sm:p-4">
-						<Link
-							to="/"
-							className="inline-flex items-center justify-center border-2 bg-background p-1.5 transition-colors hover:bg-muted"
-							aria-label="Back to home"
-						>
-							<HugeiconsIcon
-								icon={ArrowLeft}
-								strokeWidth={2}
-								className="size-5"
-							/>
-						</Link>
-						<h1 className="text-xl font-bold sm:text-2xl">Projects</h1>
-						<CornerSquare position="bottom-left" />
-						<CornerSquare position="bottom-right" />
-					</div>
-
-					{!projects || projects.length === 0 ? (
-						<div className="mx-4 mt-6 flex flex-col items-center justify-center border-2 border-dashed bg-muted/50 p-12 text-center">
-							<HugeiconsIcon
-								icon={Briefcase}
-								strokeWidth={2}
-								className="mb-4 size-8 text-muted-foreground/50"
-							/>
-							<p className="text-muted-foreground">No projects yet.</p>
+			{projects.length === 0 ? (
+				<p className="m-4 border-2 border-dashed p-12 text-center type-label text-muted-foreground">
+					No projects yet
+				</p>
+			) : (
+				[...years].map(([year, rows]) => (
+					<section
+						key={year}
+						aria-labelledby={`year-${year}`}
+						className="grid grid-cols-1 border-b-2 sm:grid-cols-[9rem_1fr]"
+					>
+						<div className="border-b-2 px-4 py-4 sm:border-r-2 sm:border-b-0">
+							<h2
+								id={`year-${year}`}
+								className="text-3xl font-extrabold tracking-tighter sm:sticky sm:top-4"
+							>
+								{year}
+							</h2>
 						</div>
-					) : (
-						<div className="space-y-12 p-2 sm:p-4">
-							{years.map((year) => (
-								<section key={year}>
-									<h2 className="mb-6 text-xl font-bold">{year}</h2>
-									<div className="flex flex-col gap-4">
-										{groupedProjects[year].map((project) => (
-											<article
-												key={project.slug}
-												className="group relative flex flex-col justify-between gap-4 border-2 bg-background p-4 transition-colors hover:bg-muted sm:flex-row sm:items-center"
+
+						<ol>
+							{rows.map(({ project, n }) => (
+								<li
+									key={project.slug}
+									className="group relative grid grid-cols-[2rem_1fr] gap-x-4 gap-y-3 border-b-2 px-4 py-5 transition-colors last:border-b-0 hover:bg-muted sm:grid-cols-[2rem_1fr_auto]"
+								>
+									<span className="pt-1.5 type-label text-muted-foreground">
+										{pad(n)}
+									</span>
+
+									<div className="min-w-0">
+										<h3 className="text-xl leading-tight font-bold tracking-tight">
+											{/* Stretched link: the whole row is clickable without nesting the external links. */}
+											<Link
+												to="/projects/$slugId"
+												params={{ slugId: project.slug }}
+												className="after:absolute after:inset-0 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:-outline-offset-4 after:focus-visible:outline-ring"
 											>
-												<CornerSquare position="top-left" mode="offset" />
-												<CornerSquare position="top-right" mode="offset" />
-												<CornerSquare position="bottom-left" mode="offset" />
-												<CornerSquare position="bottom-right" mode="offset" />
-
-												<div className="flex-1">
-													<h3 className="text-base font-semibold sm:text-lg">
-														{/* Stretched link: the whole card is clickable without nesting the external links inside it. */}
-														<Link
-															to="/projects/$slugId"
-															params={{ slugId: project.slug }}
-															className="after:absolute after:inset-0 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:outline-ring"
-														>
-															{project.title}
-														</Link>
-													</h3>
-													{project.description && (
-														<p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
-															{project.description}
-														</p>
-													)}
-												</div>
-
-												<div className="flex shrink-0 items-center gap-4">
-													{(project.repository || project.demo) && (
-														<div className="relative z-10 flex items-center gap-2 transition-opacity sm:opacity-0 sm:group-focus-within:opacity-100 sm:group-hover:opacity-100">
-															{project.repository && (
-																<a
-																	href={project.repository}
-																	target="_blank"
-																	rel="noopener noreferrer"
-																	className="inline-flex border-2 bg-background p-2 transition-colors hover:bg-muted"
-																	aria-label="View repository"
-																>
-																	<HugeiconsIcon
-																		icon={Github}
-																		strokeWidth={2}
-																		className="size-4"
-																	/>
-																</a>
-															)}
-															{project.demo && (
-																<a
-																	href={project.demo}
-																	target="_blank"
-																	rel="noopener noreferrer"
-																	className="inline-flex border-2 bg-background p-2 transition-colors hover:bg-muted"
-																	aria-label="View demo"
-																>
-																	<HugeiconsIcon
-																		icon={ExternalLink}
-																		strokeWidth={2}
-																		className="size-4"
-																	/>
-																</a>
-															)}
-														</div>
-													)}
-													<time
-														dateTime={project.date}
-														className="text-sm text-muted-foreground"
-													>
-														{shortDate.format(new Date(project.date))}
-													</time>
-												</div>
-											</article>
-										))}
+												{project.title}
+											</Link>
+										</h3>
+										<p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+											{project.description}
+										</p>
+										<p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
+											<StatusLabel status={project.status} />
+											{project.technologies.length > 0 && (
+												<span className="type-label text-muted-foreground">
+													{project.technologies
+														.map((tech) => tech.name)
+														.join(" / ")}
+												</span>
+											)}
+										</p>
 									</div>
-								</section>
+
+									<div className="col-start-2 flex items-center gap-2 sm:col-start-3 sm:flex-col sm:items-end sm:justify-between">
+										<time
+											dateTime={project.date}
+											className="type-label text-muted-foreground sm:pt-1.5"
+										>
+											{shortDate.format(new Date(project.date))}
+										</time>
+										<div className="ml-auto flex items-center gap-1.5">
+											{project.repository && (
+												<a
+													href={project.repository}
+													target="_blank"
+													rel="noopener noreferrer"
+													className={iconLinkClassName}
+													aria-label={`${project.title} repository`}
+												>
+													<HugeiconsIcon
+														icon={Github}
+														strokeWidth={2}
+														className="size-4"
+													/>
+												</a>
+											)}
+											{project.demo && (
+												<a
+													href={project.demo}
+													target="_blank"
+													rel="noopener noreferrer"
+													className={iconLinkClassName}
+													aria-label={`${project.title} demo`}
+												>
+													<HugeiconsIcon
+														icon={ArrowUpRight01Icon}
+														strokeWidth={2}
+														className="size-4"
+													/>
+												</a>
+											)}
+										</div>
+									</div>
+								</li>
 							))}
-						</div>
-					)}
-				</main>
-			</div>
-			<Footer />
-		</Layout>
+						</ol>
+					</section>
+				))
+			)}
+		</Page>
 	);
 }

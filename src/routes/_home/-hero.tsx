@@ -1,67 +1,99 @@
-import { Document, Github, Linkedin, Mail } from "@hugeicons/core-free-icons";
+import {
+	ArrowUpRight01Icon,
+	Document,
+	Github,
+	Linkedin,
+	Mail,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import { Separator } from "#/components/ui/separator";
 import { SOCIAL_LINKS } from "#/lib/constants";
 
 import { CornerSquare } from "./-layout";
 
+const LINKS = [
+	{
+		label: "GitHub",
+		href: SOCIAL_LINKS.github,
+		icon: Github,
+		external: true,
+	},
+	{
+		label: "Email",
+		href: `mailto:${SOCIAL_LINKS.email}`,
+		icon: Mail,
+		external: false,
+	},
+	{
+		label: "LinkedIn",
+		href: SOCIAL_LINKS.linkedin,
+		icon: Linkedin,
+		external: true,
+	},
+	{ label: "CV", href: SOCIAL_LINKS.cv, icon: Document, external: true },
+] as const;
+
 export function Hero() {
 	return (
-		<section>
-			<div className="relative flex flex-col justify-between border-b-2 sm:flex-row sm:items-center">
+		<section aria-labelledby="hero-title">
+			<div className="relative border-b-2 px-4 pt-12 pb-8 sm:pt-20 sm:pb-10">
+				<p className="mb-8 type-label text-muted-foreground sm:mb-12">
+					Software developer — frontend, backend, DevOps
+				</p>
+				<h1 id="hero-title" className="type-display">
+					Hi, I'm
+					<br />
+					Viktor<span className="text-primary">.</span>
+				</h1>
 				<CornerSquare position="bottom-left" />
 				<CornerSquare position="bottom-right" />
-				<h1 className="border-b-2 p-4 font-mono text-2xl font-bold sm:border-b-0 sm:p-0 sm:pl-4 md:text-3xl">
-					Hi, I'm Viktor
-				</h1>
-				<div className="flex w-full bg-background sm:w-auto sm:border-l-2">
-					<a
-						href={SOCIAL_LINKS.github}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="flex flex-1 items-center justify-center p-3 transition-colors hover:bg-muted sm:flex-none sm:p-4"
-						aria-label="GitHub profile"
-					>
-						<HugeiconsIcon icon={Github} strokeWidth={2} className="size-5" />
-					</a>
-					<Separator className="w-0.5!" orientation="vertical" />
-					<a
-						href={`mailto:${SOCIAL_LINKS.email}`}
-						className="flex flex-1 items-center justify-center p-3 transition-colors hover:bg-muted sm:flex-none sm:p-4"
-						aria-label="Send email"
-					>
-						<HugeiconsIcon icon={Mail} strokeWidth={2} className="size-5" />
-					</a>
-					<Separator className="w-0.5!" orientation="vertical" />
-					<a
-						href={SOCIAL_LINKS.linkedin}
-						className="flex flex-1 items-center justify-center p-3 transition-colors hover:bg-muted sm:flex-none sm:p-4"
-						aria-label="LinkedIn profile"
-					>
-						<HugeiconsIcon icon={Linkedin} strokeWidth={2} className="size-5" />
-					</a>
-					<Separator className="w-0.5!" orientation="vertical" />
-					<a
-						href={SOCIAL_LINKS.cv}
-						className="flex flex-1 items-center justify-center p-3 transition-colors hover:bg-muted sm:flex-none sm:p-4"
-						aria-label="CV"
-					>
-						<HugeiconsIcon icon={Document} strokeWidth={2} className="size-5" />
-					</a>
-				</div>
 			</div>
-			<article className="space-y-4 px-4 py-6 text-base sm:py-8 sm:text-lg">
-				<p>
-					I'm a software developer who loves developing web applications,
-					whether it's frontend, backend, or DevOps - I've experienced all of
-					those areas.
-				</p>
-				<p>
-					Even if it sounds like I'm a jack of all trades, I'm aware that I
-					don't know everything. I'm eager to learn new things and grow.
-				</p>
-			</article>
+
+			<div className="relative grid grid-cols-1 border-b-2 sm:grid-cols-[1fr_15rem]">
+				<div className="max-w-prose space-y-4 px-4 py-8 text-lg leading-relaxed sm:py-10 sm:text-xl">
+					<p>
+						I'm a software developer who loves building web applications,
+						whether it's frontend, backend, or DevOps — I've worked across all
+						of them.
+					</p>
+					<p className="text-muted-foreground">
+						Even if that sounds like a jack of all trades, I know I don't know
+						everything. I'm eager to learn new things and grow.
+					</p>
+				</div>
+
+				<ul
+					className="grid grid-cols-2 gap-0.5 border-t-2 bg-border sm:grid-cols-1 sm:border-t-0 sm:border-l-2"
+					aria-label="Contact and profiles"
+				>
+					{LINKS.map((link) => (
+						<li key={link.label} className="bg-background">
+							<a
+								href={link.href}
+								{...(link.external && {
+									target: "_blank",
+									rel: "noopener noreferrer",
+								})}
+								className="group flex h-full min-h-14 items-center gap-3 px-4 transition-colors hover:bg-foreground hover:text-background"
+							>
+								<HugeiconsIcon
+									icon={link.icon}
+									strokeWidth={1.75}
+									className="size-4.5"
+									aria-hidden="true"
+								/>
+								<span className="font-medium">{link.label}</span>
+								<HugeiconsIcon
+									icon={ArrowUpRight01Icon}
+									strokeWidth={2}
+									className="ml-auto size-4 opacity-40 transition-[opacity,translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
+									aria-hidden="true"
+								/>
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
 		</section>
 	);
 }

@@ -1,33 +1,39 @@
 import { Link } from "@tanstack/react-router";
 
 import { ThemeSwitcher } from "#/components/theme-switcher";
-import { Button } from "#/components/ui/button";
+
+const navLinkClassName =
+	"group/nav relative flex items-center gap-2 border-l-2 px-4 type-label text-muted-foreground transition-colors hover:bg-muted hover:text-foreground data-[status=active]:text-foreground";
 
 export function Header() {
 	return (
 		<header className="border-b-2">
+			<a
+				href="#main"
+				className="sr-only z-50 bg-foreground px-4 py-2 type-label text-background focus:not-sr-only focus:absolute focus:top-2 focus:left-2"
+			>
+				Skip to content
+			</a>
 			<div className="px-4">
-				<div className="container mx-auto flex max-w-4xl items-center justify-between border-r-2 border-l-2 py-2">
-					<Button
-						nativeButton={false}
-						variant="link"
-						className="text-foreground"
-						render={<Link to="/" />}
+				<div className="container mx-auto flex h-14 max-w-5xl items-stretch border-x-2 bg-background">
+					<Link
+						to="/"
+						className="flex items-center gap-2.5 px-4 text-lg font-extrabold tracking-tighter transition-colors hover:bg-muted"
 					>
-						VKHR.dev
-					</Button>
-					<div className="flex items-center gap-2">
-						<Button
-							nativeButton={false}
-							variant="link"
-							className="text-muted-foreground data-[status=active]:text-foreground"
-							render={<Link to="/projects" />}
-						>
+						<span className="size-2.5 bg-foreground" aria-hidden="true" />
+						VKHR
+					</Link>
+					<nav className="ml-auto flex items-stretch" aria-label="Main">
+						<Link to="/projects" className={navLinkClassName}>
+							<span
+								className="size-1.5 bg-primary opacity-0 transition-opacity group-data-[status=active]/nav:opacity-100"
+								aria-hidden="true"
+							/>
 							Projects
-						</Button>
-						<div className="mx-2.5 border-2 bg-background px-1">
-							<ThemeSwitcher />
-						</div>
+						</Link>
+					</nav>
+					<div className="flex items-center border-l-2 px-2">
+						<ThemeSwitcher />
 					</div>
 				</div>
 			</div>
