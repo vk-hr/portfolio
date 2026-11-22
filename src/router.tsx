@@ -1,9 +1,8 @@
 import { createRouter } from "@tanstack/react-router";
 
-import { routeTree } from "./routeTree.gen";
+import { viewTransitionTypes } from "#/lib/view-transition";
 
-const isProjectPage = (pathname?: string) =>
-	pathname !== undefined && /^\/projects\/[^/]+\/?$/.test(pathname);
+import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
 	return createRouter({
@@ -14,11 +13,8 @@ export function getRouter() {
 		// Shared parts: src/components/project-morph.tsx; timing: src/styles.css.
 		// The type tells the CSS which way a project title is scaling.
 		defaultViewTransition: {
-			types: ({ fromLocation, toLocation }) => {
-				if (isProjectPage(toLocation.pathname)) return ["to-project"];
-				if (isProjectPage(fromLocation?.pathname)) return ["from-project"];
-				return ["page"];
-			},
+			types: ({ fromLocation, toLocation }) =>
+				viewTransitionTypes(fromLocation?.pathname, toLocation.pathname),
 		},
 	});
 }
