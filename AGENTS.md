@@ -130,6 +130,14 @@ Everything is Bun-native except linting.
   `bunfig.toml` `[test]` preloads `test/happydom.ts` (registers happy-dom) and
   `test/setup.ts` (Testing Library cleanup + jest-dom matchers). Matcher types
   are in `test/matchers.d.ts`. Import test APIs from `bun:test`.
+- **What to test:** behaviour that can break, not markup. Pure logic goes in
+  `src/lib` and is tested there (inject data, e.g.
+  `createProjectStore(fixtures)`, rather than depending on `content/`).
+  Interactive components are tested through roles and labels with Testing
+  Library. Render anything with `<Link>` via `test/render-with-router.tsx`.
+  `test/setup.ts` turns Motion animations off. A component whose
+  `AnimatePresence` child shares a `layoutId` never unmounts in happy-dom; see
+  `src/routes/_home/-projects.test.tsx` for the stand-in.
 - **Types:** `bun check`. The `typescript` devDependency is pinned to the
   version Bun bundles; don't bump it independently.
 - **Format:** `bun fmt`, configured in `bunfig.toml` `[fmt]`: tabs, sorted
