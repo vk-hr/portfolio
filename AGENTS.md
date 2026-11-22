@@ -13,17 +13,34 @@ bun dev                      # bun --bun vite dev --port 3000
 bun run build                # bun --bun vite build
 bun run preview              # bun --bun vite preview
 
-bun test                     # all tests
+bun test --isolate           # all tests, as CI runs them (random order is on in bunfig)
 bun test src/lib/projects    # tests matching a path
+bun --bun vite build && bun test ./e2e/ssr.e2e.ts  # SSR smoke tests on the build
 bun check                    # type check (Bun built-in, same errors as tsc 7)
 bun fmt                      # format (config in bunfig.toml [fmt])
 bun fmt --check              # check formatting only
 bun lint                     # package.json "lint" script = biome lint
 ```
 
-CI (`.github/workflows/ci.yml`) runs `bun install --frozen-lockfile`,
-`bun fmt --check`, `bun lint`, `bun check`, `bun test` and
-`bun --bun vite build`. Run the same before handing work back.
+CI (`.github/workflows/ci.yml`) runs four independent jobs, each with its own
+checkout and `bun install --frozen-lockfile` (`.github/actions/setup`):
+`checks` (`bun fmt --check` and `bun lint`, both always run so every failure
+is listed), `typecheck` (`bun check`), `test` (`bun test --isolate`) and
+`build` (`bun --bun vite build`, then the SSR smoke tests). No job waits on another. The pre-push hook
+runs the same commands. Run the same before handing work back.
+
+CI policy:
+
+- **Budgets:** `fmt` 1 s, `lint` 1 s, `typecheck` 5 s, tests 30 s, each
+  job 35 s (`.github/scripts/budget.sh`, `.github/actions/budget`). Over budget
+  fails the job. Make the check faster; never raise a budget, add retries or
+  skip tests to get green. Setup (15 s) only warns while CI is on
+  GitHub-hosted runners.
+- **No test selection.** The full suite runs on every PR and on main.
+  `bun test --changed` follows imports only. It misses `content/` (which
+  reaches tests through the generated `content-collections` module),
+  `bunfig.toml` and the `test/` preloads, and it passed a run that broke
+  `test/setup.ts`. The full suite takes under 1 s, so selection saves nothing.
 
 Always use `bun` (never npm/yarn/pnpm).
 
@@ -130,6 +147,13 @@ Everything is Bun-native except linting.
   `bunfig.toml` `[test]` preloads `test/happydom.ts` (registers happy-dom) and
   `test/setup.ts` (Testing Library cleanup + jest-dom matchers). Matcher types
   are in `test/matchers.d.ts`. Import test APIs from `bun:test`.
+- **SSR smoke tests:** `e2e/ssr.e2e.ts` starts the built server
+  (`.output/server/index.mjs`) and checks every route over HTTP: status codes
+  (404s included), titles and meta tags, the `/projects` order, the
+  stylesheet, and the theme cookie reaching the pre-paint script. Plain
+  `bun test` skips it because of the `*.e2e.ts` name. Run it with the file path
+  after a build. Pages, loaders and `head()` are tested here, not with unit
+  tests.
 - **What to test:** behaviour that can break, not markup. Pure logic goes in
   `src/lib` and is tested there (inject data, e.g.
   `createProjectStore(fixtures)`, rather than depending on `content/`).
@@ -144,12 +168,21 @@ Everything is Bun-native except linting.
   imports, sorted `package.json`, Tailwind class sorting inside `cn`/`cva`.
 - **Lint:** Biome, lint-only (`biome.json`; formatter and assist disabled),
   run through the `lint` script.
+- **Git hooks:** hk (`hk.pkl`), installed by the Nix dev shell's
+  `shellHook`. Pre-commit formats and lints the staged files and re-stages
+  fixes; pre-push runs the CI commands on the whole repo and lists every
+  failure. Keep the pre-push steps identical to `.github/workflows/ci.yml`.
+  Don't bypass them (`--no-verify`, `HK=0`); fix what they report.
 - **Gotcha:** a `package.json` script named like a Bun built-in (`check`,
   `fmt`, `test`, `lint`) shadows the built-in. Don't add such scripts; `lint`
   is the one temporary exception.
 - **Environment:** NixOS. `flake.nix` provides `bun` (nixos-unstable);
   `.envrc` is `use flake`, so direnv loads it. `packageManager: bun@1.4.4` in
   `package.json` pins the Bun version CI installs via `oven-sh/setup-bun`.
+
+- **Test failures:** until 2026-12-06, log every test failure you fix in
+  `docs/test-failures.md` as `regression`, `change-detector` or `flaky`.
+  The log decides which test files are deleted afterwards.
 
 ## Conventions
 

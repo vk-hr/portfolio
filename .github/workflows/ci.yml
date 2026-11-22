@@ -4,28 +4,73 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Ready for a merge queue (needs an organization-owned repo).
+  merge_group:
 
+# A new commit on a PR cancels that PR's in-progress run. Pushes to main and
+# merge-queue runs are grouped per commit, so every commit that lands is
+# checked and none is cancelled.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
+  actions: read # the budget step reads its job's start time
 
+# Budgets fail the job (see .github/scripts/budget.sh and
+# .github/actions/budget): fmt 1 s, lint 1 s, typecheck 5 s, tests and SSR
+# smoke tests 30 s each,
+# whole job 35 s. Setup (15 s) only warns until the runners move off
+# GitHub-hosted machines; see enforce-setup. timeout-minutes is a hang guard.
+
+# Independent jobs, no `needs`: the result is the slowest job, not the sum.
+# hk.pkl's pre-push hook runs the same commands; keep the two in sync.
 jobs:
-  ci:
+  # Small checks folded into one job. Each step runs even if an earlier one
+  # failed, so a red run lists every failure.
+  checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v7
+      - id: setup
+        uses: ./.github/actions/setup
+      - if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: .github/scripts/budget.sh 1 bun fmt --check
+      - if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
+        run: .github/scripts/budget.sh 1 bun lint
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/budget
 
-      # Reads the Bun version from package.json's "packageManager" field.
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: package.json
+  typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: .github/scripts/budget.sh 5 bun check
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/budget
 
-      - run: bun install --frozen-lockfile
-      - run: bun fmt --check
-      - run: bun lint
-      - run: bun check
-      - run: bun test
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: .github/scripts/budget.sh 30 bun test --isolate
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/budget
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
       - run: bun --bun vite build
+      # SSR smoke tests against the build just made (e2e/ssr.e2e.ts).
+      - run: .github/scripts/budget.sh 30 bun test ./e2e/ssr.e2e.ts
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/budget

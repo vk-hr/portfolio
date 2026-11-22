@@ -10,6 +10,7 @@
 		"includes": [
 			"src/**",
 			"test/**",
+			"scripts/**",
 			"content-collections.ts",
 			"*.config.ts",
 			"*.json",
