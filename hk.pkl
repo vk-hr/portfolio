@@ -1,0 +1,48 @@
+amends "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/Config.pkl"
+
+// Git hooks, installed by the Nix dev shell (flake.nix shellHook).
+//   pre-commit: format and lint the staged files, re-staging fixes.
+//   pre-push:   the same commands CI runs (.github/workflows/ci.yml), on
+//               the whole repo. Keep the two lists identical.
+
+min_hk_version = "2.13.0"
+
+// Report every failing step, not just the first.
+fail_fast = false
+
+local fmtGlob = List(
+	"**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs",
+	"**/*.json", "**/*.css", "**/*.md", "**/*.yaml", "**/*.yml", "**/*.toml",
+)
+// biome.json "files.includes" decides what is linted; the rest is skipped.
+local lintGlob = List("**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json", "**/*.css")
+
+hooks {
+	["pre-commit"] {
+		fix = true
+		stash = "git"
+		steps {
+			["fmt"] {
+				glob = fmtGlob
+				check = "bun fmt --check {{files}}"
+				fix = "bun fmt {{files}}"
+			}
+			["lint"] {
+				glob = lintGlob
+				depends = "fmt"
+				check = "bunx biome lint --no-errors-on-unmatched --files-ignore-unknown=true {{files}}"
+				fix = "bunx biome lint --write --no-errors-on-unmatched --files-ignore-unknown=true {{files}}"
+			}
+		}
+	}
+	["pre-push"] {
+		steps {
+			["install"] { check = "bun install --frozen-lockfile" }
+			["fmt"] { depends = "install"; check = "bun fmt --check" }
+			["lint"] { depends = "install"; check = "bun lint" }
+			["typecheck"] { depends = "install"; check = "bun check" }
+			["test"] { depends = "install"; check = "bun test --isolate" }
+			["build"] { depends = "install"; check = "bun --bun vite build" }
+		}
+	}
+}
