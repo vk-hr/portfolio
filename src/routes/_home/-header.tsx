@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
+import { useReducedMotion } from "motion/react";
 
 import { ThemeSwitcher } from "#/components/theme-switcher";
 
@@ -7,6 +8,13 @@ const navLinkClassName =
 	"group/nav relative flex items-center gap-2 border-l-2 px-4 type-label text-muted-foreground transition-colors hover:bg-muted hover:text-foreground data-[status=active]:text-foreground";
 
 export function Header() {
+	"use no memo";
+	// Glide to the section, unless the visitor asked for less motion.
+	const contactScroll: ScrollIntoViewOptions = {
+		behavior: useReducedMotion() ? "auto" : "smooth",
+		block: "start",
+	};
+
 	return (
 		// Same name on every page: the header holds still while the page changes.
 		<header
@@ -48,6 +56,7 @@ export function Header() {
 							to="/"
 							hash="contact"
 							activeOptions={{ exact: true, includeHash: true }}
+							hashScrollIntoView={contactScroll}
 							className={cn(navLinkClassName, "max-sm:hidden")}
 						>
 							<span
