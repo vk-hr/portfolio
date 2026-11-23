@@ -31,10 +31,11 @@ export const Route = createRootRoute({
 				rel: "stylesheet",
 				href: appCss,
 			},
-			{
-				rel: "icon",
-				href: "/favicon.ico",
-			},
+			// "V." mark: SVG for browsers that follow the colour scheme, ICO
+			// (16/32/48) for the rest, and a padded PNG for iOS home screens.
+			{ rel: "icon", href: "/favicon.ico", sizes: "32x32" },
+			{ rel: "icon", href: "/icon.svg", type: "image/svg+xml" },
+			{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 		],
 	}),
 	loader: () => getTheme(),

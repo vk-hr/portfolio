@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+	<!-- "V." favicon: the V of Viktor and the emerald period. Follows the tab's colour scheme. -->
+	<style>
+		.fg { fill: #0b0e0f; }
+		.ac { fill: #007a55; }
+		@media (prefers-color-scheme: dark) {
+			.fg { fill: #f5f7f7; }
+			.ac { fill: #00bc7d; }
+		}
+	</style>
+	<polygon class="fg" points="1,5 8.5,5 13.5,20 18.5,5 26,5 17.5,27 9.5,27" />
+	<circle class="ac" cx="28.2" cy="24" r="3.3" />
+</svg>

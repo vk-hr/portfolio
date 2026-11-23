@@ -143,6 +143,28 @@ describe("home page", () => {
 	});
 });
 
+describe("icons", () => {
+	test("every icon in the head is served as an image", async () => {
+		const { doc } = await get("/");
+		const icons = [
+			...doc.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]'),
+		].map((link) => link.getAttribute("href") as string);
+		expect(icons).toEqual(
+			expect.arrayContaining([
+				"/icon.svg",
+				"/favicon.ico",
+				"/apple-touch-icon.png",
+			]),
+		);
+		for (const href of icons) {
+			const response = await fetch(new URL(href, base));
+			expect(response.status).toBe(200);
+			expect(response.headers.get("content-type")).toStartWith("image/");
+			expect((await response.arrayBuffer()).byteLength).toBeGreaterThan(0);
+		}
+	});
+});
+
 describe("/projects", () => {
 	test("lists every visible project, numbered, grouped by year, newest first", async () => {
 		const { status, doc } = await get("/projects");
