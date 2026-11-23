@@ -79,10 +79,36 @@ describe("project store", () => {
 		]);
 	});
 
+	test("selected work puts featured projects first, then the newest of the rest", () => {
+		expect(store.listSelectedProjects().map((p) => p.slug)).toEqual([
+			"middle",
+			"old",
+			"newest",
+		]);
+		expect(store.listSelectedProjects(2).map((p) => p.slug)).toEqual([
+			"middle",
+			"old",
+		]);
+	});
+
+	test("selected work falls back to the newest projects when none are featured", () => {
+		const plain = createProjectStore({
+			technologyMap,
+			projects: [
+				project("a", { date: "2024-01-01" }),
+				project("b", { date: "2025-01-01" }),
+			],
+		});
+		expect(plain.listSelectedProjects().map((p) => p.slug)).toEqual(["b", "a"]);
+	});
+
 	test("archived projects are hidden everywhere, including by slug", () => {
 		expect(store.getProject("hidden")).toBeUndefined();
 		expect(store.listProjects().some((p) => p.slug === "hidden")).toBe(false);
 		expect(store.listFeaturedProjects().some((p) => p.slug === "hidden")).toBe(
+			false,
+		);
+		expect(store.listSelectedProjects().some((p) => p.slug === "hidden")).toBe(
 			false,
 		);
 	});

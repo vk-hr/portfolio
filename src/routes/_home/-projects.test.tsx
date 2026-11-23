@@ -19,7 +19,7 @@ mock.module("motion/react", () => ({
 	...motion,
 	AnimatePresence: ImmediatePresence,
 }));
-const { Projects } = await import("./-projects");
+const { SelectedWork } = await import("./-projects");
 
 function summary(
 	slug: string,
@@ -45,16 +45,8 @@ const alpha = summary("alpha", {
 });
 const beta = summary("beta", { featured: true });
 
-function renderProjects(
-	recentProjects = [alpha, beta],
-	featuredProjects = [beta],
-) {
-	return renderWithRouter(
-		<Projects
-			recentProjects={recentProjects}
-			featuredProjects={featuredProjects}
-		/>,
-	);
+function renderProjects(projects = [alpha, beta]) {
+	return renderWithRouter(<SelectedWork index="02" projects={projects} />);
 }
 
 const openCard = (title: string) =>
@@ -64,7 +56,7 @@ const dialogGone = () =>
 	waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
 
 describe("project cards", () => {
-	test("list the recent projects, numbered", async () => {
+	test("list the given projects in order, numbered", async () => {
 		await renderProjects();
 		const cards = screen.getAllByRole("button", { name: /Title/ });
 		expect(cards.map((c) => c.textContent)).toEqual([
@@ -75,25 +67,16 @@ describe("project cards", () => {
 	});
 
 	test("say so when there are no projects", async () => {
-		await renderProjects([], []);
+		await renderProjects([]);
 		expect(screen.getByText("No projects yet")).toBeInTheDocument();
 	});
 
-	test("the Featured tab shows only featured projects", async () => {
+	test("link to the full project index", async () => {
 		await renderProjects();
-		fireEvent.click(screen.getByRole("tab", { name: "Featured" }));
-		await waitFor(() =>
-			expect(screen.queryByRole("button", { name: /Title alpha/ })).toBeNull(),
+		expect(screen.getByRole("link", { name: "All projects" })).toHaveAttribute(
+			"href",
+			"/projects",
 		);
-		expect(
-			screen.getByRole("button", { name: /Title beta/ }),
-		).toBeInTheDocument();
-	});
-
-	test("the Featured tab says so when nothing is featured", async () => {
-		await renderProjects([alpha], []);
-		fireEvent.click(screen.getByRole("tab", { name: "Featured" }));
-		expect(await screen.findByText("No featured projects")).toBeInTheDocument();
 	});
 });
 

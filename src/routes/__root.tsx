@@ -2,6 +2,7 @@ import { createRootRoute, Outlet } from "@tanstack/react-router";
 
 import { RootProviders } from "#/components/providers";
 import { getTheme } from "#/functions/theme";
+import { HOME_DESCRIPTION, HOME_TITLE } from "#/lib/site";
 
 import { NotFound } from "./_home/-not-found";
 
@@ -18,12 +19,11 @@ export const Route = createRootRoute({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "VKHR | Portfolio",
+				title: HOME_TITLE,
 			},
 			{
 				name: "description",
-				content:
-					"Viktor's portfolio: web projects across frontend, backend and DevOps.",
+				content: HOME_DESCRIPTION,
 			},
 		],
 		links: [
@@ -31,10 +31,11 @@ export const Route = createRootRoute({
 				rel: "stylesheet",
 				href: appCss,
 			},
-			{
-				rel: "icon",
-				href: "/favicon.ico",
-			},
+			// "V." mark: SVG for browsers that follow the colour scheme, ICO
+			// (16/32/48) for the rest, and a padded PNG for iOS home screens.
+			{ rel: "icon", href: "/favicon.ico", sizes: "32x32" },
+			{ rel: "icon", href: "/icon.svg", type: "image/svg+xml" },
+			{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 		],
 	}),
 	loader: () => getTheme(),

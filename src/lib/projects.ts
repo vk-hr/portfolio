@@ -75,11 +75,25 @@ export function createProjectStore(content: Content) {
 				.map(toSummary);
 		},
 
+		/**
+		 * The home page's selection: featured projects first, then the newest
+		 * of the rest, each group newest first.
+		 */
+		listSelectedProjects(limit?: number): Array<ProjectSummary> {
+			const featured = visibleProjects.filter((project) => project.featured);
+			const rest = visibleProjects.filter((project) => !project.featured);
+			return [...featured, ...rest].slice(0, limit).map(toSummary);
+		},
+
 		getProject(slug: string): ProjectDetail | undefined {
 			return visibleProjects.find((project) => project.slug === slug);
 		},
 	};
 }
 
-export const { listProjects, listFeaturedProjects, getProject } =
-	createProjectStore({ projects: allProjects, technologyMap });
+export const {
+	listProjects,
+	listFeaturedProjects,
+	listSelectedProjects,
+	getProject,
+} = createProjectStore({ projects: allProjects, technologyMap });
