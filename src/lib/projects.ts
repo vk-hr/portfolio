@@ -10,7 +10,7 @@ export type ProjectSummary = {
 	slug: string;
 	title: string;
 	description: string;
-	status: "active" | "completed" | "archived";
+	status: "pre-launch" | "active" | "completed" | "archived";
 	featured: boolean;
 	date: string;
 	repository?: string;

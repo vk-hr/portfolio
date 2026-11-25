@@ -9,6 +9,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { MarkdownContent } from "#/components/markdown-content";
 import { morph, MorphFrame } from "#/components/project-morph";
 import { StatusLabel, TechList } from "#/components/tech-list";
+import { SOCIAL_LINKS } from "#/lib/constants";
 import { longDate } from "#/lib/format";
 import { externalLink, getProject } from "#/lib/projects";
 
@@ -159,10 +160,15 @@ function ProjectPage() {
 				<article className="px-4 py-10 sm:py-14">
 					<MarkdownContent
 						html={project.html}
-						className="mx-auto prose max-w-[68ch] dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-h2:mt-12 prose-h2:border-b-2 prose-h2:pb-3 prose-h2:text-2xl prose-a:text-primary prose-a:underline-offset-4 prose-blockquote:border-l-2 prose-blockquote:border-primary prose-blockquote:font-normal prose-blockquote:not-italic prose-code:font-mono prose-code:font-medium prose-code:before:content-none prose-code:after:content-none prose-pre:rounded-none prose-pre:border-2 prose-pre:bg-muted prose-pre:text-foreground prose-th:type-label prose-th:text-muted-foreground prose-img:mx-auto prose-img:max-h-[80svh] prose-img:w-auto prose-img:border-2 prose-hr:border-t-2"
+						className="mx-auto prose max-w-[68ch] dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-h2:mt-12 prose-h2:border-b-2 prose-h2:pb-3 prose-h2:text-2xl prose-a:text-primary prose-a:underline-offset-4 prose-blockquote:border-l-2 prose-blockquote:border-primary prose-blockquote:font-normal prose-blockquote:not-italic prose-code:font-mono prose-code:font-medium prose-code:before:content-none prose-code:after:content-none prose-pre:rounded-none prose-pre:border-2 prose-pre:bg-muted prose-pre:text-foreground prose-th:type-label prose-th:text-muted-foreground prose-img:mx-auto prose-img:w-auto prose-img:border-2 prose-hr:border-t-2"
 					/>
 				</article>
 			)}
+			<div className="border-t-2">
+				<a href={`mailto:${SOCIAL_LINKS.email}`} className={actionClassName}>
+					Email Viktor
+				</a>
+			</div>
 		</Page>
 	);
 }

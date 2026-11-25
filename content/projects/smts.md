@@ -1,7 +1,7 @@
 ---
 title: SMTS
 description: Pre-launch rebuild of a smart-home installer's website, moved from an outdated WordPress codebase to Next.js and Payload CMS.
-status: active
+status: pre-launch
 featured: true
 date: 2026-11-18
 cover: /projects/smts/cover.webp
