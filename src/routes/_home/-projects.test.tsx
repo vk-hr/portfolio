@@ -98,7 +98,7 @@ describe("project dialog", () => {
 			"href",
 			"https://github.com/example/alpha",
 		);
-		expect(d.getByRole("link", { name: "Demo" })).toHaveAttribute(
+		expect(d.getByRole("link", { name: "Live demo" })).toHaveAttribute(
 			"href",
 			"https://alpha.example",
 		);
@@ -113,8 +113,22 @@ describe("project dialog", () => {
 		openCard("Title beta");
 		const d = within(await screen.findByRole("dialog"));
 		expect(d.queryByRole("link", { name: "Repository" })).toBeNull();
-		expect(d.queryByRole("link", { name: "Demo" })).toBeNull();
+		expect(d.queryByRole("link", { name: "Live demo" })).toBeNull();
 		expect(d.getByRole("link", { name: "Full project" })).toBeInTheDocument();
+	});
+
+	test("labels a package page as an npm package", async () => {
+		const pkg = summary("pkg", {
+			package: "https://www.npmjs.com/package/pkg",
+		});
+		await renderProjects([pkg]);
+		openCard("Title pkg");
+		const d = within(await screen.findByRole("dialog"));
+		expect(d.getByRole("link", { name: "npm package" })).toHaveAttribute(
+			"href",
+			"https://www.npmjs.com/package/pkg",
+		);
+		expect(d.queryByRole("link", { name: "Live demo" })).toBeNull();
 	});
 
 	test("moves focus into the dialog and back to the card on close", async () => {

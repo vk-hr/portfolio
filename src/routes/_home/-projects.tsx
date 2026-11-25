@@ -13,7 +13,7 @@ import * as React from "react";
 import { morph, MorphFrame } from "#/components/project-morph";
 import { StatusLabel, TechList } from "#/components/tech-list";
 import { mediumDate } from "#/lib/format";
-import type { ProjectSummary } from "#/lib/projects";
+import { externalLink, type ProjectSummary } from "#/lib/projects";
 
 import { CornerSquare, SectionHeading } from "./-layout";
 
@@ -174,6 +174,7 @@ function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 	"use no memo";
 	const dialogRef = React.useRef<HTMLDivElement>(null);
 	const titleId = `project-dialog-title-${project.slug}`;
+	const link = externalLink(project);
 
 	React.useEffect(() => {
 		const previouslyFocused = document.activeElement as HTMLElement | null;
@@ -249,7 +250,7 @@ function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 						<img
 							style={morph(project.slug, "cover")}
 							src={project.cover}
-							alt=""
+							alt={project.coverAlt ?? ""}
 							className="aspect-[2/1] w-full border-b-2 object-cover"
 						/>
 					) : (
@@ -288,7 +289,7 @@ function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 					</div>
 
 					<div className="flex flex-col border-t-2 sm:flex-row sm:items-stretch">
-						{(project.repository || project.demo) && (
+						{(project.repository || link) && (
 							<div className="flex border-b-2 sm:border-r-2 sm:border-b-0">
 								{project.repository && (
 									<a
@@ -305,9 +306,9 @@ function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 										Repository
 									</a>
 								)}
-								{project.demo && (
+								{link && (
 									<a
-										href={project.demo}
+										href={link.href}
 										target="_blank"
 										rel="noopener noreferrer"
 										className={cn(
@@ -320,7 +321,7 @@ function ProjectModal({ project, index, onClose }: ProjectModalProps) {
 											strokeWidth={2}
 											className="size-3.5"
 										/>
-										Demo
+										{link.label}
 									</a>
 								)}
 							</div>
