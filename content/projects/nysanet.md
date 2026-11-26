@@ -1,16 +1,16 @@
 ---
 title: NysaNet
-description: Pre-launch fiber website rebuild that carries a household's town, building type and plan into its installation request.
+description: I designed and built this fiber broadband website in WordPress, then rebuilt it with Next.js and Payload CMS.
 status: pre-launch
 date: 2026-11-26
 cover: /projects/nysanet/cover.webp
-coverAlt: NysaNet pricing page with Nysa and single-family homes selected. Four fiber plans are shown side by side, including Srebrna PLUS.
+coverAlt: NysaNet homepage promoting home fiber broadband beside a family photo, with buttons to view pricing or request installation.
 technologies:
   [nextjs, payload-cms, react, typescript, tailwindcss, postgresql, playwright]
 ---
 
 **Pre-launch.** At the last check, the public homepage still served the
-WordPress site. The November 26, 2026 screenshots show an isolated build.
+WordPress site. The cover shows the rebuilt homepage from an isolated build.
 
 ## The problem
 
@@ -19,8 +19,9 @@ building type before requesting installation.
 
 ## What I did
 
-With AI assistance, I migrated the WordPress codebase to Next.js and Payload
-CMS, refined the UI, set up deployment, optimized SEO, and integrated Telegram.
+I designed and developed the original WordPress site myself. With AI
+assistance, I rebuilt it with Next.js and Payload CMS, refined the UI, set up
+deployment, optimized SEO, and integrated Telegram.
 The rebuilt site can seed its initial WordPress content and media into Payload
 from bundled files, without connecting to the old site.
 
@@ -29,8 +30,6 @@ from bundled files, without connecting to the old site.
 A visitor selects Nysa, switches between single-family homes and apartment
 blocks, and compares the available plans. Choosing Srebrna PLUS for a house
 carries Nysa, the building type, and the plan into the installation form.
-
-![NysaNet installation form on mobile with Nysa, single-family home and Srebrna PLUS already selected. Contact and street address fields are blank.](/projects/nysanet/mobile-installation.webp)
 
 ## How it is tested
 

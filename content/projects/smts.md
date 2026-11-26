@@ -1,41 +1,35 @@
 ---
 title: SMTS
-description: Pre-launch rebuild of a smart-home installer's website, moved from an outdated WordPress codebase to Next.js and Payload CMS.
+description: I designed and built this site for a smart-home installer in WordPress, then rebuilt it with Next.js and Payload CMS.
 status: pre-launch
 featured: true
 date: 2026-11-18
 cover: /projects/smts/cover.webp
-coverAlt: SMTS home page on desktop. The hero offers turnkey smart-home design and installation, with a button to book a demonstration and the company's phone and messenger contacts in the header.
+coverAlt: SMTS homepage showing a phone with smart-home controls, a heading about design and installation, and a button to explore system features.
 technologies:
   [nextjs, payload-cms, react, typescript, tailwindcss, postgresql, playwright]
 ---
 
 **Status: pre-launch.** The rebuilt site is not public yet. The client's
 current domain still serves the old WordPress site, so there is no live demo.
-The screenshots come from an isolated build with sample data.
+The cover shows the rebuilt homepage from an isolated build with sample data.
 
 ## The problem
 
 SMTS (Smart Technology Systems) designs and installs smart-home systems. Its
-website ran on an outdated WordPress codebase that was hard to update.
+original WordPress codebase had become hard to update.
 
 ## What I did
 
-With AI assistance, I:
-
-- migrated the WordPress codebase to Next.js, with Payload CMS for content;
-- refined the UI;
-- set up deployment;
-- optimised SEO;
-- integrated Telegram for lead notifications.
+I designed and developed the original WordPress site myself. With AI
+assistance, I rebuilt it with Next.js and Payload CMS, refined the UI, set up
+deployment, optimized SEO, and integrated Telegram for lead notifications.
 
 ## The visitor workflow
 
 Visitors explore smart-home scenarios, then answer six questions about their
 home. Their answers carry into the contact step, so the request arrives with
 that context.
-
-![SMTS cost estimate quiz on a phone, at question 3 of 6: a slider sets the number of rooms to 5, with a button to go to the next question.](/projects/smts/mobile-quiz.webp)
 
 ## How it is tested
 
