@@ -8,6 +8,7 @@ import { SectionHeading } from "./-layout";
 const PROFILES = [
 	{ label: "GitHub", href: SOCIAL_LINKS.github },
 	{ label: "LinkedIn", href: SOCIAL_LINKS.linkedin },
+	{ label: "Upwork", href: SOCIAL_LINKS.upwork },
 	{ label: "CV", href: SOCIAL_LINKS.cv },
 ] as const;
 

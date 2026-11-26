@@ -11,7 +11,8 @@ technologies:
 ---
 
 **Status: pre-launch.** The rebuilt site is not public yet. The client's
-current domain still serves the old WordPress site, so there is no live demo.
+domain, [smts.com.ua](https://smts.com.ua), still serves the WordPress site I
+built, so there is no live demo of the rebuild.
 The cover shows the rebuilt homepage from an isolated build with sample data.
 
 ## The problem
@@ -26,6 +27,11 @@ for several years. I then rebuilt it with Next.js and Payload CMS with AI
 assistance, aiming to reduce page load times and improve the user experience.
 During the rebuild, I refined the UI, set up deployment, optimized SEO, and
 integrated Telegram for lead notifications.
+
+All three client sites I rebuilt (NysaNet, SMTS and BIOS Telecom) live in
+one Turborepo monorepo. Shared packages handle SEO, lead intake and Telegram
+delivery, request security and CMS access rules, so a fix or improvement
+reaches every site at once.
 
 ## The visitor workflow
 
