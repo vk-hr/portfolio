@@ -9,7 +9,8 @@ technologies:
   [nextjs, payload-cms, react, typescript, tailwindcss, postgresql, playwright]
 ---
 
-**Pre-launch.** At the last check, the public site showed a maintenance page.
+**Pre-launch.** At the last check, the public site at
+[bios-telecom.in.ua](https://bios-telecom.in.ua) showed a maintenance page.
 The cover shows the rebuilt homepage from an isolated build.
 
 ## The problem
@@ -24,6 +25,11 @@ for several years. I then rebuilt it with Next.js and Payload CMS with AI
 assistance, aiming to reduce page load times and improve the user experience.
 During the rebuild, I refined the UI, set up deployment, optimized SEO, and
 integrated Telegram.
+
+All three client sites I rebuilt (NysaNet, SMTS and BIOS Telecom) live in
+one Turborepo monorepo. Shared packages handle SEO, lead intake and Telegram
+delivery, request security and CMS access rules, so a fix or improvement
+reaches every site at once.
 
 ## The visitor workflow
 

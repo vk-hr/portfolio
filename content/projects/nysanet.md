@@ -10,7 +10,7 @@ technologies:
 ---
 
 **Pre-launch.** At the last check, the public homepage still served the
-WordPress site. The cover shows the rebuilt homepage from an isolated build.
+WordPress site I built, at [nysanet.pl](https://nysanet.pl). The cover shows the rebuilt homepage from an isolated build.
 
 ## The problem
 
@@ -26,6 +26,11 @@ During the rebuild, I refined the UI, set up deployment, optimized SEO, and
 integrated Telegram.
 The rebuilt site can seed its initial WordPress content and media into Payload
 from bundled files, without connecting to the old site.
+
+All three client sites I rebuilt (NysaNet, SMTS and BIOS Telecom) live in
+one Turborepo monorepo. Shared packages handle SEO, lead intake and Telegram
+delivery, request security and CMS access rules, so a fix or improvement
+reaches every site at once.
 
 ## The visitor workflow
 

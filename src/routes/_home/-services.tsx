@@ -5,8 +5,8 @@ import { SectionHeading } from "./-layout";
 const SERVICES = [
 	{
 		title: "Websites and web applications",
-		body: "Frontend and backend for business websites and web apps: content you can edit through a CMS, forms, and the workflows behind them.",
-		examples: ["Next.js", "Payload CMS", "TypeScript"],
+		body: "Frontend and backend for business websites and web apps: content you can edit through a CMS, forms, and the workflows behind them. I also move existing WordPress sites to a modern stack without losing their content or links.",
+		examples: ["Next.js", "Payload CMS", "WordPress migration"],
 	},
 	{
 		title: "Automation and integrations",
