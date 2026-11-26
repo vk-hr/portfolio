@@ -19,9 +19,11 @@ building type before requesting installation.
 
 ## What I did
 
-I designed and developed the original WordPress site myself. With AI
-assistance, I rebuilt it with Next.js and Payload CMS, refined the UI, set up
-deployment, optimized SEO, and integrated Telegram.
+I designed and developed the original WordPress site and maintained it myself
+for several years. I then rebuilt it with Next.js and Payload CMS with AI
+assistance, aiming to reduce page load times and improve the user experience.
+During the rebuild, I refined the UI, set up deployment, optimized SEO, and
+integrated Telegram.
 The rebuilt site can seed its initial WordPress content and media into Payload
 from bundled files, without connecting to the old site.
 

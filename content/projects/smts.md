@@ -21,9 +21,11 @@ original WordPress codebase had become hard to update.
 
 ## What I did
 
-I designed and developed the original WordPress site myself. With AI
-assistance, I rebuilt it with Next.js and Payload CMS, refined the UI, set up
-deployment, optimized SEO, and integrated Telegram for lead notifications.
+I designed and developed the original WordPress site and maintained it myself
+for several years. I then rebuilt it with Next.js and Payload CMS with AI
+assistance, aiming to reduce page load times and improve the user experience.
+During the rebuild, I refined the UI, set up deployment, optimized SEO, and
+integrated Telegram for lead notifications.
 
 ## The visitor workflow
 
