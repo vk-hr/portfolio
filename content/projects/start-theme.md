@@ -5,7 +5,7 @@ status: active
 featured: true
 date: 2026-10-30
 repository: https://github.com/vk-hr/start-theme
-demo: https://www.npmjs.com/package/start-theme
+package: https://www.npmjs.com/package/start-theme
 technologies: [react, typescript, tanstack-start]
 ---
 

@@ -5,7 +5,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { morph } from "#/components/project-morph";
 import { StatusLabel } from "#/components/tech-list";
 import { shortDate } from "#/lib/format";
-import { listProjects, type ProjectSummary } from "#/lib/projects";
+import {
+	externalLink,
+	listProjects,
+	type ProjectSummary,
+} from "#/lib/projects";
 
 import { Page, SectionHeading } from "../-layout";
 
@@ -31,12 +35,16 @@ function ProjectsPage() {
 	// Projects arrive newest first, so years and rows keep that order.
 	const years = new Map<
 		number,
-		Array<{ project: ProjectSummary; n: number }>
+		Array<{
+			project: ProjectSummary;
+			n: number;
+			link: ReturnType<typeof externalLink>;
+		}>
 	>();
 	projects.forEach((project, i) => {
 		const year = new Date(project.date).getUTCFullYear();
 		const rows = years.get(year) ?? [];
-		rows.push({ project, n: i + 1 });
+		rows.push({ project, n: i + 1, link: externalLink(project) });
 		years.set(year, rows);
 	});
 
@@ -69,7 +77,7 @@ function ProjectsPage() {
 						</div>
 
 						<ol>
-							{rows.map(({ project, n }) => (
+							{rows.map(({ project, n, link }) => (
 								<li
 									key={project.slug}
 									className="group relative grid grid-cols-[2rem_1fr] gap-x-4 gap-y-3 border-b-2 px-4 py-5 transition-colors last:border-b-0 hover:bg-muted sm:grid-cols-[2rem_1fr_auto]"
@@ -130,13 +138,13 @@ function ProjectsPage() {
 													/>
 												</a>
 											)}
-											{project.demo && (
+											{link && (
 												<a
-													href={project.demo}
+													href={link.href}
 													target="_blank"
 													rel="noopener noreferrer"
 													className={iconLinkClassName}
-													aria-label={`${project.title} demo`}
+													aria-label={`${project.title} ${link.label}`}
 												>
 													<HugeiconsIcon
 														icon={ArrowUpRight01Icon}

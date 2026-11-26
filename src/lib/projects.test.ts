@@ -4,6 +4,7 @@ import { allProjects, type Project } from "content-collections";
 
 import {
 	createProjectStore,
+	externalLink,
 	getProject,
 	listFeaturedProjects,
 	listProjects,
@@ -129,6 +130,22 @@ describe("project store", () => {
 
 	test("unknown slugs return undefined", () => {
 		expect(store.getProject("does-not-exist")).toBeUndefined();
+	});
+});
+
+describe("externalLink", () => {
+	test("prefers the live demo, then the package page", () => {
+		expect(
+			externalLink({
+				demo: "https://a.example",
+				package: "https://npm.example",
+			}),
+		).toEqual({ href: "https://a.example", label: "Live demo" });
+		expect(externalLink({ package: "https://npm.example" })).toEqual({
+			href: "https://npm.example",
+			label: "npm package",
+		});
+		expect(externalLink({})).toBeUndefined();
 	});
 });
 

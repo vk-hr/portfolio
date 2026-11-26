@@ -15,7 +15,11 @@ import { allProjects } from "content-collections";
 import { Window } from "happy-dom";
 
 import { SOCIAL_LINKS } from "#/lib/constants";
-import { listProjects, listSelectedProjects } from "#/lib/projects";
+import {
+	externalLink,
+	listProjects,
+	listSelectedProjects,
+} from "#/lib/projects";
 import { HOME_DESCRIPTION, HOME_TITLE } from "#/lib/site";
 
 const SERVER = ".output/server/index.mjs";
@@ -201,6 +205,24 @@ describe("/projects/$slug", () => {
 			expect(
 				doc.querySelector('meta[name="description"]')?.getAttribute("content"),
 			).toBe(project.description);
+		},
+	);
+
+	test.each(visible.map((p) => [p.slug, p] as const))(
+		"%s labels its outward link and describes its cover",
+		async (slug, project) => {
+			const { doc } = await get(`/projects/${slug}`);
+			const link = externalLink(project);
+			const outward = [...doc.querySelectorAll("dl a")].filter(
+				(a) => text(a) !== "Repository",
+			);
+			expect(outward.map((a) => [text(a), a.getAttribute("href")])).toEqual(
+				link ? [[link.label, link.href]] : [],
+			);
+			if (project.cover) {
+				const cover = doc.querySelector(`img[src="${project.cover}"]`);
+				expect(cover?.getAttribute("alt")).toBe(project.coverAlt ?? "");
+			}
 		},
 	);
 

@@ -10,16 +10,30 @@ export type ProjectSummary = {
 	slug: string;
 	title: string;
 	description: string;
-	status: "active" | "completed" | "archived";
+	status: "pre-launch" | "active" | "completed" | "archived";
 	featured: boolean;
 	date: string;
 	repository?: string;
 	demo?: string;
+	package?: string;
 	cover?: string;
+	coverAlt?: string;
 	technologies: Array<Technology>;
 };
 
 export type ProjectDetail = ProjectSummary & { html: string };
+
+/**
+ * The project's outward link besides the repository: its live demo, or its
+ * package page when it ships as a package.
+ */
+export function externalLink(
+	project: Pick<ProjectSummary, "demo" | "package">,
+): { href: string; label: "Live demo" | "npm package" } | undefined {
+	if (project.demo) return { href: project.demo, label: "Live demo" };
+	if (project.package) return { href: project.package, label: "npm package" };
+	return undefined;
+}
 
 type Content = {
 	projects: typeof allProjects;
@@ -41,7 +55,9 @@ export function createProjectStore(content: Content) {
 			date: project.date,
 			repository: project.repository,
 			demo: project.demo,
+			package: project.package,
 			cover: project.cover,
+			coverAlt: project.coverAlt,
 			html: project.html,
 			technologies: project.technologies.map((slug) => ({
 				slug,

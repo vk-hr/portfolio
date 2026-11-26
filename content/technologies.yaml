@@ -16,3 +16,15 @@ tailwindcss:
 bun:
   name: Bun
   color: orange
+nextjs:
+  name: Next.js
+  color: indigo
+payload-cms:
+  name: Payload CMS
+  color: violet
+postgresql:
+  name: PostgreSQL
+  color: blue
+playwright:
+  name: Playwright
+  color: green

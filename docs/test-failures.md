@@ -19,5 +19,6 @@ concurrency, whatever their log says. This repo has none of those today.
 A flaky failure, one that passes on rerun without a change, is neither: it's a bug in the
 test or the code. Fix it and log it as `flaky` with the cause.
 
-| date | test file › test | class | what changed / root cause | commit |
-| ---- | ---------------- | ----- | ------------------------- | ------ |
+| date       | test file › test                                                                                  | class           | what changed / root cause                                                                                                                                                  | commit                    |
+| ---------- | ------------------------------------------------------------------------------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| 2026-11-26 | src/routes/_home/-projects.test.tsx › project dialog › opens with the project's details and links | change-detector | The dialog's demo link copy changed from "Demo" to "Live demo" (shared label with the project page; package pages now read "npm package"). Updated the expected link name. | uncommitted (t3/9ae85e0b) |

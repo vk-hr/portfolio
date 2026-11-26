@@ -27,13 +27,17 @@ const projects = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
-		status: z.enum(["active", "completed", "archived"]),
+		status: z.enum(["pre-launch", "active", "completed", "archived"]),
 		featured: z.boolean().default(false),
 		date: z.iso.date(),
 		repository: z.url().optional(),
 		demo: z.url().optional(),
+		/** Package registry page, e.g. https://www.npmjs.com/package/<name> */
+		package: z.url().optional(),
 		/** Path under public/, e.g. /projects/portfolio/cover.webp */
 		cover: z.string().startsWith("/").optional(),
+		/** Describes the cover for screen readers; without it the cover is decorative. */
+		coverAlt: z.string().optional(),
 		technologies: z.array(slug).default([]),
 		content: z.string(),
 	}),

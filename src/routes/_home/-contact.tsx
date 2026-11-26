@@ -38,7 +38,7 @@ export function Contact({ index }: { index: string }) {
 					</span>
 				</a>
 				<ul
-					className="mt-8 flex flex-wrap gap-x-6 gap-y-2 type-label"
+					className="mt-6 flex flex-wrap gap-x-6 type-label"
 					aria-label="Profiles"
 				>
 					{PROFILES.map((profile) => (
@@ -47,7 +47,7 @@ export function Contact({ index }: { index: string }) {
 								href={profile.href}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="group inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
+								className="group inline-flex min-h-6 items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground pointer-coarse:min-h-11"
 							>
 								{profile.label}
 								<HugeiconsIcon
